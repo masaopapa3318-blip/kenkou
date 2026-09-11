@@ -679,7 +679,9 @@ a { color: inherit; }
   color: #fdfbf5;
   margin: 0 0 4px;
 }
-.footer-copy { margin: 0; font-size: 0.78rem; }
+.footer-copy { margin: 0 0 4px; font-size: 0.78rem; }
+.footer-copy a { color: var(--clay-soft); text-decoration: underline; }
+.footer-copy a:hover { color: #fff; }
 .footer-nav { display: flex; gap: 22px; font-size: 0.82rem; }
 .footer-nav a { text-decoration: none; }
 .footer-nav a:hover { color: #fff; }
