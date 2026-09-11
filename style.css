@@ -529,6 +529,38 @@ a { color: inherit; }
 }
 .related-card p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); }
 
+/* ---------- Photo bands (full-bleed, no frame — ilpleut参考) ---------- */
+.photo-band {
+  width: 100%;
+  height: 480px;
+  overflow: hidden;
+  background: var(--cream-deep);
+}
+.photo-band img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.photo-band--short { height: 340px; }
+
+.photo-pair {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 0;
+}
+.photo-pair .photo-band { height: 420px; }
+.photo-pair .photo-band:last-child { margin-top: 64px; height: 356px; }
+
+.photo-caption {
+  padding: 14px 28px;
+  font-size: 0.78rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+  max-width: var(--max-w);
+  margin: 0 auto;
+}
+
 /* ---------- Hub cards (index) ---------- */
 .hub-grid {
   display: grid;
@@ -694,6 +726,10 @@ a { color: inherit; }
   .related-grid { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .merit-list { grid-template-columns: 1fr; }
+  .hub-grid { grid-template-columns: 1fr; }
+  .photo-pair { grid-template-columns: 1fr; }
+  .photo-pair .photo-band:last-child { margin-top: 0; height: 340px; }
+  .photo-band { height: 320px; }
 }
 
 @media (max-width: 760px) {
