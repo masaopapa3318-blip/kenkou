@@ -515,6 +515,7 @@ a { color: inherit; }
   grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
+.related-grid--four { grid-template-columns: repeat(4, 1fr); }
 .related-card {
   background: #fff;
   border: 1px solid var(--line);
@@ -723,7 +724,7 @@ a { color: inherit; }
   .philosophy-grid { grid-template-columns: 1fr; }
   .course-grid { grid-template-columns: 1fr; }
   .people-grid { grid-template-columns: 1fr; }
-  .related-grid { grid-template-columns: 1fr; }
+  .related-grid, .related-grid--four { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .merit-list { grid-template-columns: 1fr; }
   .hub-grid { grid-template-columns: 1fr; }
