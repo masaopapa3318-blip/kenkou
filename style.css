@@ -543,6 +543,28 @@ a { color: inherit; }
 .mission-box .price-table th, .mission-box .price-table td { color: inherit; }
 .mission-box .price-table th, .mission-box .price-table td { border-bottom-color: var(--line); }
 
+/* ---------- Legal table (shop.html: 特定商取引法に基づく表示) ---------- */
+.legal-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 0.9rem; }
+.legal-table th, .legal-table td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-weight: 400;
+}
+.legal-table th { width: 200px; color: var(--ink-soft); }
+.legal-table td { color: var(--ink); }
+.legal-table a { text-decoration: underline; }
+@media (max-width: 760px) {
+  .legal-table, .legal-table tbody, .legal-table tr, .legal-table th, .legal-table td {
+    display: block;
+    width: auto;
+  }
+  .legal-table tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .legal-table th, .legal-table td { border-bottom: none; padding: 2px 0; }
+  .legal-table th { color: var(--clay); font-size: 0.78rem; letter-spacing: 0.04em; }
+}
+
 /* ---------- People ---------- */
 .people-grid {
   display: grid;
@@ -873,7 +895,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .photo-band { height: 320px; }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 1060px) {
   .main-nav {
     position: fixed;
     top: 76px; left: 0; right: 0;
@@ -929,7 +951,9 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .nav-toggle.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-toggle.is-open span:nth-child(2) { opacity: 0; }
   .nav-toggle.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+}
 
+@media (max-width: 760px) {
   .section { padding: 74px 0; }
   .seasons-grid { grid-template-columns: 1fr; }
   .timeline-item { grid-template-columns: 64px 1fr; gap: 16px; }
