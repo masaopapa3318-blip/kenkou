@@ -529,6 +529,23 @@ a { color: inherit; }
 }
 .timeline-body p:last-child { margin: 0; color: var(--ink-soft); font-size: 0.93rem; }
 
+.timeline-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.timeline-photos img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  transition: transform 1.2s ease;
+}
+.timeline-photos a:hover img,
+.timeline-photos img:hover { transform: scale(1.05); }
+
 .curriculum-note {
   margin-top: 34px;
   font-size: 0.82rem;
