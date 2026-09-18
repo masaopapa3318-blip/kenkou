@@ -381,18 +381,16 @@ a { color: inherit; }
   background-size: cover;
   background-position: center;
   opacity: 0;
-  animation: entranceFade 30s ease-in-out infinite;
+  animation: entranceFade 18s ease-in-out infinite;
 }
 .entrance-slide:nth-child(1) { animation-delay: 0s; }
 .entrance-slide:nth-child(2) { animation-delay: 6s; }
 .entrance-slide:nth-child(3) { animation-delay: 12s; }
-.entrance-slide:nth-child(4) { animation-delay: 18s; }
-.entrance-slide:nth-child(5) { animation-delay: 24s; }
 @keyframes entranceFade {
   0%   { opacity: 0; transform: scale(1.04); }
-  3%   { opacity: 1; }
-  17%  { opacity: 1; }
-  20%  { opacity: 0; }
+  5%   { opacity: 1; }
+  28%  { opacity: 1; }
+  33%  { opacity: 0; }
   100% { opacity: 0; transform: scale(1.16); }
 }
 .entrance-overlay {
@@ -430,17 +428,55 @@ a { color: inherit; }
 .entrance-title {
   font-family: var(--serif);
   font-weight: 700;
-  font-size: clamp(2.4rem, 7vw, 4rem);
+  font-size: clamp(2.2rem, 6.4vw, 3.6rem);
+  line-height: 1.25;
   letter-spacing: 0.05em;
   margin: 0 0 10px;
   text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+  white-space: nowrap;
+}
+@media (max-width: 420px) {
+  .entrance-title { white-space: normal; }
 }
 .entrance-sub {
   font-size: 0.85rem;
   letter-spacing: 0.32em;
   color: var(--clay-soft);
   text-transform: uppercase;
-  margin: 0 0 38px;
+  margin: 0;
+}
+.entrance-captions {
+  position: relative;
+  min-height: clamp(170px, 24vw, 230px);
+  margin-bottom: 22px;
+}
+.entrance-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: entranceCaptionFade 18s ease-in-out infinite;
+}
+.entrance-caption-eyebrow {
+  font-family: var(--serif);
+  font-style: italic;
+  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  color: var(--clay-soft);
+  margin: 0 0 6px;
+  letter-spacing: 0.05em;
+}
+.entrance-caption:nth-child(1) { animation-delay: 0s; }
+.entrance-caption:nth-child(2) { animation-delay: 6s; }
+.entrance-caption:nth-child(3) { animation-delay: 12s; }
+@keyframes entranceCaptionFade {
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  28%  { opacity: 1; }
+  33%  { opacity: 0; }
+  100% { opacity: 0; }
 }
 .entrance-lead {
   font-size: 1.08rem;
@@ -456,6 +492,8 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .entrance-slide { animation: none; opacity: 0; }
   .entrance-slide:first-child { opacity: 1; }
+  .entrance-caption { animation: none; opacity: 0; }
+  .entrance-caption:first-child { opacity: 1; }
   .entrance-content { animation: none; opacity: 1; transform: none; }
 }
 
