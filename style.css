@@ -655,7 +655,7 @@ a { color: inherit; }
   max-width: 780px;
   margin: 0 auto;
   padding: 34px 42px;
-  background: var(--cream-deep);
+  background: rgba(185, 113, 58, 0.1);
   border-radius: var(--radius);
   border-left: 4px solid var(--clay);
 }
@@ -663,7 +663,8 @@ a { color: inherit; }
   margin: 0;
   font-size: 1.08rem;
   line-height: 2;
-  color: var(--ink);
+  color: var(--forest-deep);
+  font-weight: 500;
 }
 @media (max-width: 600px) {
   .course-intro-box { padding: 26px 24px; }
