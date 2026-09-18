@@ -721,8 +721,19 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   border: 1px solid var(--line);
   border-top: 4px solid var(--forest-soft);
   border-radius: var(--radius);
-  padding: 28px 24px;
+  padding: 0;
+  overflow: hidden;
 }
+.season-photo { width: 100%; height: 140px; overflow: hidden; }
+.season-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s ease;
+}
+.season-chip:hover .season-photo img { transform: scale(1.06); }
+.season-chip-body { padding: 22px 22px 26px; }
 .season-label {
   font-family: var(--serif);
   font-size: 1.6rem;
