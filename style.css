@@ -398,8 +398,8 @@ a { color: inherit; }
   inset: 0;
   z-index: -1;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 10%, rgba(217,154,91,0.22), transparent 60%),
-    linear-gradient(180deg, rgba(31,50,39,0.58) 0%, rgba(31,50,39,0.62) 45%, rgba(19,31,24,0.88) 100%);
+    radial-gradient(ellipse 65% 55% at 50% 52%, rgba(14,22,17,0.52), transparent 72%),
+    linear-gradient(180deg, rgba(14,22,17,0.22) 0%, rgba(14,22,17,0.12) 26%, rgba(14,22,17,0.4) 100%);
 }
 .entrance-content {
   position: relative;
