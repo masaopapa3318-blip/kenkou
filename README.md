@@ -4,7 +4,8 @@
 
 ## 構成
 
-- `index.html` — ホーム
+- `index.html` — サイト入口（大自然を感じるダイナミックな入口ページ。「サイトへ入る」からホームへ）
+- `home.html` — ホーム（旧index.html）
 - `fermentation.html` — 発酵実践塾（天給自足実践塾と同格の、もう一つの学び舎）
 - `philosophy.html` — 理念（天給自足とは／志／7つのメリット／祈り）
 - `curriculum.html` — 年間カリキュラム
