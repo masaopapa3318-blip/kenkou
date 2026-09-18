@@ -451,6 +451,12 @@ a { color: inherit; }
   color: var(--clay-soft);
   margin: 10px 0 0;
 }
+.entrance-logo {
+  width: clamp(220px, 30vw, 340px);
+  height: auto;
+  margin: 4px 0 0;
+  filter: drop-shadow(0 2px 16px rgba(0,0,0,0.35));
+}
 .entrance-captions {
   position: relative;
   min-height: clamp(200px, 27vw, 270px);
