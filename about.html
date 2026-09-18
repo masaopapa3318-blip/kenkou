@@ -17,16 +17,26 @@
 
 <header class="site-header" id="top">
   <div class="wrap header-inner">
-    <a class="brand" href="index.html">
+    <a class="brand" href="home.html">
       <span class="brand-kanji">天給自足実践塾</span>
       <span class="brand-sub">レジオン八ヶ岳</span>
     </a>
     <nav class="main-nav" aria-label="主要ナビゲーション">
-      <a href="index.html">ホーム</a>
+      <a href="home.html">ホーム</a>
+      <a href="fermentation.html">発酵実践塾</a>
       <a href="philosophy.html">理念</a>
       <a href="curriculum.html">年間カリキュラム</a>
       <a href="courses.html">コース</a>
-      <a href="about.html" class="active">主宰者・レジオン八ヶ岳</a>
+      <div class="nav-dropdown current">
+        <a href="about.html" class="nav-dropdown-label active">レジオン八ヶ岳</a>
+        <button type="button" class="nav-dropdown-caret" aria-expanded="false" aria-label="サブメニューを開く"><span>&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="stay.html">ステイ</a>
+          <a href="rental.html">レンタル</a>
+          <a href="shop.html">通販</a>
+          <a href="consulting.html">コンサル</a>
+        </div>
+      </div>
       <a href="contact.html" class="nav-cta">お問い合わせ</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
@@ -46,7 +56,7 @@
     </div>
   </section>
 
-  <div class="photo-band">
+  <div class="photo-band reveal">
     <img src="images/venue-exterior-1.jpg" alt="レジオン八ヶ岳の建物外観。夏、白樺と緑に囲まれたログハウス調の建物">
   </div>
 
@@ -56,10 +66,10 @@
       <h2 class="section-title">主宰者紹介</h2>
 
       <div class="people-grid">
-        <article class="person-card">
+        <article class="person-card reveal">
           <div class="person-avatar" aria-hidden="true">正</div>
           <h3>藤巻 正夫</h3>
-          <p class="person-role">天給自足実践塾 主宰／醗酵実践塾 主宰／菊芋活用実践塾 主宰</p>
+          <p class="person-role">天給自足実践塾 主宰／発酵実践塾 主宰／菊芋活用実践塾 主宰</p>
           <p>
             1958年生まれ、新潟県柏崎市出身。18歳より洋菓子業界へ（ヒサモト洋菓子店、菓歩区を経て
             オーボンヴュータンでスーシェフ）。1984〜1989年渡欧。スイスでは5つ星ホテル
@@ -73,12 +83,12 @@
             NHK「きょうの料理」出演（2002年）。レジオン フランス菓子教室・パン教室を16年間主宰。
           </p>
           <p>
-            天給自足案内人・天給自足伝承人・天給自足講師養成をミッションに、天給自足と醗酵で食を楽しみ健康に、
+            天給自足案内人・天給自足伝承人・天給自足講師養成をミッションに、天給自足と発酵で食を楽しみ健康に、
             一人ひとりの持ち味を活かす食創りと伝承復活に取り組んでいます。
           </p>
         </article>
 
-        <article class="person-card">
+        <article class="person-card reveal">
           <div class="person-avatar" aria-hidden="true">ま</div>
           <h3>藤巻 まり子</h3>
           <p class="person-role">ミネラル＆アロマ習慣リトリート 主宰／Salon de Marie 主宰／香りと環境研究家</p>
@@ -103,15 +113,30 @@
       <div class="philosophy-grid">
         <div class="philosophy-text">
           <p>
+            八ヶ岳の大自然の中で、ゆったりと過ごす贅沢。レジオン八ヶ岳は、まるでフランスの田舎にあるような
+            あたたかなカフェです。焼きたてのパン、おいしいデザート、ドリンク・・・日常の喧騒からはなれ、
+            くつろぎの空間をお楽しみください。
+          </p>
+          <p>
+            八ヶ岳の自然に抱かれるやすらぎ。シンプルステイ、そしてナチュラルな空間。
+            山小屋風ログの木のぬくもりの客室で、旅の疲れを癒し心も体もリフレッシュ。
+            麦飯石で浄化した、ミネラル豊富なお風呂で疲れを癒してください。
+          </p>
+          <p>
             レジオン八ヶ岳の目的は「<strong>食で世界をより良く変える</strong>」。
             心と身体は食べた物で創られている。人間は食べ物の変化体だ。だから食を変えたら世界は変わる。
           </p>
           <p>
-            できるだけオーガニック食材、添加物不使用、ナチュラルな食で心と躰をより良く変えたい。
-            そんな思いで大自然の中でレジオン八ヶ岳をスタートしました。
+            レジオン横浜時代と同じく、できるだけオーガニック食材（八ヶ岳にはオーガニック野菜農家がたくさんあります）を使用、
+            添加物不使用、ナチュラルな食で心と躰をより良く変えたい。そんな思いで大自然の中でレジオン八ヶ岳をスタートしました。
           </p>
           <p>
-            人間は自然の一部。太陽の光、雨、空気、大地の恵みの無償の愛が、生きるすべてを育て成長させている。
+            人間は自然の一部。安らぎ、健康、元気、笑顔──目に見えないすべての営みと繋がり活かされている。
+            太陽の光、雨、空気、大地の恵みの無償の愛が、生きるすべてを育て成長させている。
+          </p>
+          <p>
+            大自然、天然のすばらしさを体験しに来ませんか？　自然の中で目に見えないパワーを感じ、
+            食を通して心をプラスにチャージして元気になりに来てください。
             皆様の健康と幸せを祈りながら、食を創り提供しています。
           </p>
         </div>
@@ -127,22 +152,24 @@
       </div>
 
       <div class="related-grid related-grid--four" style="margin-top:20px;">
-        <div class="related-card">
+        <a class="related-card" href="stay.html">
           <h3>Café &amp; Stay</h3>
-          <p>宿泊できるカフェ。大自然の中で元気と幸せをチャージ。ログハウス調・無垢材の客室。</p>
-        </div>
+          <p>フランスの田舎にあるような、あたたかなカフェ＆宿。大自然の中で元気と幸せをチャージ。ログハウス調・無垢材の客室。</p>
+          <span class="hub-link">くわしく見る →</span>
+        </a>
         <div class="related-card">
           <h3>Ecole（エコール）</h3>
-          <p>天給自足実践塾、醗酵実践塾。学びの場としての講座運営。</p>
+          <p>天給自足実践塾、発酵実践塾。学びの場としての講座運営。</p>
         </div>
         <div class="related-card">
           <h3>Labo（ラボ）</h3>
           <p>野草を生活に落とし込む会。薬草・山菜・きのこ・山葡萄など大自然の恵みを学ぶ。</p>
         </div>
-        <div class="related-card">
+        <a class="related-card" href="consulting.html">
           <h3>Consulting</h3>
           <p>カフェ開業・運営のご相談。メニュー開発、ヴィーガン／ベジタリアンメニューなど食のコンサルティング。</p>
-        </div>
+          <span class="hub-link">くわしく見る →</span>
+        </a>
       </div>
 
       <p class="curriculum-note" style="margin-top:24px;">
@@ -154,25 +181,28 @@
     </div>
   </section>
 
-  <div class="photo-band">
+  <div class="photo-band reveal">
     <img src="images/venue-interior-room.jpg" alt="レジオン八ヶ岳の客室。ログハウス調・無垢材のロフト、ベッド3台">
   </div>
-  <p class="photo-caption">ログハウス調・無垢材の客室。昼は八ヶ岳の大自然で遊び、夜は満天の星空の下で眠る。</p>
+  <div class="photo-caption-band photo-caption-band--night">
+    <p class="photo-caption">ログハウス調・無垢材の客室。昼は八ヶ岳の大自然で遊び、夜は満天の星空の下で眠る。</p>
+  </div>
 
   <section class="section" id="related">
     <div class="wrap">
       <p class="section-eyebrow">Related Programs</p>
       <h2 class="section-title">関連講座</h2>
       <div class="related-grid">
-        <div class="related-card">
-          <h3>醗酵実践塾</h3>
+        <a class="related-card reveal" href="fermentation.html">
+          <h3>発酵実践塾</h3>
           <p>糀作り・味噌・縄文漬け・甘酒・シードルなど、11講座を2泊3日で集中して学ぶリトリート。伝承者を養成します。</p>
-        </div>
-        <div class="related-card">
+          <span class="hub-link">くわしく見る →</span>
+        </a>
+        <div class="related-card reveal">
           <h3>野草を生活に落とし込み楽しむ会</h3>
           <p>野草研究家・加藤好美さん（みこたま）を講師に迎え、見極めと活用を学ぶ2泊3日。</p>
         </div>
-        <div class="related-card">
+        <div class="related-card reveal">
           <h3>ミネラル＆アロマ習慣リトリート</h3>
           <p>藤巻まり子が主宰。ミネラルとメディカルアロマ、グルテンフリー食を軸にした心身のリトリート。</p>
         </div>
@@ -193,14 +223,19 @@
   </section>
 
   <div class="photo-pair">
-    <div class="photo-band">
+    <div class="photo-band reveal">
       <img src="images/garden-flower-pink.jpg" alt="レジオン八ヶ岳の庭に咲くサクラソウ">
     </div>
-    <div class="photo-band">
+    <div class="photo-band reveal">
       <img src="images/garden-flower-white.jpg" alt="レジオン八ヶ岳の庭に咲く白い花">
     </div>
   </div>
-  <p class="photo-caption">レジオン八ヶ岳の庭は、季節の花が所狭しと咲き乱れます。</p>
+  <p class="photo-caption">
+    レジオン八ヶ岳の庭は、季節の花が所狭しと咲き乱れます。
+    <a href="https://regioncafelabo.wixsite.com/mysite/gallery" target="_blank" rel="noopener" style="color:var(--forest); text-decoration:underline;">
+      「レジオン八ヶ岳の四季」ギャラリー（毎月更新）を見る →
+    </a>
+  </p>
 
   <section class="section">
     <div class="wrap">
@@ -221,11 +256,16 @@
       <p class="footer-copy"><a href="https://regioncafelabo.wixsite.com/mysite" target="_blank" rel="noopener">café&amp;stay レジオン八ヶ岳 本サイトはこちら →</a></p>
     </div>
     <nav class="footer-nav" aria-label="フッターナビゲーション">
-      <a href="index.html">ホーム</a>
+      <a href="home.html">ホーム</a>
+      <a href="stay.html">ステイ</a>
+      <a href="rental.html">レンタル</a>
+      <a href="shop.html">通販</a>
+      <a href="consulting.html">コンサル</a>
+      <a href="fermentation.html">発酵実践塾</a>
       <a href="philosophy.html">理念</a>
       <a href="curriculum.html">年間カリキュラム</a>
       <a href="courses.html">コース</a>
-      <a href="about.html" class="active">主宰者・レジオン八ヶ岳</a>
+      <a href="about.html" class="active">主宰者</a>
       <a href="contact.html">お問い合わせ</a>
     </nav>
   </div>

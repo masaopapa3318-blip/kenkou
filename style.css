@@ -42,6 +42,17 @@ img { max-width: 100%; display: block; }
 
 a { color: inherit; }
 
+/* ---------- Scroll reveal (organic fade + rise, used across pages) ---------- */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .9s ease, transform .9s ease;
+}
+.reveal.is-visible { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
 /* subtle grain overlay for warmth */
 .noise-overlay {
   position: fixed;
@@ -74,6 +85,7 @@ a { color: inherit; }
 .brand {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   text-decoration: none;
   color: var(--forest-deep);
   line-height: 1.2;
@@ -83,11 +95,13 @@ a { color: inherit; }
   font-weight: 700;
   font-size: 1.15rem;
   letter-spacing: 0.03em;
+  white-space: nowrap;
 }
 .brand-sub {
   font-size: 0.66rem;
   letter-spacing: 0.18em;
   color: var(--clay);
+  white-space: nowrap;
 }
 
 .main-nav {
@@ -129,6 +143,79 @@ a { color: inherit; }
   font-weight: 500;
 }
 .main-nav a.active:not(.nav-cta)::after { right: 0; background: var(--clay); }
+
+/* ---------- Nav dropdown ("レジオン八ヶ岳" — stay/rental/shop/consulting) ---------- */
+.nav-dropdown { position: relative; display: flex; align-items: center; gap: 4px; }
+.nav-dropdown-label {
+  text-decoration: none;
+  color: var(--ink-soft);
+  position: relative;
+  padding: 4px 0;
+  white-space: nowrap;
+}
+.nav-dropdown-label:hover { color: var(--forest); }
+.nav-dropdown-label::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: -2px;
+  height: 1px;
+  background: var(--clay);
+  transition: right .25s ease;
+}
+.nav-dropdown-label:hover::after,
+.nav-dropdown.current .nav-dropdown-label::after { right: 0; }
+.nav-dropdown.current .nav-dropdown-label { color: var(--forest); font-weight: 500; }
+.nav-dropdown.current .nav-dropdown-label::after { background: var(--clay); }
+
+.nav-dropdown-caret {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  color: var(--ink-soft);
+  font-size: 0.65rem;
+  line-height: 1;
+}
+.nav-dropdown-caret:hover { color: var(--forest); }
+.nav-dropdown-caret span { display: inline-block; transition: transform .2s ease; }
+.nav-dropdown.is-open .nav-dropdown-caret span { transform: rotate(180deg); }
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 8px;
+  min-width: 170px;
+  box-shadow: 0 20px 40px rgba(31,50,39,0.16);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 700;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown.is-open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  text-decoration: none;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.nav-dropdown-menu a:hover { background: var(--cream-deep); color: var(--forest); }
+.nav-dropdown-menu a.active { color: var(--forest); font-weight: 500; background: var(--cream-deep); }
 
 .footer-nav a.active { color: #fff; text-decoration: underline; }
 
@@ -194,9 +281,40 @@ a { color: inherit; }
     repeating-linear-gradient(115deg, rgba(255,255,255,0.035) 0 2px, transparent 2px 90px),
     repeating-linear-gradient(25deg, rgba(255,255,255,0.03) 0 2px, transparent 2px 120px);
 }
+/* 八ヶ岳の稜線シルエット */
+.hero-bg::before {
+  content: "";
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 36%;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 200' preserveAspectRatio='none'%3E%3Cpath d='M0 200 L0 140 L80 90 L150 130 L230 60 L320 140 L400 40 L480 120 L560 70 L650 150 L720 100 L800 150 L800 200 Z' fill='%23233d2e' fill-opacity='0.55'/%3E%3Cpath d='M0 200 L0 170 L100 150 L200 190 L300 140 L420 190 L520 150 L620 195 L720 160 L800 190 L800 200 Z' fill='%231c3225' fill-opacity='0.75'/%3E%3C/svg%3E")
+    bottom / cover no-repeat;
+}
+/* 木漏れ日・花粉が漂うような、ごく淡い浮遊パーティクル */
+.hero::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle, rgba(255,255,255,0.55) 0 2px, transparent 3px),
+    radial-gradient(circle, rgba(255,255,255,0.4) 0 1.5px, transparent 2.5px);
+  background-size: 260px 260px, 340px 340px;
+  background-position: 0 0, 90px 140px;
+  opacity: 0.35;
+  animation: driftParticles 40s linear infinite;
+}
+@keyframes driftParticles {
+  from { background-position: 0 0, 90px 140px; }
+  to   { background-position: -260px 260px, -340px 480px; }
+}
 .hero-inner { padding-top: 90px; padding-bottom: 90px; position: relative; }
 .hero-eyebrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   font-size: 0.75rem;
   letter-spacing: 0.14em;
   color: var(--clay-soft);
@@ -240,6 +358,158 @@ a { color: inherit; }
   100% { transform: scaleY(0); transform-origin: bottom; opacity: 0; }
 }
 
+/* ---------- Entrance (index.html: dynamic nature splash before home.html) ---------- */
+.entrance-hero {
+  position: relative;
+  min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  color: #fdfbf5;
+  text-align: center;
+}
+.entrance-slideshow {
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  background: var(--forest-deep);
+}
+.entrance-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  animation: entranceFade 18s ease-in-out infinite;
+}
+.entrance-slide:nth-child(1) { animation-delay: 0s; }
+.entrance-slide:nth-child(2) { animation-delay: 6s; filter: brightness(1.25) saturate(1.08); }
+.entrance-slide:nth-child(3) { animation-delay: 12s; filter: brightness(1.22) saturate(1.1); }
+@keyframes entranceFade {
+  0%   { opacity: 0; transform: scale(1.04); }
+  5%   { opacity: 1; }
+  28%  { opacity: 1; }
+  33%  { opacity: 0; }
+  100% { opacity: 0; transform: scale(1.16); }
+}
+.entrance-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.03) 55%, rgba(0,0,0,0.22) 100%);
+}
+.entrance-content {
+  position: relative;
+  z-index: 1;
+  max-width: 720px;
+  padding: 46px 42px;
+  background: rgba(15, 23, 18, 0.34);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 28px;
+  animation: entranceContentIn 1.4s ease both;
+  animation-delay: 0.3s;
+}
+@media (max-width: 640px) {
+  .entrance-content { padding: 34px 24px; border-radius: 22px; }
+}
+@keyframes entranceContentIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.entrance-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  color: var(--clay-soft);
+  border: 1px solid rgba(255,255,255,0.35);
+  border-radius: 999px;
+  padding: 6px 18px;
+  margin-bottom: 26px;
+}
+.entrance-title {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6.4vw, 3.6rem);
+  line-height: 1.25;
+  letter-spacing: 0.05em;
+  margin: 0 0 10px;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.25);
+  white-space: nowrap;
+}
+@media (max-width: 420px) {
+  .entrance-title { white-space: normal; }
+}
+.entrance-sub {
+  font-size: clamp(1.05rem, 2.8vw, 1.5rem);
+  letter-spacing: 0.14em;
+  color: var(--clay-soft);
+  margin: 10px 0 0;
+}
+.entrance-logo {
+  width: clamp(220px, 30vw, 340px);
+  height: auto;
+  margin: 4px 0 0;
+  filter: drop-shadow(0 2px 16px rgba(0,0,0,0.35));
+}
+.entrance-captions {
+  position: relative;
+  min-height: clamp(200px, 27vw, 270px);
+  margin-bottom: 22px;
+}
+.entrance-caption {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  animation: entranceCaptionFade 18s ease-in-out infinite;
+}
+.entrance-caption-eyebrow {
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.8vw, 2.1rem);
+  color: var(--clay-soft);
+  margin: 0 0 8px;
+  letter-spacing: 0.06em;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
+}
+.entrance-caption:nth-child(1) { animation-delay: 0s; }
+.entrance-caption:nth-child(2) { animation-delay: 6s; }
+.entrance-caption:nth-child(3) { animation-delay: 12s; }
+@keyframes entranceCaptionFade {
+  0%   { opacity: 0; }
+  5%   { opacity: 1; }
+  28%  { opacity: 1; }
+  33%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+.entrance-lead {
+  font-size: 1.08rem;
+  line-height: 1.95;
+  color: rgba(253,251,245,0.92);
+  margin: 0 0 46px;
+}
+.entrance-btn { font-size: 1rem; padding: 17px 42px; }
+@media (max-width: 640px) {
+  .entrance-title { letter-spacing: 0.02em; }
+  .entrance-lead { font-size: 1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .entrance-slide { animation: none; opacity: 0; }
+  .entrance-slide:first-child { opacity: 1; }
+  .entrance-caption { animation: none; opacity: 0; }
+  .entrance-caption:first-child { opacity: 1; }
+  .entrance-content { animation: none; opacity: 1; transform: none; }
+}
+
 /* ---------- Sections ---------- */
 .section { padding: 110px 0; }
 .section-alt { background: var(--cream-deep); }
@@ -251,6 +521,20 @@ a { color: inherit; }
   color: var(--clay);
   margin: 0 0 14px;
   text-transform: uppercase;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-eyebrow::before,
+.hero-eyebrow::before {
+  content: "";
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  background-color: currentColor;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C4 8 4 16 12 22C20 16 20 8 12 2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C4 8 4 16 12 22C20 16 20 8 12 2Z'/%3E%3C/svg%3E") center / contain no-repeat;
+  opacity: 0.85;
 }
 .section-title {
   font-family: var(--serif);
@@ -397,6 +681,23 @@ a { color: inherit; }
 }
 .timeline-body p:last-child { margin: 0; color: var(--ink-soft); font-size: 0.93rem; }
 
+.timeline-photos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+.timeline-photos img {
+  width: 100%;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+  transition: transform 1.2s ease;
+}
+.timeline-photos a:hover img,
+.timeline-photos img:hover { transform: scale(1.05); }
+
 .curriculum-note {
   margin-top: 34px;
   font-size: 0.82rem;
@@ -473,6 +774,99 @@ a { color: inherit; }
 }
 .course-card:not(.course-card-main) .course-features li { color: var(--ink-soft); }
 
+.course-months {
+  list-style: none;
+  margin: 0 0 20px;
+  padding: 16px 18px;
+  background: var(--cream-deep);
+  border-radius: 10px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.course-months li { color: var(--ink-soft); }
+.course-months li span {
+  display: inline-block;
+  min-width: 34px;
+  font-weight: 700;
+  color: var(--clay);
+  margin-right: 4px;
+}
+.course-card-main .course-months { background: rgba(255,255,255,0.08); }
+.course-card-main .course-months li { color: rgba(253,251,245,0.8); }
+.course-card-main .course-months li span { color: var(--clay-soft); }
+.course-note-2y {
+  font-size: 0.8rem;
+  color: var(--clay-soft);
+  margin: -8px 0 20px;
+}
+
+.course-intro-box {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 34px 42px;
+  background: rgba(185, 113, 58, 0.1);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--clay);
+}
+.course-intro-box p {
+  margin: 0;
+  font-size: 1.22rem;
+  line-height: 1.9;
+  color: var(--forest-deep);
+  font-weight: 500;
+}
+.course-intro-link {
+  margin-top: 20px !important;
+  text-align: center;
+}
+.course-intro-link a {
+  color: var(--clay);
+  text-decoration: underline;
+}
+@media (max-width: 600px) {
+  .course-intro-box { padding: 26px 24px; }
+  .course-intro-box p { font-size: 1.08rem; line-height: 1.8; }
+}
+
+/* ---------- Price table (stay.html rates / cancellation policy) ---------- */
+.price-table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 0.92rem; }
+.price-table th, .price-table td {
+  text-align: left;
+  padding: 10px 6px;
+  border-bottom: 1px solid var(--line);
+  font-weight: 400;
+}
+.price-table th { color: var(--ink-soft); }
+.price-table td { color: var(--forest-deep); font-family: var(--serif); font-size: 1.05rem; }
+.price-note { display: block; font-size: 0.72rem; color: var(--ink-soft); font-family: var(--sans); margin-top: 2px; }
+.mission-box .price-table th, .mission-box .price-table td { color: inherit; }
+.mission-box .price-table th, .mission-box .price-table td { border-bottom-color: var(--line); }
+
+/* ---------- Legal table (shop.html: 特定商取引法に基づく表示) ---------- */
+.legal-table { width: 100%; border-collapse: collapse; margin-top: 24px; font-size: 0.9rem; }
+.legal-table th, .legal-table td {
+  text-align: left;
+  padding: 14px 12px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+  font-weight: 400;
+}
+.legal-table th { width: 200px; color: var(--ink-soft); }
+.legal-table td { color: var(--ink); }
+.legal-table a { text-decoration: underline; }
+@media (max-width: 760px) {
+  .legal-table, .legal-table tbody, .legal-table tr, .legal-table th, .legal-table td {
+    display: block;
+    width: auto;
+  }
+  .legal-table tr { padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .legal-table th, .legal-table td { border-bottom: none; padding: 2px 0; }
+  .legal-table th { color: var(--clay); font-size: 0.78rem; letter-spacing: 0.04em; }
+}
+
 /* ---------- People ---------- */
 .people-grid {
   display: grid;
@@ -529,6 +923,88 @@ a { color: inherit; }
   margin: 0 0 12px;
 }
 .related-card p { margin: 0; font-size: 0.88rem; color: var(--ink-soft); }
+a.related-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+a.related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 34px rgba(47,74,58,0.12);
+  border-color: var(--forest-soft);
+}
+a.related-card .hub-link { display: inline-block; margin-top: 14px; }
+
+/* ---------- Seasons band (index: 八ヶ岳の四季) ---------- */
+.seasons-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.season-chip {
+  background: #fff;
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--forest-soft);
+  border-radius: var(--radius);
+  padding: 0;
+  overflow: hidden;
+}
+.season-photo { width: 100%; height: 140px; overflow: hidden; }
+.season-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s ease;
+}
+.season-chip:hover .season-photo img { transform: scale(1.06); }
+.season-chip-body { padding: 22px 22px 26px; }
+.season-label {
+  font-family: var(--serif);
+  font-size: 1.6rem;
+  color: var(--clay);
+  margin: 0;
+}
+.season-chip h3 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  color: var(--forest-deep);
+  margin: 8px 0 12px;
+}
+.season-chip p:not(.season-label) { margin: 0; font-size: 0.86rem; color: var(--ink-soft); }
+.season-summer { border-top-color: var(--clay); }
+.season-autumn { border-top-color: var(--clay-soft); }
+.season-winter { border-top-color: var(--ink-soft); }
+
+/* ---------- Craft gallery (fermentation.html: 手づくりの品々) ---------- */
+.craft-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+.craft-item {
+  margin: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.craft-item img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s ease;
+}
+.craft-item:hover img { transform: scale(1.06); }
+.craft-item figcaption {
+  padding: 14px 16px;
+  font-size: 0.9rem;
+  color: var(--forest-deep);
+  font-family: var(--serif);
+  text-align: center;
+}
 
 /* ---------- Photo bands (full-bleed, no frame — ilpleut参考) ---------- */
 .photo-band {
@@ -536,14 +1012,41 @@ a { color: inherit; }
   height: 480px;
   overflow: hidden;
   background: var(--cream-deep);
+  position: relative;
 }
 .photo-band img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   display: block;
+  transition: transform 1.4s ease;
+}
+.photo-band:hover img { transform: scale(1.045); }
+/* 森の色に馴染ませる、ごく淡いビネット */
+.photo-band::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(31,50,39,0.16) 0%, transparent 20%, transparent 78%, rgba(31,50,39,0.2) 100%),
+    radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(31,50,39,0.12) 100%);
 }
 .photo-band--short { height: 340px; }
+
+.photo-caption-band { width: 100%; }
+.photo-caption-band--night {
+  background: var(--forest-deep);
+  background-image:
+    radial-gradient(1.6px 1.6px at 8% 35%, rgba(255,255,255,.9) 60%, transparent),
+    radial-gradient(1.2px 1.2px at 22% 70%, rgba(255,255,255,.8) 60%, transparent),
+    radial-gradient(1.6px 1.6px at 38% 20%, rgba(255,255,255,.9) 60%, transparent),
+    radial-gradient(1.2px 1.2px at 55% 65%, rgba(255,255,255,.8) 60%, transparent),
+    radial-gradient(1.6px 1.6px at 68% 30%, rgba(255,255,255,.9) 60%, transparent),
+    radial-gradient(1.2px 1.2px at 80% 75%, rgba(255,255,255,.8) 60%, transparent),
+    radial-gradient(1.6px 1.6px at 92% 45%, rgba(255,255,255,.9) 60%, transparent);
+}
+.photo-caption-band--night .photo-caption { color: rgba(253,251,245,0.85); }
 
 .photo-pair {
   display: grid;
@@ -728,12 +1231,13 @@ a { color: inherit; }
   .contact-grid { grid-template-columns: 1fr; }
   .merit-list { grid-template-columns: 1fr; }
   .hub-grid { grid-template-columns: 1fr; }
+  .seasons-grid { grid-template-columns: repeat(2, 1fr); }
   .photo-pair { grid-template-columns: 1fr; }
   .photo-pair .photo-band:last-child { margin-top: 0; height: 340px; }
   .photo-band { height: 320px; }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .main-nav {
     position: fixed;
     top: 76px; left: 0; right: 0;
@@ -768,6 +1272,37 @@ a { color: inherit; }
   .main-nav a:last-of-type { border-bottom: none; }
   .nav-cta { margin-top: 10px; text-align: center; }
 
+  /* dropdown becomes a plain, always-expanded grouped section in the mobile menu */
+  .nav-dropdown { width: 100%; display: block; border-top: 1px solid var(--line); margin-top: 4px; padding-top: 4px; }
+  .nav-dropdown-label {
+    display: block;
+    width: 100%;
+    padding: 12px 4px 4px;
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+  .nav-dropdown-label::after { display: none; }
+  .nav-dropdown-caret { display: none; }
+  .nav-dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+  }
+  .nav-dropdown-menu a {
+    width: 100%;
+    padding: 16px 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 1rem;
+    border-radius: 0;
+  }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { background: none; }
+
   /* dim backdrop behind the open menu, tap to close */
   .nav-backdrop {
     display: none;
@@ -789,8 +1324,11 @@ a { color: inherit; }
   .nav-toggle.is-open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
   .nav-toggle.is-open span:nth-child(2) { opacity: 0; }
   .nav-toggle.is-open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+}
 
+@media (max-width: 760px) {
   .section { padding: 74px 0; }
+  .seasons-grid { grid-template-columns: 1fr; }
   .timeline-item { grid-template-columns: 64px 1fr; gap: 16px; }
   .timeline-month { width: 64px; height: 64px; }
   .timeline-month span { font-size: 1.4rem; }
