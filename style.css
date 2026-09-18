@@ -362,6 +362,8 @@ a { color: inherit; }
 .entrance-hero {
   position: relative;
   min-height: 100vh;
+  min-height: 100svh;
+  min-height: 100dvh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -444,15 +446,14 @@ a { color: inherit; }
   .entrance-title { white-space: normal; }
 }
 .entrance-sub {
-  font-size: 0.85rem;
-  letter-spacing: 0.32em;
+  font-size: clamp(1.05rem, 2.8vw, 1.5rem);
+  letter-spacing: 0.14em;
   color: var(--clay-soft);
-  text-transform: uppercase;
-  margin: 0;
+  margin: 10px 0 0;
 }
 .entrance-captions {
   position: relative;
-  min-height: clamp(170px, 24vw, 230px);
+  min-height: clamp(200px, 27vw, 270px);
   margin-bottom: 22px;
 }
 .entrance-caption {
@@ -467,11 +468,12 @@ a { color: inherit; }
 }
 .entrance-caption-eyebrow {
   font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1rem, 2.6vw, 1.3rem);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 3.8vw, 2.1rem);
   color: var(--clay-soft);
-  margin: 0 0 6px;
-  letter-spacing: 0.05em;
+  margin: 0 0 8px;
+  letter-spacing: 0.06em;
+  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
 }
 .entrance-caption:nth-child(1) { animation-delay: 0s; }
 .entrance-caption:nth-child(2) { animation-delay: 6s; }
