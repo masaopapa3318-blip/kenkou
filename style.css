@@ -397,17 +397,22 @@ a { color: inherit; }
   position: absolute;
   inset: 0;
   z-index: -1;
-  background:
-    radial-gradient(ellipse 65% 55% at 50% 52%, rgba(14,22,17,0.52), transparent 72%),
-    linear-gradient(180deg, rgba(14,22,17,0.22) 0%, rgba(14,22,17,0.12) 26%, rgba(14,22,17,0.4) 100%);
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.03) 55%, rgba(0,0,0,0.22) 100%);
 }
 .entrance-content {
   position: relative;
   z-index: 1;
   max-width: 720px;
-  padding: 0 28px;
+  padding: 46px 42px;
+  background: rgba(15, 23, 18, 0.34);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 28px;
   animation: entranceContentIn 1.4s ease both;
   animation-delay: 0.3s;
+}
+@media (max-width: 640px) {
+  .entrance-content { padding: 34px 24px; border-radius: 22px; }
 }
 @keyframes entranceContentIn {
   from { opacity: 0; transform: translateY(24px); }
