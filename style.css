@@ -651,6 +651,25 @@ a { color: inherit; }
   margin: -8px 0 20px;
 }
 
+.course-intro-box {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 34px 42px;
+  background: var(--cream-deep);
+  border-radius: var(--radius);
+  border-left: 4px solid var(--clay);
+}
+.course-intro-box p {
+  margin: 0;
+  font-size: 1.08rem;
+  line-height: 2;
+  color: var(--ink);
+}
+@media (max-width: 600px) {
+  .course-intro-box { padding: 26px 24px; }
+  .course-intro-box p { font-size: 1rem; line-height: 1.85; }
+}
+
 /* ---------- Price table (stay.html rates / cancellation policy) ---------- */
 .price-table { width: 100%; border-collapse: collapse; margin-top: 18px; font-size: 0.92rem; }
 .price-table th, .price-table td {
