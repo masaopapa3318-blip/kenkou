@@ -23,15 +23,20 @@
     </a>
     <nav class="main-nav" aria-label="主要ナビゲーション">
       <a href="index.html">ホーム</a>
-      <a href="stay.html">ステイ</a>
-      <a href="rental.html">レンタル</a>
-      <a href="shop.html">通販</a>
-      <a href="consulting.html" class="active">コンサル</a>
       <a href="fermentation.html">発酵実践塾</a>
       <a href="philosophy.html">理念</a>
       <a href="curriculum.html">年間カリキュラム</a>
       <a href="courses.html">コース</a>
-      <a href="about.html">主宰者</a>
+      <div class="nav-dropdown current">
+        <a href="about.html" class="nav-dropdown-label">レジオン八ヶ岳</a>
+        <button type="button" class="nav-dropdown-caret" aria-expanded="false" aria-label="サブメニューを開く"><span>&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="stay.html">ステイ</a>
+          <a href="rental.html">レンタル</a>
+          <a href="shop.html">通販</a>
+          <a href="consulting.html" class="active">コンサル</a>
+        </div>
+      </div>
       <a href="contact.html" class="nav-cta">お問い合わせ</a>
     </nav>
     <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">

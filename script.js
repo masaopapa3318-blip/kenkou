@@ -35,6 +35,33 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 });
 
+// Desktop nav dropdown ("レジオン八ヶ岳"): click/keyboard toggle,
+// closes on outside click or Escape. Hover is handled purely by CSS.
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelectorAll(".nav-dropdown").forEach((dropdown) => {
+    const caret = dropdown.querySelector(".nav-dropdown-caret");
+    if (!caret) return;
+
+    const close = () => {
+      dropdown.classList.remove("is-open");
+      caret.setAttribute("aria-expanded", "false");
+    };
+
+    caret.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const isOpen = dropdown.classList.toggle("is-open");
+      caret.setAttribute("aria-expanded", String(isOpen));
+    });
+
+    document.addEventListener("click", (e) => {
+      if (!dropdown.contains(e.target)) close();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") close();
+    });
+  });
+});
+
 // Scroll reveal: fade + rise elements into view as the page is scrolled.
 // Checked directly against each element's position (rather than relying only on
 // IntersectionObserver) so a jump-scroll (End key, scrollbar-track click, anchor

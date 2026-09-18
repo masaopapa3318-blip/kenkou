@@ -144,6 +144,79 @@ a { color: inherit; }
 }
 .main-nav a.active:not(.nav-cta)::after { right: 0; background: var(--clay); }
 
+/* ---------- Nav dropdown ("レジオン八ヶ岳" — stay/rental/shop/consulting) ---------- */
+.nav-dropdown { position: relative; display: flex; align-items: center; gap: 4px; }
+.nav-dropdown-label {
+  text-decoration: none;
+  color: var(--ink-soft);
+  position: relative;
+  padding: 4px 0;
+  white-space: nowrap;
+}
+.nav-dropdown-label:hover { color: var(--forest); }
+.nav-dropdown-label::after {
+  content: "";
+  position: absolute;
+  left: 0; right: 100%;
+  bottom: -2px;
+  height: 1px;
+  background: var(--clay);
+  transition: right .25s ease;
+}
+.nav-dropdown-label:hover::after,
+.nav-dropdown.current .nav-dropdown-label::after { right: 0; }
+.nav-dropdown.current .nav-dropdown-label { color: var(--forest); font-weight: 500; }
+.nav-dropdown.current .nav-dropdown-label::after { background: var(--clay); }
+
+.nav-dropdown-caret {
+  background: none;
+  border: none;
+  padding: 4px;
+  margin: 0;
+  cursor: pointer;
+  color: var(--ink-soft);
+  font-size: 0.65rem;
+  line-height: 1;
+}
+.nav-dropdown-caret:hover { color: var(--forest); }
+.nav-dropdown-caret span { display: inline-block; transition: transform .2s ease; }
+.nav-dropdown.is-open .nav-dropdown-caret span { transform: rotate(180deg); }
+
+.nav-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 8px;
+  min-width: 170px;
+  box-shadow: 0 20px 40px rgba(31,50,39,0.16);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .18s ease, transform .18s ease, visibility .18s;
+  z-index: 700;
+}
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu,
+.nav-dropdown.is-open .nav-dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+.nav-dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.86rem;
+  text-decoration: none;
+  color: var(--ink-soft);
+  white-space: nowrap;
+}
+.nav-dropdown-menu a:hover { background: var(--cream-deep); color: var(--forest); }
+.nav-dropdown-menu a.active { color: var(--forest); font-weight: 500; background: var(--cream-deep); }
+
 .footer-nav a.active { color: #fff; text-decoration: underline; }
 
 .nav-toggle {
@@ -898,7 +971,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .photo-band { height: 320px; }
 }
 
-@media (max-width: 1220px) {
+@media (max-width: 900px) {
   .main-nav {
     position: fixed;
     top: 76px; left: 0; right: 0;
@@ -932,6 +1005,37 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   }
   .main-nav a:last-of-type { border-bottom: none; }
   .nav-cta { margin-top: 10px; text-align: center; }
+
+  /* dropdown becomes a plain, always-expanded grouped section in the mobile menu */
+  .nav-dropdown { width: 100%; display: block; border-top: 1px solid var(--line); margin-top: 4px; padding-top: 4px; }
+  .nav-dropdown-label {
+    display: block;
+    width: 100%;
+    padding: 12px 4px 4px;
+    font-size: 1rem;
+    color: var(--ink-soft);
+  }
+  .nav-dropdown-label::after { display: none; }
+  .nav-dropdown-caret { display: none; }
+  .nav-dropdown-menu {
+    position: static;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0;
+    min-width: 0;
+  }
+  .nav-dropdown-menu a {
+    width: 100%;
+    padding: 16px 4px;
+    border-bottom: 1px solid var(--line);
+    font-size: 1rem;
+    border-radius: 0;
+  }
+  .nav-dropdown-menu a:hover, .nav-dropdown-menu a.active { background: none; }
 
   /* dim backdrop behind the open menu, tap to close */
   .nav-backdrop {
