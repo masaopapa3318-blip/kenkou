@@ -1071,6 +1071,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
+.hub-grid-5 { grid-template-columns: repeat(3, 1fr); }
 .hub-card {
   display: block;
   background: #fff;
