@@ -1026,9 +1026,25 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   display: block;
 }
 .art-item figcaption {
-  padding: 14px 16px;
-  font-size: 0.9rem;
+  padding: 18px 20px 22px;
+}
+.art-item-title {
+  margin: 0 0 12px;
+  font-size: 1.05rem;
   color: var(--forest-deep);
+  font-family: var(--serif);
+  text-align: center;
+}
+.art-item-desc {
+  margin: 0 0 14px;
+  font-size: 0.8rem;
+  line-height: 1.9;
+  color: var(--ink-soft);
+}
+.art-item-price {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--clay);
   font-family: var(--serif);
   text-align: center;
 }
