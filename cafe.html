@@ -1,0 +1,255 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>カフェメニュー｜レジオン八ヶ岳</title>
+<meta name="description" content="café &amp; stay レジオン八ヶ岳「発酵ミネラルカフェ」のメニューご案内。ビーガンバーガー、縄文おむすびセット、グルテンフリーのデザート、オーガニックドリンクなど。" />
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="brand" href="home.html">
+      <span class="brand-kanji">天給自足実践塾</span>
+      <span class="brand-sub">レジオン八ヶ岳</span>
+    </a>
+    <nav class="main-nav" aria-label="主要ナビゲーション">
+      <a href="home.html">ホーム</a>
+      <a href="fermentation.html">醗酵実践塾</a>
+      <a href="philosophy.html">理念</a>
+      <a href="curriculum.html">年間カリキュラム</a>
+      <a href="courses.html">コース</a>
+      <div class="nav-dropdown current">
+        <a href="about.html" class="nav-dropdown-label">レジオン八ヶ岳</a>
+        <button type="button" class="nav-dropdown-caret" aria-expanded="false" aria-label="サブメニューを開く"><span>&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="cafe.html" class="active">カフェ</a>
+          <a href="stay.html">ステイ</a>
+          <a href="rental.html">レンタル</a>
+          <a href="shop.html">通販</a>
+          <a href="consulting.html">コンサル</a>
+        </div>
+      </div>
+      <a href="contact.html" class="nav-cta">お問い合わせ</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="nav-backdrop" id="navBackdrop"></div>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="section-eyebrow">Café Menu</p>
+      <h1>発酵ミネラルカフェ</h1>
+      <p>
+        営業時間　8：30〜16：30（L.O 16：00）<br>
+        朝食・昼食はご予約をお願いいたします。価格は全て税込価格です。
+      </p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="section-eyebrow">Food</p>
+      <h2 class="section-title">フードメニュー</h2>
+
+      <div class="menu-grid">
+        <div class="menu-item reveal">
+          <img src="images/cafe-vegan-burger.jpg" alt="ビーガンバーガーセット。米粉のバンズを使ったハンバーガー">
+          <div class="menu-item-body">
+            <h3>ビーガンバーガーセット <span class="menu-tag">Vegan</span></h3>
+            <p class="menu-item-desc">米粉のバンズ。雑穀ベースのバーガー、発酵マヨネーズ、醤油麹、トマトソース、ビーガンチーズは全て自家製。奥深い味わい。</p>
+            <p class="menu-item-price">単品 1,600円／季節のスープ付き 2,200円</p>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <img src="images/cafe-jomon-onigiri-set.jpg" alt="縄文おむすびセット。発芽発酵玄米のおむすびとスープ、サラダ">
+          <div class="menu-item-body">
+            <h3>縄文おむすびセット <span class="menu-tag">Gluten Free</span><span class="menu-tag">Vegan</span></h3>
+            <p class="menu-item-desc">縄文漬物付き。発芽発酵玄米おむすび、季節のスープ、サラダのセット。</p>
+            <p class="menu-item-price">1,800円</p>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <img src="images/cafe-french-toast-set.jpg" alt="フレンチトーストセット。米粉パンを使ったフレンチトースト">
+          <div class="menu-item-body">
+            <h3>フレンチトーストセット <span class="menu-tag menu-tag--allergen">卵・乳・米</span></h3>
+            <p class="menu-item-desc">米粉パン使用。どこにもない美味しさ。フレンチトーストの概念を変えました！サラダ、飲み物のセット。</p>
+            <p class="menu-item-price">1,500円</p>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <img src="images/cafe-soup-set.jpg" alt="スープセット。季節のスープと米粉パン、サラダ">
+          <div class="menu-item-body">
+            <h3>スープセット <span class="menu-tag">Gluten Free</span><span class="menu-tag">Vegan</span></h3>
+            <p class="menu-item-desc">季節のスープ、サラダ、米粉パンのセット。</p>
+            <p class="menu-item-price">1,600円</p>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <img src="images/cafe-salad-set.jpg" alt="サラダセット。季節の野菜サラダと米粉パン、スープ">
+          <div class="menu-item-body">
+            <h3>サラダセット <span class="menu-tag">Gluten Free</span><span class="menu-tag">Vegan</span></h3>
+            <p class="menu-item-desc">サラダ、季節のスープ、米粉パンのセット。</p>
+            <p class="menu-item-price">1,600円</p>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <img src="images/cafe-jomon-tsukemono.jpg" alt="縄文漬物の盛り合わせ">
+          <div class="menu-item-body">
+            <h3>縄文漬物 盛合せ単品</h3>
+            <p class="menu-item-desc">季節の野菜を使った縄文漬物の盛り合わせ、単品でもご注文いただけます。</p>
+            <p class="menu-item-price">400円</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <p class="section-eyebrow">Dessert</p>
+      <h2 class="section-title">デザート</h2>
+
+      <div class="menu-grid">
+        <div class="menu-item reveal">
+          <img src="images/cafe-choux-cream.jpg" alt="シュークリームメゾン。濃厚なカスタードクリームのシュークリーム">
+          <div class="menu-item-body">
+            <h3>シュークリームメゾン <span class="menu-tag menu-tag--allergen">卵・乳・小麦</span></h3>
+            <p class="menu-item-desc">
+              濃厚カスタードクリームが人気の秘密。カスタードが白っぽいのは、お米を食べて育った健康な鶏の卵を使用しているためです。
+            </p>
+            <p class="menu-item-price">420円</p>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <img src="images/cafe-crepe.jpg" alt="クレープ。三角に折られた米粉のクレープ">
+          <div class="menu-item-body">
+            <h3>クレープ2種</h3>
+            <p class="menu-item-desc">
+              アーモンドと米粉　<span class="menu-tag menu-tag--allergen">卵・乳</span>　960円<br>
+              お米の全粒粉と地粉　<span class="menu-tag menu-tag--allergen">卵・乳・小麦</span>　880円
+            </p>
+          </div>
+        </div>
+
+        <div class="menu-item reveal">
+          <img src="images/cafe-montblanc.jpg" alt="秋冬限定・和栗のモンブラン。人気のデザート">
+          <div class="menu-item-body">
+            <h3>日替わりデザート</h3>
+            <p class="menu-item-desc">
+              期間限定、オリジナルデザートをお楽しみください。秋冬限定・和栗のモンブランは大人気です。
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <p class="curriculum-note">※メニュー・材料は店内のご案内をご覧ください。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <p class="section-eyebrow">Drink</p>
+      <h2 class="section-title">お飲み物メニュー</h2>
+
+      <div class="course-grid">
+        <div class="course-card reveal">
+          <h3>CAFE &amp; TEA　珈琲・紅茶</h3>
+          <table class="price-table">
+            <tr><th>オーガニック珈琲</th><td>690円</td></tr>
+            <tr><th>無農薬紅茶　ダージリン<span class="price-note">ケニア・インドブレンド</span></th><td>660円</td></tr>
+          </table>
+        </div>
+
+        <div class="course-card reveal">
+          <h3>HERB TEA　ハーブティ</h3>
+          <table class="price-table">
+            <tr><th>自家農園ブレンドハーブティ</th><td>550円</td></tr>
+            <tr><th>自家農園フレッシュハーブティ<span class="price-note">夏季限定</span></th><td>550円</td></tr>
+          </table>
+        </div>
+
+        <div class="course-card reveal">
+          <h3>HAKKOU DRINK　醗酵ドリンク</h3>
+          <table class="price-table">
+            <tr><th>自家製甘酒<span class="price-note">ほんのり生姜の香り</span></th><td>690円</td></tr>
+          </table>
+        </div>
+
+        <div class="course-card reveal">
+          <h3>JUICE　ジュース</h3>
+          <table class="price-table">
+            <tr><th>りんご<span class="price-note">信州ふじブレンド</span></th><td>660円</td></tr>
+            <tr><th>ぶどう<span class="price-note">山梨コンコード</span></th><td>660円</td></tr>
+          </table>
+        </div>
+
+        <div class="course-card reveal">
+          <h3>ALCOHOL　アルコール</h3>
+          <table class="price-table">
+            <tr><th>ヴァン・ツーリズム（赤・白）<span class="price-note">スペイン産・オーガニック・酸化防止剤無添加・ビオシーゲル認証／ボトル売り</span></th><td>2,200円</td></tr>
+            <tr><th>信州地ビール</th><td>660円</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <p class="curriculum-note">※価格は全て税込価格です。</p>
+
+      <div class="page-nav">
+        <a href="stay.html">← ステイのご案内</a>
+        <a href="contact.html">お問い合わせへ →</a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <p class="footer-brand">天給自足実践塾</p>
+      <p class="footer-copy">主催：レジオン八ヶ岳（藤巻正夫・藤巻まり子）</p>
+      <p class="footer-copy"><a href="https://regioncafelabo.wixsite.com/mysite" target="_blank" rel="noopener">café&amp;stay レジオン八ヶ岳 本サイトはこちら →</a></p>
+    </div>
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <a href="home.html">ホーム</a>
+      <a href="cafe.html" class="active">カフェ</a>
+      <a href="stay.html">ステイ</a>
+      <a href="rental.html">レンタル</a>
+      <a href="shop.html">通販</a>
+      <a href="consulting.html">コンサル</a>
+      <a href="fermentation.html">醗酵実践塾</a>
+      <a href="kikuimo.html">菊芋活用実践塾</a>
+      <a href="wild-herbs.html">野草の会</a>
+      <a href="mineral-aroma.html">ミネラル＆アロマリトリート</a>
+      <a href="philosophy.html">理念</a>
+      <a href="curriculum.html">年間カリキュラム</a>
+      <a href="courses.html">コース</a>
+      <a href="about.html">主宰者</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+  </div>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -910,6 +910,7 @@ a { color: inherit; }
   gap: 24px;
 }
 .related-grid--four { grid-template-columns: repeat(4, 1fr); }
+.related-grid--five { grid-template-columns: repeat(3, 1fr); }
 .related-card {
   background: #fff;
   border: 1px solid var(--line);
@@ -1030,6 +1031,72 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   color: var(--forest-deep);
   font-family: var(--serif);
   text-align: center;
+}
+
+/* ---------- Menu items (café menu: photo + name/tags/desc/price) ---------- */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+}
+.menu-item {
+  display: flex;
+  gap: 0;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.menu-item img {
+  width: 160px;
+  min-width: 160px;
+  height: auto;
+  object-fit: cover;
+  display: block;
+}
+.menu-item-body {
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.menu-item-body h3 {
+  font-family: var(--serif);
+  font-size: 1.05rem;
+  margin: 0;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.menu-tag {
+  display: inline-block;
+  font-size: 0.68rem;
+  font-family: var(--sans);
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--forest-soft);
+  color: #fff;
+  letter-spacing: 0.03em;
+}
+.menu-tag--allergen { background: var(--clay-soft); }
+.menu-item-desc {
+  font-size: 0.85rem;
+  color: var(--ink-soft);
+  margin: 0;
+  line-height: 1.6;
+}
+.menu-item-price {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--clay);
+  margin: 4px 0 0;
+}
+@media (max-width: 640px) {
+  .menu-grid { grid-template-columns: 1fr; }
+  .menu-item { flex-direction: column; }
+  .menu-item img { width: 100%; height: 180px; }
 }
 
 /* ---------- Photo bands (full-bleed, no frame — ilpleut参考) ---------- */
@@ -1254,7 +1321,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .philosophy-grid { grid-template-columns: 1fr; }
   .course-grid { grid-template-columns: 1fr; }
   .people-grid { grid-template-columns: 1fr; }
-  .related-grid, .related-grid--four { grid-template-columns: 1fr; }
+  .related-grid, .related-grid--four, .related-grid--five { grid-template-columns: 1fr; }
   .contact-grid { grid-template-columns: 1fr; }
   .merit-list { grid-template-columns: 1fr; }
   .hub-grid { grid-template-columns: 1fr; }
