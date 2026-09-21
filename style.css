@@ -79,12 +79,14 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
   height: 76px;
 }
 
 .brand {
   display: flex;
-  flex-direction: column;
+  align-items: baseline;
+  gap: 12px;
   flex-shrink: 0;
   text-decoration: none;
   color: var(--forest-deep);
@@ -98,16 +100,25 @@ a { color: inherit; }
   white-space: nowrap;
 }
 .brand-sub {
-  font-size: 0.66rem;
-  letter-spacing: 0.18em;
-  color: var(--clay);
+  font-family: var(--serif);
+  font-weight: 700;
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+  color: var(--forest-deep);
   white-space: nowrap;
+  padding-left: 12px;
+  border-left: 1px solid var(--line);
+}
+@media (max-width: 420px) {
+  .brand { gap: 6px; }
+  .brand-kanji, .brand-sub { font-size: 0.82rem; }
+  .brand-sub { padding-left: 6px; }
 }
 
 .main-nav {
   display: flex;
   align-items: center;
-  gap: 30px;
+  gap: 16px;
   font-size: 0.86rem;
 }
 .main-nav a {
@@ -1347,7 +1358,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .photo-band { height: 320px; }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1120px) {
   .main-nav {
     position: fixed;
     top: 76px; left: 0; right: 0;
