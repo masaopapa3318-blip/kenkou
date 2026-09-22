@@ -721,6 +721,7 @@ a { color: inherit; }
   grid-template-columns: repeat(3, 1fr);
   gap: 26px;
 }
+.course-grid--four { grid-template-columns: repeat(4, 1fr); }
 .course-card {
   background: #fff;
   border: 1px solid var(--line);
