@@ -462,53 +462,19 @@ a { color: inherit; }
   color: var(--clay-soft);
   margin: 10px 0 0;
 }
-.entrance-logo {
-  width: clamp(220px, 30vw, 340px);
-  height: auto;
-  margin: 4px 0 0;
-  filter: drop-shadow(0 2px 16px rgba(0,0,0,0.35));
-}
-.entrance-captions {
-  position: relative;
-  min-height: clamp(200px, 27vw, 270px);
-  margin-bottom: 22px;
-}
-.entrance-caption {
-  position: absolute;
-  inset: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  opacity: 0;
-  animation: entranceCaptionFade 18s ease-in-out infinite;
-}
-.entrance-caption-eyebrow {
-  font-family: var(--serif);
-  font-weight: 700;
-  font-size: clamp(1.5rem, 3.8vw, 2.1rem);
-  color: var(--clay-soft);
-  margin: 0 0 8px;
-  letter-spacing: 0.06em;
-  text-shadow: 0 2px 20px rgba(0,0,0,0.3);
-}
-.entrance-caption:nth-child(1) { animation-delay: 0s; }
-.entrance-caption:nth-child(2) { animation-delay: 6s; }
-.entrance-caption:nth-child(3) { animation-delay: 12s; }
-@keyframes entranceCaptionFade {
-  0%   { opacity: 0; }
-  5%   { opacity: 1; }
-  28%  { opacity: 1; }
-  33%  { opacity: 0; }
-  100% { opacity: 0; }
-}
 .entrance-lead {
   font-size: 1.08rem;
   line-height: 1.95;
   color: rgba(253,251,245,0.92);
-  margin: 0 0 46px;
+  margin: 0 0 36px;
 }
-.entrance-btn { font-size: 1rem; padding: 17px 42px; }
+.entrance-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.entrance-btn { font-size: 1rem; padding: 17px 36px; }
 @media (max-width: 640px) {
   .entrance-title { letter-spacing: 0.02em; }
   .entrance-lead { font-size: 1rem; }
@@ -516,8 +482,6 @@ a { color: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .entrance-slide { animation: none; opacity: 0; }
   .entrance-slide:first-child { opacity: 1; }
-  .entrance-caption { animation: none; opacity: 0; }
-  .entrance-caption:first-child { opacity: 1; }
   .entrance-content { animation: none; opacity: 1; transform: none; }
 }
 
@@ -952,7 +916,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 /* ---------- Seasons band (index: 八ヶ岳の四季) ---------- */
 .seasons-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
 .season-chip {
@@ -1322,6 +1286,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   gap: 24px;
 }
 .hub-grid-5 { grid-template-columns: repeat(3, 1fr); }
+.hub-grid-4 { grid-template-columns: repeat(4, 1fr); }
 .hub-card {
   display: block;
   background: #fff;
@@ -1351,6 +1316,26 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 }
 .hub-card p { margin: 0 0 18px; color: var(--ink-soft); font-size: 0.92rem; }
 .hub-link { font-size: 0.85rem; color: var(--forest); }
+.hub-card-featured {
+  grid-column: 1 / -1;
+  background: var(--forest-deep);
+  padding: 44px;
+}
+.hub-card-featured:hover { border-color: var(--forest-deep); }
+.hub-card-featured .hub-num { color: var(--clay-soft); }
+.hub-card-featured h3 { color: #fdfbf5; font-size: 1.6rem; }
+.hub-card-featured p { color: rgba(253,251,245,0.85); font-size: 1rem; max-width: 640px; }
+.hub-card-featured .hub-link { color: var(--clay-soft); font-weight: 700; }
+.hub-card-featured-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  letter-spacing: 0.06em;
+  color: var(--forest-deep);
+  background: var(--clay-soft);
+  border-radius: 999px;
+  padding: 4px 14px;
+  margin-bottom: 10px;
+}
 
 /* ---------- Page hero (sub pages) ---------- */
 .page-hero {
