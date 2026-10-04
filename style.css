@@ -1361,6 +1361,38 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 .contact-teaser .section-title { margin-left: auto; margin-right: auto; }
 .contact-teaser .section-lead { margin-left: auto; margin-right: auto; text-align: center; }
 
+/* ---------- Floating LINE QR badge ---------- */
+.line-qr-fixed {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 500;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  background: #fff;
+  border-radius: 14px;
+  padding: 8px;
+  box-shadow: 0 6px 20px rgba(31, 50, 39, 0.22);
+}
+.line-qr-fixed img {
+  display: block;
+  width: 100px;
+  height: 100px;
+  border-radius: 8px;
+}
+.line-qr-fixed span {
+  font-size: 0.68rem;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+@media (max-width: 640px) {
+  .line-qr-fixed { left: 10px; bottom: 10px; padding: 6px; }
+  .line-qr-fixed img { width: 78px; height: 78px; }
+  .line-qr-fixed span { font-size: 0.62rem; }
+}
+
 /* ---------- Breadcrumb-ish page nav (prev/next) ---------- */
 .page-nav {
   display: flex;
