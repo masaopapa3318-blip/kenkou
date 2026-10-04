@@ -1394,6 +1394,15 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .line-qr-fixed { left: 10px; bottom: 10px; padding: 6px; }
   .line-qr-fixed img { width: 78px; height: 78px; }
   .line-qr-fixed span { font-size: 0.62rem; }
+  /* On a phone you can't scan your own screen, so make the tap action explicit */
+  .line-qr-fixed span::after {
+    content: "タップで追加 →";
+    display: block;
+    margin-top: 2px;
+    font-size: 0.6rem;
+    font-weight: 500;
+    color: #06C755;
+  }
 }
 
 /* ---------- Breadcrumb-ish page nav (prev/next) ---------- */
