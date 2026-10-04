@@ -1375,7 +1375,10 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   border-radius: 14px;
   padding: 8px;
   box-shadow: 0 6px 20px rgba(31, 50, 39, 0.22);
+  text-decoration: none;
+  transition: transform .15s ease;
 }
+.line-qr-fixed:hover { transform: translateY(-2px); }
 .line-qr-fixed img {
   display: block;
   width: 100px;
