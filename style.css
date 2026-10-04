@@ -1486,7 +1486,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 .footer-copy { margin: 0 0 4px; font-size: 0.78rem; }
 .footer-copy a { color: var(--clay-soft); text-decoration: underline; }
 .footer-copy a:hover { color: #fff; }
-.footer-nav { display: flex; gap: 22px; font-size: 0.82rem; }
+.footer-nav { display: flex; flex-wrap: wrap; gap: 10px 22px; font-size: 0.82rem; }
 .footer-nav a { text-decoration: none; }
 .footer-nav a:hover { color: #fff; }
 
