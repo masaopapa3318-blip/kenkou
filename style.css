@@ -1678,6 +1678,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   color: var(--clay);
 }
 .recipe-no span { font-size: .9rem; margin-right: 2px; }
+.recipe-title-sub { display: block; font-size: .55em; line-height: 1.5; color: var(--forest-soft); }
 
 .recipe-photo {
   flex: 0 0 auto;
