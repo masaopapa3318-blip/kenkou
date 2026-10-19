@@ -1785,3 +1785,5 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
     print-color-adjust: exact;
   }
 }
+.recipe-ingredients small { font-size: .78em; color: var(--ink-soft); }
+.recipe-pending { margin: 0; font-size: .9rem; color: var(--ink-soft); }
