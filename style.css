@@ -1827,6 +1827,20 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .recipe-use ul { grid-template-columns: 1fr; }
 }
 
+/* 2種類のバリエーションを並べるシート */
+.recipe-body--variants { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.recipe-variant h4 {
+  margin: 12px 0 6px;
+  font-family: var(--sans);
+  font-size: .82rem;
+  font-weight: 500;
+  color: var(--forest);
+  letter-spacing: .1em;
+}
+@media (max-width: 640px) {
+  .recipe-body--variants { grid-template-columns: 1fr; }
+}
+
 @page { size: A4; margin: 0; }
 @media print {
   .recipe-page .site-header,
