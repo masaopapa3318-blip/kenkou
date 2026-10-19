@@ -1614,3 +1614,174 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .timeline-month span { font-size: 1.4rem; }
   .timeline::before { left: 32px; }
 }
+
+/* ---------- 10月レシピ集 (recipes-october.html) — A4 recipe sheets ---------- */
+.recipe-print-btn {
+  margin-top: 22px;
+  padding: 10px 26px;
+  border: 1px solid var(--clay-soft);
+  border-radius: 999px;
+  background: transparent;
+  color: inherit;
+  font-family: var(--sans);
+  font-size: .9rem;
+  cursor: pointer;
+}
+.recipe-print-btn:hover { background: var(--clay); border-color: var(--clay); }
+
+.recipe-book .wrap { display: flex; flex-direction: column; align-items: center; gap: 56px; }
+
+.recipe-sheet {
+  width: 100%;
+  max-width: 210mm;
+  aspect-ratio: 210 / 297;
+  display: flex;
+  flex-direction: column;
+  padding: 14mm 15mm 10mm;
+  background: #fff;
+  border: 1px solid var(--line);
+  box-shadow: 0 18px 40px rgba(43, 38, 32, 0.08);
+}
+
+.recipe-sheet-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: end;
+  gap: 4px 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--forest);
+}
+.recipe-series {
+  grid-column: 1 / -1;
+  margin: 0;
+  font-size: .78rem;
+  letter-spacing: .2em;
+  color: var(--forest-soft);
+}
+.recipe-title {
+  grid-column: 1;
+  grid-row: 2;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 2rem;
+  line-height: 1.4;
+  color: var(--forest-deep);
+}
+.recipe-no {
+  grid-column: 2;
+  grid-row: 2;
+  margin: 0;
+  font-family: var(--serif);
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--clay);
+}
+.recipe-no span { font-size: .9rem; margin-right: 2px; }
+
+.recipe-photo {
+  flex: 0 0 auto;
+  height: 42%;
+  margin: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px dashed var(--clay-soft);
+  border-radius: 10px;
+  background: var(--cream-deep);
+  color: var(--ink-soft);
+  font-size: .8rem;
+  letter-spacing: .3em;
+  overflow: hidden;
+}
+.recipe-photo img { width: 100%; height: 100%; object-fit: cover; }
+
+.recipe-body {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+  gap: 28px;
+}
+.recipe-body h3 {
+  margin: 0 0 10px;
+  padding-left: 10px;
+  border-left: 4px solid var(--clay);
+  font-family: var(--serif);
+  font-size: 1.15rem;
+  color: var(--forest-deep);
+}
+.recipe-ingredients ul { list-style: none; margin: 0; padding: 0; }
+.recipe-ingredients li {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 5px 2px;
+  border-bottom: 1px dotted var(--line);
+  font-size: .95rem;
+}
+.recipe-ingredients li span:last-child { font-weight: 500; white-space: nowrap; }
+
+.recipe-steps ol { list-style: none; margin: 0; padding: 0; counter-reset: step; }
+.recipe-steps li {
+  position: relative;
+  padding: 0 0 12px 38px;
+  font-size: .95rem;
+  line-height: 1.8;
+  counter-increment: step;
+}
+.recipe-steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 2px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--forest);
+  color: #fff;
+  font-size: .85rem;
+  line-height: 26px;
+  text-align: center;
+}
+
+.recipe-sheet-foot {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 8px;
+  border-top: 1px solid var(--line);
+  font-size: .72rem;
+  letter-spacing: .15em;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 640px) {
+  .recipe-sheet { aspect-ratio: auto; padding: 24px 18px 16px; }
+  .recipe-title { font-size: 1.5rem; }
+  .recipe-no { font-size: 1.9rem; }
+  .recipe-photo { height: auto; aspect-ratio: 4 / 3; }
+  .recipe-body { grid-template-columns: 1fr; gap: 20px; }
+}
+
+@page { size: A4; margin: 0; }
+@media print {
+  .recipe-page .site-header,
+  .recipe-page .nav-backdrop,
+  .recipe-page .recipe-hero,
+  .recipe-page .page-nav,
+  .recipe-page .line-qr-fixed,
+  .recipe-page .site-footer,
+  .recipe-page .noise-overlay { display: none !important; }
+  .recipe-page { background: #fff; }
+  .recipe-page .recipe-book { padding: 0; }
+  .recipe-page .recipe-book .wrap { display: block; max-width: none; padding: 0; }
+  .recipe-page .recipe-sheet {
+    width: 210mm;
+    height: 297mm;
+    max-width: none;
+    aspect-ratio: auto;
+    border: 0;
+    box-shadow: none;
+    break-after: page;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
