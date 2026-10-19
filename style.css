@@ -1852,4 +1852,16 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 }
 .recipe-ingredients small { font-size: .78em; color: var(--ink-soft); }
 .recipe-ingredients small.note-block { display: block; line-height: 1.4; }
+.recipe-ingredients li.recipe-group {
+  display: block;
+  margin-top: 10px;
+  padding: 2px 8px;
+  border-bottom: 0;
+  border-radius: 4px;
+  background: var(--cream-deep);
+  font-size: .8rem;
+  font-weight: 500;
+  color: var(--forest);
+}
+.recipe-ingredients li.recipe-group:first-child { margin-top: 0; }
 .recipe-pending { margin: 0; font-size: .9rem; color: var(--ink-soft); }
