@@ -1645,7 +1645,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 
 .recipe-sheet-head {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: end;
   gap: 4px 16px;
   padding-bottom: 12px;
@@ -1665,6 +1665,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   font-family: var(--serif);
   font-size: 2rem;
   line-height: 1.4;
+  white-space: nowrap;
   color: var(--forest-deep);
 }
 .recipe-no {
@@ -1754,9 +1755,11 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 }
 
 @media (max-width: 640px) {
-  .recipe-sheet { aspect-ratio: auto; padding: 24px 18px 16px; }
-  .recipe-title { font-size: 1.5rem; }
-  .recipe-no { font-size: 1.9rem; }
+  .recipe-book .wrap { padding: 0 12px; }
+  .recipe-sheet { aspect-ratio: auto; padding: 24px 16px 16px; }
+  .recipe-series { grid-column: 1; align-self: end; }
+  .recipe-title { grid-column: 1 / -1; font-size: 1.5rem; }
+  .recipe-no { grid-row: 1; font-size: 1.9rem; }
   .recipe-photo { height: auto; aspect-ratio: 4 / 3; }
   .recipe-body { grid-template-columns: 1fr; gap: 20px; }
 }

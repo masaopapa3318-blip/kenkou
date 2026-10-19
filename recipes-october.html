@@ -328,6 +328,24 @@
   </div>
 </footer>
 
+<script>
+  // レシピ名を1行に収める：はみ出す場合だけ文字を縮める
+  function fitRecipeTitles() {
+    document.querySelectorAll('.recipe-title').forEach(function (el) {
+      el.style.fontSize = '';
+      var size = parseFloat(getComputedStyle(el).fontSize);
+      while (el.scrollWidth > el.clientWidth && size > 12) {
+        size -= 1;
+        el.style.fontSize = size + 'px';
+      }
+    });
+  }
+  fitRecipeTitles();
+  if (document.fonts) document.fonts.ready.then(fitRecipeTitles);
+  window.addEventListener('resize', fitRecipeTitles);
+  window.addEventListener('beforeprint', fitRecipeTitles);
+  window.addEventListener('afterprint', fitRecipeTitles);
+</script>
 <script src="script.js"></script>
 </body>
 </html>
