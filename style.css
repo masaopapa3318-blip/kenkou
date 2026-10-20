@@ -1700,6 +1700,20 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 /* 縦長の写真は切らずに全体を見せ、左右を背景色で埋める */
 .recipe-photo.has-photo.is-portrait { background: var(--cream-deep); }
 .recipe-photo.is-portrait img { object-fit: contain; }
+/* 2枚の写真を左右に並べる（バリエーションのあるシート用） */
+.recipe-photo.is-pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.recipe-photo.is-pair figure { position: relative; margin: 0; height: 100%; overflow: hidden; border-radius: 10px; }
+.recipe-photo.is-pair figcaption {
+  position: absolute;
+  left: 10px;
+  bottom: 10px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  background: rgba(31, 50, 39, 0.78);
+  color: #fff;
+  font-size: .78rem;
+  letter-spacing: .1em;
+}
 
 .recipe-body {
   flex: 1;
