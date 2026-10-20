@@ -1882,3 +1882,12 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 }
 .recipe-ingredients li.recipe-group:first-child { margin-top: 0; }
 .recipe-pending { margin: 0; font-size: .9rem; color: var(--ink-soft); }
+.recipe-tip {
+  margin: 6px 0 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: var(--cream);
+  font-size: .86rem;
+  line-height: 1.7;
+}
+.recipe-tip::before { content: "ひとこと"; margin-right: 8px; font-size: .75rem; font-weight: 500; color: var(--clay); }
