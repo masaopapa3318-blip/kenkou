@@ -1859,6 +1859,15 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .recipe-body--variants { grid-template-columns: 1fr; }
 }
 
+/* 材料・手順が特に多いシート：写真を小さめにし、行間を詰めて A4 に収める */
+.recipe-sheet--long .recipe-photo { height: 24%; }
+.recipe-sheet--long .recipe-ingredients li { padding: 3px 2px; font-size: .88rem; }
+.recipe-sheet--long .recipe-ingredients li.recipe-group { margin-top: 6px; }
+.recipe-sheet--long .recipe-steps li { padding-bottom: 8px; font-size: .9rem; line-height: 1.7; }
+@media (max-width: 640px) {
+  .recipe-sheet--long .recipe-photo { height: auto; }
+}
+
 @page { size: A4; margin: 0; }
 @media print {
   .recipe-page .site-header,
