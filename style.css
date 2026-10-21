@@ -1868,6 +1868,23 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   .recipe-sheet--long .recipe-photo { height: auto; }
 }
 
+/* 3種類を並べるシート（おむすび三種など） */
+.recipe-body--variants3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.recipe-body--variants3 .recipe-variant h3 { font-size: 1rem; }
+.recipe-body--variants3 .recipe-ingredients li { font-size: .86rem; }
+.recipe-body--variants3 .recipe-steps li { font-size: .88rem; }
+.recipe-common {
+  margin: 0 0 14px;
+  padding: 8px 14px;
+  border-radius: 8px;
+  background: var(--cream);
+  font-size: .9rem;
+}
+.recipe-common span { margin-right: 10px; font-size: .78rem; font-weight: 500; color: var(--clay); }
+@media (max-width: 640px) {
+  .recipe-body--variants3 { grid-template-columns: 1fr; }
+}
+
 @page { size: A4; margin: 0; }
 @media print {
   .recipe-page .site-header,
