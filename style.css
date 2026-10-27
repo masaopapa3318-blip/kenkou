@@ -1026,6 +1026,34 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   text-align: center;
 }
 
+/* ---------- Video gallery (curriculum.html: 稲刈り・きのこ狩りの様子) ---------- */
+.video-gallery-group { margin-top: 28px; }
+.video-gallery-label {
+  font-family: var(--serif);
+  font-size: 1rem;
+  color: var(--forest-deep);
+  margin: 0 0 14px;
+}
+.video-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+}
+.video-item {
+  margin: 0;
+  background: #000;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+.video-item video {
+  width: 100%;
+  aspect-ratio: 9 / 16;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
 /* ---------- Shop: product cards (shop.html) ---------- */
 .product-intro {
   background: var(--cream-deep);
