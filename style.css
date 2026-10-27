@@ -475,9 +475,52 @@ a { color: inherit; }
   flex-wrap: wrap;
 }
 .entrance-btn { font-size: 1rem; padding: 17px 36px; }
+
+.entrance-quicklinks {
+  margin-top: 28px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255,255,255,0.18);
+}
+.entrance-quicklinks-label {
+  display: block;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  color: rgba(253,251,245,0.6);
+  margin-bottom: 12px;
+}
+.entrance-quicklinks-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.entrance-quicklinks-row a {
+  font-size: 0.82rem;
+  color: rgba(253,251,245,0.92);
+  text-decoration: none;
+  border: 1px solid rgba(255,255,255,0.32);
+  border-radius: 999px;
+  padding: 8px 18px;
+  transition: background .15s ease, border-color .15s ease;
+}
+.entrance-quicklinks-row a:hover {
+  background: rgba(255,255,255,0.12);
+  border-color: rgba(255,255,255,0.55);
+}
 @media (max-width: 640px) {
   .entrance-title { letter-spacing: 0.02em; }
   .entrance-lead { font-size: 1rem; }
+  .entrance-quicklinks { margin-top: 20px; padding-top: 16px; }
+  .entrance-quicklinks-row a { font-size: 0.76rem; padding: 7px 14px; }
+  /* Content can run taller than one screen here, so top-align and let it
+     scroll instead of being clipped/centered. */
+  .entrance-hero { align-items: flex-start; overflow-y: auto; padding: 70px 0 40px; }
+  .entrance-content { margin: 0 auto; }
+  /* Reserve the LINE QR badge's footprint (bottom-left, ~100px wide) so a
+     pill can never land under it, independent of scroll position or
+     viewport height — relying on vertical scroll math alone isn't reliable
+     since this content can be shorter OR taller than the viewport. */
+  .entrance-quicklinks-row { padding-left: 110px; justify-content: flex-start; }
 }
 @media (prefers-reduced-motion: reduce) {
   .entrance-slide { animation: none; opacity: 0; }
@@ -1403,6 +1446,13 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
     font-weight: 500;
     color: #06C755;
   }
+}
+@media (max-height: 760px) {
+  /* The entrance page has no header, so on short viewports its badge can
+     safely move to the top-right, clear of the centered hero content.
+     Scoped to the entrance page only — other pages have a hamburger menu
+     in that corner the badge must not collide with instead. */
+  .line-qr-fixed--entrance { left: auto; right: 10px; top: 10px; bottom: auto; }
 }
 
 /* ---------- Breadcrumb-ish page nav (prev/next) ---------- */
