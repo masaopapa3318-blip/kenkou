@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>統合マインドマップ｜天給自足実践塾</title>
+<meta name="description" content="複数のマインドマップをひとつの大きなくくりで連携させた、天給自足実践塾の統合マインドマップ。" />
+<meta name="robots" content="noindex" />
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;700&family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<style>
+  .mm-toolbar { display:flex; flex-wrap:wrap; gap:8px; align-items:center; margin-bottom:14px; }
+  .mm-tab {
+    border:1px solid var(--line); background:#fff; color:var(--ink);
+    padding:8px 14px; border-radius:999px; font:500 0.9rem var(--sans); cursor:pointer;
+  }
+  .mm-tab[aria-pressed="true"] { background:var(--forest); color:#fdfbf5; border-color:var(--forest); }
+  .mm-tab .dot { display:inline-block; width:9px; height:9px; border-radius:50%; margin-right:6px; vertical-align:middle; }
+  .mm-tools { display:flex; flex-wrap:wrap; gap:8px; margin-bottom:14px; }
+  .mm-tools button, .mm-tools label {
+    border:1px solid var(--line); background:var(--cream-deep); color:var(--ink);
+    padding:6px 12px; border-radius:10px; font:400 0.85rem var(--sans); cursor:pointer;
+    display:inline-flex; align-items:center; gap:6px;
+  }
+  .mm-tools input[type="search"] {
+    border:1px solid var(--line); border-radius:10px; padding:6px 12px; font:400 0.9rem var(--sans);
+    min-width:0; flex:1 1 180px; max-width:280px; background:#fff;
+  }
+  .mm-stage {
+    position:relative; border:1px solid var(--line); border-radius:var(--radius);
+    background:#fffdf8; height:min(72vh, 680px); overflow:hidden; touch-action:none;
+  }
+  .mm-stage svg { width:100%; height:100%; display:block; cursor:grab; user-select:none; }
+  .mm-stage svg.dragging { cursor:grabbing; }
+  .mm-edge { fill:none; stroke-width:2; opacity:.55; }
+  .mm-xlink { fill:none; stroke:var(--clay); stroke-width:2; stroke-dasharray:6 5; opacity:.8; }
+  .mm-xlink-label { font:500 11px var(--sans); fill:var(--clay); paint-order:stroke; stroke:#fffdf8; stroke-width:4px; }
+  .mm-node { cursor:pointer; }
+  .mm-node rect { stroke-width:1.5; }
+  .mm-node text { font-family:var(--sans); font-size:13px; fill:var(--ink); dominant-baseline:central; }
+  .mm-node.hub text { font-family:var(--serif); font-weight:700; font-size:16px; fill:#fdfbf5; }
+  .mm-node.root text { font-weight:700; font-size:14px; }
+  .mm-node .toggle { font-size:11px; fill:var(--ink-soft); }
+  .mm-node.dim { opacity:.25; }
+  .mm-node.hit rect { stroke:var(--clay) !important; stroke-width:3; }
+  .mm-node.selected rect { stroke:var(--forest-deep) !important; stroke-width:3; }
+  @media (max-width: 600px) { .mm-stage { height:62vh; } }
+  .mm-detail {
+    margin-top:16px; border:1px solid var(--line); border-radius:var(--radius);
+    background:#fff; padding:18px 20px; min-height:80px;
+  }
+  .mm-detail h3 { font-family:var(--serif); margin:0 0 6px; font-size:1.2rem; color:var(--forest-deep); }
+  .mm-detail .crumb { font-size:.8rem; color:var(--ink-soft); margin:0 0 10px; }
+  .mm-detail ul { margin:8px 0 0; padding-left:1.2em; }
+  .mm-detail button.linkjump { background:none; border:0; color:var(--clay); cursor:pointer; padding:0; font:500 .95rem var(--sans); text-decoration:underline; }
+  .mm-legend { display:flex; flex-wrap:wrap; gap:16px; font-size:.82rem; color:var(--ink-soft); margin-top:10px; }
+  .mm-legend span::before { content:""; display:inline-block; width:22px; height:0; border-top:2px solid var(--forest-soft); vertical-align:middle; margin-right:6px; }
+  .mm-legend span.x::before { border-top:2px dashed var(--clay); }
+  .mm-list { columns:2 280px; column-gap:28px; }
+  .mm-list section { break-inside:avoid; margin-bottom:22px; }
+  .mm-list h3 { font-family:var(--serif); margin:0 0 6px; }
+  .mm-list ul { margin:0; padding-left:1.2em; }
+  .mm-list li { margin:2px 0; }
+  .mm-list .xl { color:var(--clay); font-size:.85em; }
+</style>
+</head>
+<body>
+
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<header class="site-header" id="top">
+  <div class="wrap header-inner">
+    <a class="brand" href="home.html">
+      <span class="brand-kanji">レジオン八ヶ岳</span>
+      <span class="brand-sub">天給自足実践塾</span>
+    </a>
+    <nav class="main-nav" aria-label="主要ナビゲーション">
+      <div class="nav-dropdown">
+        <a href="about.html" class="nav-dropdown-label">レジオン八ヶ岳</a>
+        <button type="button" class="nav-dropdown-caret" aria-expanded="false" aria-label="サブメニューを開く"><span>&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="about.html">レジオン八ヶ岳について</a>
+          <a href="cafe.html">カフェ</a>
+          <a href="stay.html">ステイ</a>
+          <a href="rental.html">レンタル</a>
+          <a href="shop.html">通販</a>
+          <a href="consulting.html">コンサル</a>
+          <a href="about.html#gallery">ギャラリー</a>
+          <a href="schedule.html">休日、休館カレンダー</a>
+        </div>
+      </div>
+      <a href="philosophy.html">天給自足実践塾</a>
+      <a href="home.html">ホーム</a>
+      <div class="nav-dropdown">
+        <a href="fermentation.html" class="nav-dropdown-label">醗酵実践塾・その他塾</a>
+        <button type="button" class="nav-dropdown-caret" aria-expanded="false" aria-label="サブメニューを開く"><span>&#9662;</span></button>
+        <div class="nav-dropdown-menu">
+          <a href="fermentation.html">醗酵実践塾</a>
+          <a href="kikuimo.html">菊芋活用実践塾</a>
+          <a href="wild-herbs.html">野草の会</a>
+          <a href="mineral-aroma.html">四季を楽しむ実践リトリート</a>
+        </div>
+      </div>
+      <a href="curriculum.html">年間カリキュラム</a>
+      <a href="courses.html">コース</a>
+      <a href="contact.html" class="nav-cta">お問い合わせ</a>
+    </nav>
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開く" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+<div class="nav-backdrop" id="navBackdrop"></div>
+
+<main>
+
+  <section class="page-hero">
+    <div class="wrap">
+      <p class="section-eyebrow">Integrated Mind Map</p>
+      <h1>統合マインドマップ</h1>
+      <p>いくつものマインドマップを、ひとつの大きなくくりの中でつなげて見るためのページです。
+        枝をタップすると開閉し、点線は別のマップどうしの「つながり（連携）」を表します。</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="mm-toolbar" id="mmTabs" role="group" aria-label="表示するマップ"></div>
+      <div class="mm-tools">
+        <input type="search" id="mmSearch" placeholder="キーワードで探す" aria-label="キーワードで探す">
+        <button type="button" id="mmExpand">すべて開く</button>
+        <button type="button" id="mmCollapse">たたむ</button>
+        <button type="button" id="mmFit">全体を表示</button>
+        <button type="button" id="mmZoomIn" aria-label="拡大">＋</button>
+        <button type="button" id="mmZoomOut" aria-label="縮小">－</button>
+        <label><input type="checkbox" id="mmShowLinks" checked> つながりを表示</label>
+      </div>
+      <div class="mm-stage">
+        <svg id="mmSvg" aria-label="統合マインドマップ" role="img"><g id="mmViewport"></g></svg>
+      </div>
+      <div class="mm-legend"><span>マップ内の枝</span><span class="x">マップ間のつながり</span></div>
+      <div class="mm-detail" id="mmDetail" aria-live="polite">
+        <p style="margin:0; color:var(--ink-soft);">項目をタップすると、ここに説明と「つながっている項目」が表示されます。</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="wrap">
+      <p class="section-eyebrow">Outline</p>
+      <h2 class="section-title">マップ一覧（文字で見る）</h2>
+      <div class="mm-list" id="mmList"></div>
+    </div>
+  </section>
+
+</main>
+
+<a class="line-qr-fixed" href="https://lin.ee/zMekybB" target="_blank" rel="noopener" aria-label="公式LINEを友だち追加">
+  <img src="images/line-qr-code.png" alt="公式LINEのQRコード">
+  <span>公式LINE</span>
+</a>
+
+<footer class="site-footer">
+  <div class="wrap footer-inner">
+    <div>
+      <p class="footer-brand">天給自足実践塾</p>
+      <p class="footer-copy">主催：レジオン八ヶ岳（藤巻正夫・藤巻まり子）</p>
+    </div>
+    <nav class="footer-nav" aria-label="フッターナビゲーション">
+      <a href="home.html">ホーム</a>
+      <a href="philosophy.html">理念</a>
+      <a href="curriculum.html">年間カリキュラム</a>
+      <a href="courses.html">コース</a>
+      <a href="contact.html">お問い合わせ</a>
+    </nav>
+  </div>
+</footer>
+
+<script>
+/* =====================================================================
+   マインドマップのデータ
+   ---------------------------------------------------------------------
+   ・MINDMAPS にマップを1つずつ追加していきます。
+     { id, title, color, children:[ {id, label, note, children:[...]} ] }
+     id はページ全体で重ならない半角英数字にしてください。
+   ・LINKS に「マップどうしのつながり（連携）」を書きます。
+     { from:"項目id", to:"項目id", label:"つながりの説明" }
+   ※ 現在の内容は、届いたマインドマップに差し替えるまでの仮のものです。
+   ===================================================================== */
+const HUB = { id: "hub", label: "天給自足 統合マップ", note: "すべてのマインドマップをまとめる中心です。" };
+
+const MINDMAPS = [
+  {
+    id: "tenkyu", title: "天給自足実践塾", color: "#2f4a3a",
+    note: "（仮）理念ページの内容から作成したサンプルです。",
+    children: [
+      { id: "tenkyu-nou", label: "自然農", children: [
+        { id: "tenkyu-potager", label: "ポタジェ（キッチンガーデン）" },
+        { id: "tenkyu-mikiwame", label: "自然の恵みの見極め" },
+      ]},
+      { id: "tenkyu-kakou", label: "加工＆調理", children: [
+        { id: "tenkyu-gf", label: "グルテンフリー菓子・米パン" },
+        { id: "tenkyu-bichiku", label: "無添加の食作りと備蓄" },
+      ]},
+      { id: "tenkyu-kenkou", label: "老けない・病まない・飢えない", note: "家族の健康を見つめ直す生き方。" },
+    ]
+  },
+  {
+    id: "hakko", title: "醗酵実践塾", color: "#b9713a",
+    note: "（仮）サンプルです。",
+    children: [
+      { id: "hakko-koji", label: "麹づくり" },
+      { id: "hakko-miso", label: "味噌・調味料" },
+      { id: "hakko-seikatsu", label: "醗酵生活（委ねる・待つ・信じる）" },
+    ]
+  },
+  {
+    id: "yasou", title: "野草の会", color: "#6b8f4e",
+    note: "（仮）サンプルです。",
+    children: [
+      { id: "yasou-shiki", label: "四季の野草" },
+      { id: "yasou-ryouri", label: "野草料理" },
+    ]
+  },
+];
+
+const LINKS = [
+  { from: "tenkyu-bichiku", to: "hakko-miso", label: "醗酵食で備蓄" },
+  { from: "tenkyu-mikiwame", to: "yasou-shiki", label: "見極める力" },
+  { from: "yasou-ryouri", to: "hakko-koji", label: "野草×醗酵" },
+];
+
+/* ===================================================================== */
+(() => {
+  const svg = document.getElementById("mmSvg");
+  const vp = document.getElementById("mmViewport");
+  const NS = "http://www.w3.org/2000/svg";
+  const detail = document.getElementById("mmDetail");
+  const showLinksBox = document.getElementById("mmShowLinks");
+
+  // ---- build tree with parent pointers ----
+  const byId = new Map();
+  function prep(node, parent, mapId, color, depth) {
+    node.parent = parent; node.mapId = mapId; node.color = color; node.depth = depth;
+    node.children = node.children || [];
+    if (byId.has(node.id)) console.warn("重複したid:", node.id);
+    byId.set(node.id, node);
+    node.children.forEach(c => prep(c, node, mapId, color, depth + 1));
+  }
+  const hub = Object.assign({}, HUB, { children: MINDMAPS.map(m => ({ id: m.id, label: m.title, note: m.note, children: m.children })) });
+  prep(hub, null, null, "#1f3227", 0);
+  hub.children.forEach((r, i) => { const m = MINDMAPS[i]; (function set(n){ n.mapId = m.id; n.color = m.color; n.children.forEach(set); })(r); });
+  const links = LINKS.filter(l => byId.has(l.from) && byId.has(l.to));
+  LINKS.forEach(l => { if (!byId.has(l.from) || !byId.has(l.to)) console.warn("つながり先が見つかりません:", l); });
+
+  let focus = "all";            // "all" or a map id
+  let selected = null;
+  const collapsed = new Set();  // collapsed node ids
+  hub.children.forEach(r => r.children.forEach(c => { if (c.children.length) collapsed.add(c.id); }));
+
+  // ---- text measuring ----
+  const ctx = document.createElement("canvas").getContext("2d");
+  const width = (n) => {
+    ctx.font = (n.depth === 0 ? "700 16px 'Shippori Mincho'" : n.depth === 1 ? "700 14px 'Noto Sans JP'" : "400 13px 'Noto Sans JP'");
+    return Math.ceil(ctx.measureText(n.label).width) + (n.children.length && n.depth ? 40 : 24);
+  };
+
+  // ---- layout (left→right tidy tree) ----
+  const ROW = 40, GAP = 56;
+  function visibleChildren(n) { return collapsed.has(n.id) ? [] : n.children; }
+  function layout(root) {
+    const colX = [];
+    const maxW = [];
+    (function w(n){ n.w = width(n); maxW[n.depth] = Math.max(maxW[n.depth] || 0, n.w); visibleChildren(n).forEach(w); })(root);
+    colX[root.depth] = 0;
+    for (let d = root.depth + 1; d < maxW.length; d++) colX[d] = colX[d-1] + maxW[d-1] + GAP;
+    let leaf = 0;
+    (function place(n){
+      n.x = colX[n.depth];
+      const kids = visibleChildren(n);
+      if (!kids.length) { n.y = leaf++ * ROW; return; }
+      kids.forEach(place);
+      n.y = (kids[0].y + kids[kids.length-1].y) / 2;
+    })(root);
+  }
+
+  function visibleOf(n) {
+    while (n) {
+      let p = n.parent, ok = true;
+      for (let a = p; a; a = a.parent) if (collapsed.has(a.id)) { ok = false; break; }
+      if (ok && (focus === "all" || n.mapId === focus)) return n;
+      n = n.parent;
+    }
+    return null;
+  }
+
+  function el(tag, attrs, parent) {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (parent) parent.appendChild(e);
+    return e;
+  }
+
+  const query = () => document.getElementById("mmSearch").value.trim();
+
+  function render() {
+    vp.innerHTML = "";
+    const root = focus === "all" ? hub : byId.get(focus);
+    layout(root);
+    const gEdges = el("g", {}, vp), gX = el("g", {}, vp), gNodes = el("g", {}, vp);
+    const q = query();
+
+    (function draw(n){
+      const kids = visibleChildren(n);
+      kids.forEach(c => {
+        const x1 = n.x + n.w, y1 = n.y, x2 = c.x, y2 = c.y, mx = (x1 + x2) / 2;
+        el("path", { d:`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`, class:"mm-edge", stroke:c.color }, gEdges);
+        draw(c);
+      });
+      const isHub = n.depth === 0, isRoot = n.depth === 1;
+      const g = el("g", { class:"mm-node" + (isHub ? " hub" : isRoot ? " root" : ""), transform:`translate(${n.x},${n.y})`, tabindex:"0", role:"button", "aria-label":n.label }, gNodes);
+      if (q) g.classList.add(n.label.includes(q) || (n.note || "").includes(q) ? "hit" : "dim");
+      if (selected === n.id) g.classList.add("selected");
+      const h = isHub ? 40 : isRoot ? 32 : 28;
+      el("rect", { x:0, y:-h/2, width:n.w, height:h, rx:h/2,
+        fill: isHub ? "#1f3227" : isRoot ? n.color + "22" : "#fff",
+        stroke: n.color }, g);
+      const t = el("text", { x:12, y:0 }, g); t.textContent = n.label;
+      if (n.children.length && !isHub) {
+        const s = el("text", { x:n.w - 18, y:0, class:"toggle" }, g);
+        s.textContent = collapsed.has(n.id) ? "＋" : "－";
+      }
+      g.addEventListener("click", (e) => { e.stopPropagation(); onNode(n); });
+      g.addEventListener("keydown", (e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onNode(n); } });
+    })(root);
+
+    if (showLinksBox.checked) {
+      links.forEach(l => {
+        const a = visibleOf(byId.get(l.from)), b = visibleOf(byId.get(l.to));
+        if (!a || !b || a === b || a.x === undefined || b.x === undefined) return;
+        const ax = a.x + a.w, ay = a.y, bx = b.x + b.w, by = b.y;
+        const bend = 80 + Math.abs(ay - by) * 0.25;
+        const cx = Math.max(ax, bx) + bend;
+        el("path", { d:`M${ax},${ay} C${cx},${ay} ${cx},${by} ${bx},${by}`, class:"mm-xlink" }, gX);
+        if (l.label) {
+          const lt = el("text", { x:(ax + 6 * cx + bx) / 8 + 4, y:(ay + by) / 2, class:"mm-xlink-label" }, gX);
+          lt.textContent = l.label;
+        }
+      });
+    }
+    applyView();
+  }
+
+  function onNode(n) {
+    if (n.children.length && n.depth > 0) {
+      if (collapsed.has(n.id)) collapsed.delete(n.id); else collapsed.add(n.id);
+    }
+    selected = n.id;
+    showDetail(n);
+    render();
+  }
+
+  function path(n) { const p = []; for (let a = n; a; a = a.parent) p.unshift(a.label); return p.join(" › "); }
+
+  function showDetail(n) {
+    const rel = links.filter(l => l.from === n.id || l.to === n.id);
+    detail.innerHTML = "";
+    const h = document.createElement("h3"); h.textContent = n.label; detail.appendChild(h);
+    const c = document.createElement("p"); c.className = "crumb"; c.textContent = path(n); detail.appendChild(c);
+    if (n.note) { const p = document.createElement("p"); p.style.margin = "0"; p.textContent = n.note; detail.appendChild(p); }
+    if (rel.length) {
+      const t = document.createElement("p"); t.style.margin = "12px 0 0"; t.innerHTML = "<strong>つながっている項目</strong>"; detail.appendChild(t);
+      const ul = document.createElement("ul");
+      rel.forEach(l => {
+        const other = byId.get(l.from === n.id ? l.to : l.from);
+        const li = document.createElement("li");
+        const b = document.createElement("button"); b.className = "linkjump"; b.textContent = other.label;
+        b.addEventListener("click", () => jumpTo(other.id));
+        li.appendChild(b);
+        li.append(`（${byId.get(other.mapId).label}${l.label ? "／" + l.label : ""}）`);
+        ul.appendChild(li);
+      });
+      detail.appendChild(ul);
+    }
+  }
+
+  function jumpTo(id) {
+    const n = byId.get(id);
+    for (let a = n.parent; a; a = a.parent) collapsed.delete(a.id);
+    if (focus !== "all" && focus !== n.mapId) setFocus("all", false);
+    selected = id; showDetail(n); render();
+    centerOn(n);
+  }
+
+  // ---- pan / zoom ----
+  let view = { x: 20, y: 0, k: 1 };
+  function applyView() { vp.setAttribute("transform", `translate(${view.x},${view.y}) scale(${view.k})`); }
+  function fit() {
+    const bb = vp.getBBox(), r = svg.getBoundingClientRect();
+    if (!bb.width || !r.width) return;
+    const k = Math.min(1.4, (r.width - 40) / bb.width, (r.height - 40) / bb.height);
+    view.k = Math.max(r.width < 600 ? 0.55 : 0.2, k);
+    view.x = bb.width * view.k > r.width - 40 ? 20 - bb.x * view.k : (r.width - bb.width * view.k) / 2 - bb.x * view.k;
+    view.y = (r.height - bb.height * view.k) / 2 - bb.y * view.k;
+    applyView();
+  }
+  function centerOn(n) {
+    const r = svg.getBoundingClientRect();
+    view.x = r.width / 2 - (n.x + n.w / 2) * view.k;
+    view.y = r.height / 2 - n.y * view.k;
+    applyView();
+  }
+  function zoom(f, cx, cy) {
+    const r = svg.getBoundingClientRect();
+    cx = cx ?? r.width / 2; cy = cy ?? r.height / 2;
+    const k = Math.min(3, Math.max(0.2, view.k * f));
+    view.x = cx - (cx - view.x) * (k / view.k);
+    view.y = cy - (cy - view.y) * (k / view.k);
+    view.k = k; applyView();
+  }
+  svg.addEventListener("wheel", (e) => {
+    e.preventDefault();
+    const r = svg.getBoundingClientRect();
+    zoom(e.deltaY < 0 ? 1.12 : 1 / 1.12, e.clientX - r.left, e.clientY - r.top);
+  }, { passive: false });
+
+  const pts = new Map(); let last = null, pinch = null;
+  svg.addEventListener("pointerdown", (e) => {
+    if (e.target.closest(".mm-node")) return;
+    svg.setPointerCapture(e.pointerId);
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    svg.classList.add("dragging");
+  });
+  svg.addEventListener("pointermove", (e) => {
+    if (!pts.has(e.pointerId)) return;
+    const prev = pts.get(e.pointerId);
+    pts.set(e.pointerId, { x: e.clientX, y: e.clientY });
+    if (pts.size === 2) {
+      const [a, b] = [...pts.values()];
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (pinch) { const r = svg.getBoundingClientRect(); zoom(d / pinch, (a.x + b.x) / 2 - r.left, (a.y + b.y) / 2 - r.top); }
+      pinch = d; return;
+    }
+    view.x += e.clientX - prev.x; view.y += e.clientY - prev.y; applyView();
+  });
+  const end = (e) => { pts.delete(e.pointerId); pinch = null; if (!pts.size) svg.classList.remove("dragging"); };
+  svg.addEventListener("pointerup", end); svg.addEventListener("pointercancel", end);
+
+  // ---- tabs ----
+  const tabs = document.getElementById("mmTabs");
+  function setFocus(id, doRender = true) {
+    focus = id;
+    tabs.querySelectorAll(".mm-tab").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.id === id)));
+    if (doRender) { render(); fit(); }
+  }
+  const mkTab = (id, label, color) => {
+    const b = document.createElement("button");
+    b.type = "button"; b.className = "mm-tab"; b.dataset.id = id;
+    b.innerHTML = color ? `<span class="dot" style="background:${color}"></span>` : "";
+    b.append(label);
+    b.addEventListener("click", () => setFocus(id));
+    tabs.appendChild(b);
+  };
+  mkTab("all", "全体（統合）");
+  MINDMAPS.forEach(m => mkTab(m.id, m.title, m.color));
+
+  // ---- tools ----
+  document.getElementById("mmExpand").onclick = () => { collapsed.clear(); render(); fit(); };
+  document.getElementById("mmCollapse").onclick = () => {
+    collapsed.clear(); hub.children.forEach(r => r.children.forEach(c => { if (c.children.length) collapsed.add(c.id); }));
+    render(); fit();
+  };
+  document.getElementById("mmFit").onclick = fit;
+  document.getElementById("mmZoomIn").onclick = () => zoom(1.2);
+  document.getElementById("mmZoomOut").onclick = () => zoom(1 / 1.2);
+  showLinksBox.onchange = render;
+  document.getElementById("mmSearch").addEventListener("input", () => {
+    const q = query();
+    if (q) byId.forEach(n => { if (n.label.includes(q) || (n.note || "").includes(q)) for (let a = n.parent; a; a = a.parent) collapsed.delete(a.id); });
+    render();
+  });
+
+  // ---- outline list ----
+  const list = document.getElementById("mmList");
+  MINDMAPS.forEach(m => {
+    const sec = document.createElement("section");
+    const h = document.createElement("h3"); h.textContent = m.title; h.style.color = m.color; sec.appendChild(h);
+    const build = (nodes) => {
+      const ul = document.createElement("ul");
+      nodes.forEach(n => {
+        const li = document.createElement("li"); li.textContent = n.label;
+        links.filter(l => l.from === n.id || l.to === n.id).forEach(l => {
+          const o = byId.get(l.from === n.id ? l.to : l.from);
+          const s = document.createElement("span"); s.className = "xl"; s.textContent = ` ⇄ ${o.label}`; li.appendChild(s);
+        });
+        if (n.children.length) li.appendChild(build(n.children));
+        ul.appendChild(li);
+      });
+      return ul;
+    };
+    sec.appendChild(build(m.children));
+    list.appendChild(sec);
+  });
+
+  setFocus("all", false);
+  render();
+  (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => { render(); fit(); });
+  window.addEventListener("resize", fit);
+})();
+</script>
+<script src="script.js"></script>
+</body>
+</html>
