@@ -48,6 +48,13 @@
   .mm-node.hit rect { stroke:var(--clay) !important; stroke-width:3; }
   .mm-node.selected rect { stroke:var(--forest-deep) !important; stroke-width:3; }
   @media (max-width: 600px) { .mm-stage { height:62vh; } }
+  .mm-detail-img { display:block; max-width:100%; max-height:420px; margin:6px 0 12px; border:1px solid var(--line); border-radius:10px; cursor:zoom-in; background:#fff; }
+  .mm-list-img { display:block; width:160px; margin:6px 0; border:1px solid var(--line); border-radius:8px; cursor:zoom-in; background:#fff; }
+  .mm-lightbox { position:fixed; inset:0; z-index:1000; background:rgba(20,26,22,.88); display:flex; flex-direction:column; align-items:center; justify-content:center; padding:16px; cursor:zoom-out; }
+  .mm-lightbox[hidden] { display:none; }
+  .mm-lightbox img { max-width:100%; max-height:84vh; background:#fff; border-radius:8px; }
+  .mm-lightbox p { color:#fdfbf5; margin:10px 0 0; font-family:var(--serif); }
+  .mm-lightbox button { position:absolute; top:12px; right:16px; background:none; border:0; color:#fdfbf5; font-size:2rem; cursor:pointer; }
   .mm-detail {
     margin-top:16px; border:1px solid var(--line); border-radius:var(--radius);
     background:#fff; padding:18px 20px; min-height:80px;
@@ -147,6 +154,12 @@
       </div>
     </div>
   </section>
+
+  <div class="mm-lightbox" id="mmLightbox" hidden role="dialog" aria-modal="true" aria-label="図の拡大表示">
+    <button type="button" aria-label="閉じる">×</button>
+    <img src="" alt="">
+    <p></p>
+  </div>
 
   <section class="section section-alt">
     <div class="wrap">
@@ -396,10 +409,16 @@ const MINDMAPS = [
           L("trc03-taikei-dou-3", "理解しやすいためにも範囲を絞り込む必要がある"),
           { id: "trc03-taikei-dou-ue", label: "その上で", children: [
             L("trc03-taikei-dou-ue-1", "階層構造"),
-            { id: "trc03-taikei-dou-ue-zu", label: "図", note: "元のマインドマップでは、それぞれの図の画像が添えられています。", children: [
-              L("trc03-taikei-dou-ue-zu-1", "ikigaiの図"),
-              L("trc03-taikei-dou-ue-zu-2", "マーケティングファネルの図"),
-              L("trc03-taikei-dou-ue-zu-3", "幸福のブループリント"),
+            { id: "trc03-taikei-dou-ue-zu", label: "図", note: "図をタップすると大きく表示されます。", children: [
+              { id: "trc03-taikei-dou-ue-zu-1", label: "ikigaiの図",
+                img: { src: "images/mindmap/trc03-ikigai.jpg", w: 1280, h: 1166 },
+                note: "4つの要素（好きなこと・得意なこと・お金になること・世界が求めるもの）に全てが圧縮されている図。© 2018 GOROLIB DESIGN" },
+              { id: "trc03-taikei-dou-ue-zu-2", label: "マーケティングファネルの図",
+                img: { src: "images/mindmap/trc03-marketing-funnel.png", w: 1284, h: 766 },
+                note: "パーチェスファネル（認知→興味・関心→比較・検討→行動）と、インフルエンスファネル（継続→紹介→発信）。© 2022 株式会社プラスアルファ・コンサルティング" },
+              { id: "trc03-taikei-dou-ue-zu-3", label: "幸福のブループリント",
+                img: { src: "images/mindmap/trc03-happiness-blueprint.png", w: 1800, h: 897 },
+                note: "「幸福」と「人間」の循環。幸福側：居場所・没頭活動・自己超越／人間側：個人・社会・宗教（手書きの図）。" },
             ]},
             L("trc03-taikei-dou-ue-3", "などを作っていく"),
           ]},
@@ -493,12 +512,15 @@ const LINKS = [
   const ctx = document.createElement("canvas").getContext("2d");
   const width = (n) => {
     ctx.font = (n.depth === 0 ? "700 16px 'Shippori Mincho'" : n.depth === 1 ? "700 14px 'Noto Sans JP'" : "400 13px 'Noto Sans JP'");
-    return Math.ceil(Math.max(...n.lines.map(t => ctx.measureText(t).width))) + (n.children.length && n.depth ? 40 : 24);
+    const w = Math.ceil(Math.max(...n.lines.map(t => ctx.measureText(t).width))) + (n.children.length && n.depth ? 40 : 24);
+    return n.img ? Math.max(w, THUMB_W + 16) : w;
   };
 
   // ---- layout (left→right tidy tree) ----
   const GAP = 56, LINE = 17;
-  const nodeH = (n) => (n.depth === 0 ? 40 : n.depth === 1 ? 32 : 28) + (n.lines.length - 1) * LINE;
+  const THUMB_W = 200;
+  const thumbH = (n) => n.img ? Math.round(THUMB_W * n.img.h / n.img.w) : 0;
+  const nodeH = (n) => (n.depth === 0 ? 40 : n.depth === 1 ? 32 : 28) + (n.lines.length - 1) * LINE + (n.img ? thumbH(n) + 12 : 0);
   function visibleChildren(n) { return collapsed.has(n.id) ? [] : n.children; }
   function layout(root) {
     const colX = [];
@@ -555,12 +577,18 @@ const LINKS = [
       if (q) g.classList.add(n.text.includes(q) || (n.note || "").includes(q) ? "hit" : "dim");
       if (selected === n.id) g.classList.add("selected");
       const h = n.h;
-      el("rect", { x:0, y:-h/2, width:n.w, height:h, rx:Math.min(h / 2, 16),
+      el("rect", { x:0, y:-h/2, width:n.w, height:h, rx:n.img ? 10 : Math.min(h / 2, 16),
         fill: isHub ? "#1f3227" : isRoot ? n.color + "22" : "#fff",
         stroke: n.color }, g);
-      const t = el("text", { x:12, y:0 }, g);
+      let textY = 0;
+      if (n.img) {
+        const th = thumbH(n);
+        el("image", { href:n.img.src, x:8, y:-h/2 + 8, width:THUMB_W, height:th, preserveAspectRatio:"xMidYMid meet" }, g);
+        textY = h/2 - 14;
+      }
+      const t = el("text", { x:12, y:textY }, g);
       n.lines.forEach((line, i) => {
-        const ts = el("tspan", { x:12, y:(i - (n.lines.length - 1) / 2) * LINE }, t);
+        const ts = el("tspan", { x:12, y:textY + (i - (n.lines.length - 1) / 2) * LINE }, t);
         ts.textContent = line;
       });
       if (n.children.length && !isHub) {
@@ -598,13 +626,27 @@ const LINKS = [
   }
 
   function onNode(n) {
+    if (n.img && selected === n.id) { openLightbox(n); return; }
     if (n.children.length && n.depth > 0) {
       if (collapsed.has(n.id)) collapsed.delete(n.id); else collapsed.add(n.id);
     }
     selected = n.id;
     showDetail(n);
     render();
+    if (n.depth > 0) centerOn(n);
   }
+
+  const lb = document.getElementById("mmLightbox");
+  function openLightbox(n) {
+    lb.querySelector("img").src = n.img.src;
+    lb.querySelector("img").alt = n.text;
+    lb.querySelector("p").textContent = n.text;
+    lb.hidden = false;
+    lb.querySelector("button").focus();
+  }
+  const closeLightbox = () => { lb.hidden = true; };
+  lb.addEventListener("click", closeLightbox);
+  document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !lb.hidden) closeLightbox(); });
 
   function path(n) { const p = []; for (let a = n; a; a = a.parent) p.unshift(a.text); return p.join(" › "); }
 
@@ -613,6 +655,12 @@ const LINKS = [
     detail.innerHTML = "";
     const h = document.createElement("h3"); h.textContent = n.text; detail.appendChild(h);
     const c = document.createElement("p"); c.className = "crumb"; c.textContent = path(n); detail.appendChild(c);
+    if (n.img) {
+      const im = document.createElement("img");
+      im.src = n.img.src; im.alt = n.text; im.className = "mm-detail-img"; im.title = "タップで拡大";
+      im.addEventListener("click", () => openLightbox(n));
+      detail.appendChild(im);
+    }
     if (n.note) { const p = document.createElement("p"); p.style.margin = "0"; p.textContent = n.note; detail.appendChild(p); }
     if (rel.length) {
       const t = document.createElement("p"); t.style.margin = "12px 0 0"; t.innerHTML = "<strong>つながっている項目</strong>"; detail.appendChild(t);
@@ -735,6 +783,12 @@ const LINKS = [
       const ul = document.createElement("ul");
       nodes.forEach(n => {
         const li = document.createElement("li"); li.textContent = n.text;
+        if (n.img) {
+          const im = document.createElement("img");
+          im.src = n.img.src; im.alt = n.text; im.className = "mm-list-img";
+          im.addEventListener("click", () => openLightbox(n));
+          li.appendChild(im);
+        }
         links.filter(l => l.from === n.id || l.to === n.id).forEach(l => {
           const o = byId.get(l.from === n.id ? l.to : l.from);
           const s = document.createElement("span"); s.className = "xl"; s.textContent = ` ⇄ ${o.text}`; li.appendChild(s);
