@@ -188,49 +188,275 @@
      id はページ全体で重ならない半角英数字にしてください。
    ・LINKS に「マップどうしのつながり（連携）」を書きます。
      { from:"項目id", to:"項目id", label:"つながりの説明" }
-   ※ 現在の内容は、届いたマインドマップに差し替えるまでの仮のものです。
    ===================================================================== */
-const HUB = { id: "hub", label: "天給自足 統合マップ", note: "すべてのマインドマップをまとめる中心です。" };
+const HUB = { id: "hub", label: "TRCオンラインセミナー\n統合マップ", note: "TRCオンラインセミナーの各回のマインドマップをまとめる中心です。" };
+
+// 葉（子のない項目）を短く書くための関数
+const L = (id, label, note) => ({ id, label, note });
 
 const MINDMAPS = [
   {
-    id: "tenkyu", title: "天給自足実践塾", color: "#2f4a3a",
-    note: "（仮）理念ページの内容から作成したサンプルです。",
+    id: "trc01", title: "第1回 はじめの一歩の踏み出し方", color: "#3f6fd8",
+    note: "TRCオンラインセミナー 第1回「はじめの一歩の踏み出し方」",
     children: [
-      { id: "tenkyu-nou", label: "自然農", children: [
-        { id: "tenkyu-potager", label: "ポタジェ（キッチンガーデン）" },
-        { id: "tenkyu-mikiwame", label: "自然の恵みの見極め" },
+      { id: "trc01-zentei", label: "大前提", children: [
+        L("trc01-zentei-1", "TRCでは「情報発信」を実践していく"),
+        L("trc01-zentei-2", "そのためのセミナーやコンサルを行います"),
+        L("trc01-zentei-3", "デビュー＆リブランディングを実践していきましょう！"),
       ]},
-      { id: "tenkyu-kakou", label: "加工＆調理", children: [
-        { id: "tenkyu-gf", label: "グルテンフリー菓子・米パン" },
-        { id: "tenkyu-bichiku", label: "無添加の食作りと備蓄" },
+      { id: "trc01-pj", label: "プロジェクト思考", children: [
+        L("trc01-pj-1", "まずは「プロジェクト思考」というマインドセットを身につけましょう"),
+        { id: "trc01-pj-toha", label: "プロジェクト思考とは", children: [
+          L("trc01-pj-toha-1", "①プロジェクト単位で考える（範囲の限定）"),
+          L("trc01-pj-toha-2", "②マイルストーンを置いていく"),
+          L("trc01-pj-toha-3", "③スケジュールに落とし込んでいく"),
+          L("trc01-pj-toha-4", "④評価・反省・課題化していく"),
+          L("trc01-pj-toha-5", "ということ"),
+        ]},
+        { id: "trc01-pj-yosuru", label: "要するに", children: [
+          L("trc01-pj-yosuru-1", "大きく考えすぎないこと"),
+          L("trc01-pj-yosuru-2", "行き当たりばったりでやらないこと"),
+          L("trc01-pj-yosuru-3", "締め切りをちゃんと作ること"),
+          L("trc01-pj-yosuru-4", "成果や結果をちゃんと評価していくこと"),
+          L("trc01-pj-yosuru-5", "行動を常に次に繋げていくこと"),
+          L("trc01-pj-yosuru-6", "これを意識しないと、何となくで時間が過ぎていく"),
+        ]},
       ]},
-      { id: "tenkyu-kenkou", label: "老けない・病まない・飢えない", note: "家族の健康を見つめ直す生き方。" },
+      { id: "trc01-susume", label: "プロジェクトの進め方", children: [
+        L("trc01-susume-1", "全ての基本は「叩き台づくり」から"),
+        { id: "trc01-susume-kore", label: "これは", children: [
+          L("trc01-susume-kore-1", "計画も"),
+          L("trc01-susume-kore-2", "コンテンツも"),
+          L("trc01-susume-kore-3", "デザインも"),
+          L("trc01-susume-kore-4", "全て同じ"),
+        ]},
+        { id: "trc01-susume-mazu", label: "まず作らないといけないのは", children: [
+          L("trc01-susume-mazu-1", "叩くためのサンプル"),
+          L("trc01-susume-mazu-2", "コンサルを有効活用するためにも必要不可欠"),
+          L("trc01-susume-mazu-3", "何の叩き台もなしにコンサルはもったいない"),
+        ]},
+        { id: "trc01-susume-boku", label: "僕の場合だと", children: [
+          L("trc01-susume-boku-1", "こうやってマインドマップを利用することが多い"),
+          L("trc01-susume-boku-2", "これは「マインドマイスター」"),
+          L("trc01-susume-boku-3", "課金して使う価値がある"),
+          L("trc01-susume-boku-4", "他にもGoogleドキュメントやノーションやエバーノートでもいい"),
+        ]},
+        { id: "trc01-susume-imi", label: "叩き台の意味", children: [
+          L("trc01-susume-imi-1", "①思考の整理"),
+          L("trc01-susume-imi-2", "②思考の共有"),
+          L("trc01-susume-imi-3", "③思考の履歴保存"),
+          { id: "trc01-susume-imi-tsumari", label: "つまり", children: [
+            L("trc01-susume-imi-tsumari-1", "叩き台は「残す」ものだということ"),
+            L("trc01-susume-imi-tsumari-2", "じゃないと、履歴がわからなくなる"),
+            L("trc01-susume-imi-tsumari-3", "議事録と同じ"),
+            L("trc01-susume-imi-tsumari-4", "記憶を過信してはいけない"),
+          ]},
+        ]},
+      ]},
+      { id: "trc01-todo", label: "やって欲しいこと", children: [
+        { id: "trc01-todo-research", label: "①リサーチ", children: [
+          L("trc01-todo-research-1", "ライバル"),
+          L("trc01-todo-research-2", "モデリング先"),
+        ]},
+        { id: "trc01-todo-plan", label: "②プランニング", children: [
+          L("trc01-todo-plan-goal", "①暫定的なゴール"),
+          { id: "trc01-todo-plan-concept", label: "②コンセプト", children: [
+            L("trc01-todo-plan-concept-1", "＆キャラクター＆ストーリー"),
+            L("trc01-todo-plan-concept-2", "なぜ自分がやるのか？"),
+          ]},
+          L("trc01-todo-plan-target", "③ターゲット"),
+          L("trc01-todo-plan-kikaku", "④企画案"),
+          L("trc01-todo-plan-action", "⑤行動計画"),
+        ]},
+        L("trc01-todo-start", "まずはこれをやりましょう"),
+      ]},
     ]
   },
   {
-    id: "hakko", title: "醗酵実践塾", color: "#b9713a",
-    note: "（仮）サンプルです。",
+    id: "trc02", title: "第2回 誰のため、何のため、なぜ自分が", color: "#8e5bd6",
+    note: "TRCオンラインセミナー 第2回「“誰のため、何のため、なぜ自分が”の考え方」",
     children: [
-      { id: "hakko-koji", label: "麹づくり" },
-      { id: "hakko-miso", label: "味噌・調味料" },
-      { id: "hakko-seikatsu", label: "醗酵生活（委ねる・待つ・信じる）" },
+      { id: "trc02-kihon", label: "情報発信の基本中の基本", children: [
+        L("trc02-kihon-1", "コンセプト・キャラクター・ストーリーの三種の神器"),
+        L("trc02-kihon-2", "誰のため、何のため、なぜ自分が、なぜいま、ここで"),
+        L("trc02-kihon-3", "この2つ"),
+      ]},
+      { id: "trc02-dare", label: "「誰のため」の考え方", children: [
+        L("trc02-dare-1", "僕がオススメしていないのは、\n「過去の落ち込んでいた時の自分」を相手にすること"),
+        L("trc02-dare-2", "意外と多くのビジネス書やセミナーで、\nこれがオススメされているけど、僕は反対"),
+        { id: "trc02-dare-naze", label: "なぜなら", children: [
+          L("trc02-dare-naze-1", "「下目線」の人を相手にしてはいけないから"),
+          L("trc02-dare-naze-2", "つまり、落ち込んでいる最中の人には、\n何を言っても無駄だということ"),
+          L("trc02-dare-naze-3", "「救済」は、やるべきではない"),
+          L("trc02-dare-naze-4", "意外とここが落とし穴になっている人が多い気がする"),
+        ]},
+        { id: "trc02-dare-jaa", label: "じゃあどうするか？", children: [
+          L("trc02-dare-jaa-1", "「上目線」の人を相手にすること"),
+          L("trc02-dare-jaa-2", "つまり、どん底に落ち切った人や、\n上を向いて這いあがろうとしている人や、\nいままさに上昇している人を相手にしよう"),
+          L("trc02-dare-jaa-3", "その人たちには「伸び代」がある"),
+          L("trc02-dare-jaa-4", "だからやり甲斐もあるし、効果が現れやすい"),
+        ]},
+      ]},
+      { id: "trc02-nan", label: "「何のため」の考え方", children: [
+        { id: "trc02-nan-1", label: "①抽象と具体で2つのレイヤーで考える", children: [
+          L("trc02-nan-1-1", "例えば、「何度でも生まれ変われる人を増やしたい」は、\n抽象的な目的"),
+          L("trc02-nan-1-2", "「三種の神器を言語化して、情報発信をする」は、\n具体的な目的"),
+          L("trc02-nan-1-3", "具体的なイメージができないと「ふーん」で終わる"),
+        ]},
+        { id: "trc02-nan-2", label: "②自分とお客さんで2つのレイヤーで考える", children: [
+          L("trc02-nan-2-1", "自分の自己実現に寄与する"),
+          L("trc02-nan-2-2", "お客さんの自己実現に寄与する"),
+          L("trc02-nan-2-3", "この両立が必要"),
+        ]},
+      ]},
+      { id: "trc02-jibun", label: "「なぜ自分が」の考え方", children: [
+        L("trc02-jibun-1", "必ず最後はお客さんに寄り添うこと"),
+        { id: "trc02-jibun-rei", label: "例えば", children: [
+          L("trc02-jibun-rei-1", "「私には〜〜などの実績があり、\n実力があるから」だけでは不十分"),
+          L("trc02-jibun-rei-2", "プラスして「そして何より、〜〜で困っている人、\n躓いている人を多くみてきて、\nそれが本当にもったいないと思うから」などの寄り添いが必要"),
+          L("trc02-jibun-rei-3", "「あなたに貢献したいという想い」を\n自分事として持っていることを伝える"),
+          L("trc02-jibun-rei-4", "寄り添わないとただの独り言になってしまう"),
+        ]},
+      ]},
+      { id: "trc02-ima", label: "「なぜいま、ここで」の考え方", children: [
+        L("trc02-ima-1", "共通の時代感覚"),
+        L("trc02-ima-2", "自分の年齢、相手の年齢、2025年というタイミングなど"),
+        L("trc02-ima-3", "業界的なタイミングも重要"),
+        L("trc02-ima-4", "「今やろう」と思えるメッセージや理由が欲しい"),
+      ]},
+      { id: "trc02-aratame", label: "改めて", children: [
+        L("trc02-aratame-1", "誰のため、何のため、なぜ自分が、なぜいま、ここで"),
+        L("trc02-aratame-2", "を考えてみてください"),
+        L("trc02-aratame-3", "叩き台があるとフィードバックもしやすいです"),
+      ]},
     ]
   },
   {
-    id: "yasou", title: "野草の会", color: "#6b8f4e",
-    note: "（仮）サンプルです。",
+    id: "trc03", title: "第3回 ちゃんと体系化してる？", color: "#c2457a",
+    note: "TRCオンラインセミナー 第3回「ちゃんと体系化してる？」",
     children: [
-      { id: "yasou-shiki", label: "四季の野草" },
-      { id: "yasou-ryouri", label: "野草料理" },
+      { id: "trc03-kizuki", label: "TRCのコンサルをしていて気づいたこと", children: [
+        L("trc03-kizuki-1", "「誰のため、なんのため、なぜ自分が、なぜ今、ここで」を言語化しても\n“その先”の具体的なイメージができていない人が多い"),
+        L("trc03-kizuki-2", "「情報発信とは何か？」や"),
+        L("trc03-kizuki-3", "「教育とは何か？」の基本が意外と知られていない"),
+        L("trc03-kizuki-4", "これが意外と面白い発見だと思う"),
+      ]},
+      { id: "trc03-kyoiku", label: "教育ビジネスの基本", children: [
+        L("trc03-kyoiku-1", "＝教育する、なんだけど..."),
+        { id: "trc03-kyoiku-toha", label: "教育とは何か？", children: [
+          L("trc03-kyoiku-toha-1", "例えば、小学生に国語や算数や理科や社会を教えるのはなぜ？"),
+          L("trc03-kyoiku-toha-2", "教育の最も根本的な意味は、\n「世界を理解するための枠組みを与えること」\nにある"),
+          L("trc03-kyoiku-toha-3", "知識体系＝理解するための枠組み（フレームワーク）"),
+          { id: "trc03-kyoiku-toha-rei", label: "例えば", children: [
+            L("trc03-kyoiku-toha-rei-1", "足し算や引き算を理解していないと、\n現代的な生活の一切が理解できない"),
+            L("trc03-kyoiku-toha-rei-2", "社会や歴史を理解していないと、\n現在的な常識やルールが理解できない"),
+            L("trc03-kyoiku-toha-rei-3", "知識体系がない＝無秩序だということ"),
+            L("trc03-kyoiku-toha-rei-4", "無秩序な世界に秩序を与えるのが、\n教育の最も根源的な価値だと言える"),
+          ]},
+        ]},
+        { id: "trc03-kyoiku-onaji", label: "情報発信も同じ", children: [
+          L("trc03-kyoiku-onaji-1", "自分のメッセージやコンセプトに秩序（体系）を与え、\n順番に伝えていく必要がある"),
+          L("trc03-kyoiku-onaji-2", "これを「体系化」と呼ぶ"),
+          L("trc03-kyoiku-onaji-3", "体系化されていない情報発信は無秩序になる"),
+          L("trc03-kyoiku-onaji-4", "つまり、行き当たりばったりで、\nその場の思いつきで情報が量産されることになる"),
+          L("trc03-kyoiku-onaji-5", "果たしてそれは教育的か？"),
+          L("trc03-kyoiku-onaji-6", "また、初めての人が見たとき、\nスムーズに沼れるか？"),
+          L("trc03-kyoiku-onaji-7", "情報発信の目的は「教育」と「沼らせること」にある"),
+        ]},
+      ]},
+      { id: "trc03-taikei", label: "体系化とは", children: [
+        L("trc03-taikei-1", "＝膨大な情報の圧縮＆範囲の限定"),
+        { id: "trc03-taikei-rei", label: "例えば", children: [
+          L("trc03-taikei-rei-1", "「ikigaiの図」では4つの要素に全てが圧縮されている"),
+          L("trc03-taikei-rei-2", "4つの要素から、あらゆる説明ができる"),
+          L("trc03-taikei-rei-3", "逆に言えば、4つの要素でカバーできないものは無視している"),
+          L("trc03-taikei-rei-4", "そして当然、世の中にあるあらゆる知識体系は完璧ではない"),
+        ]},
+        { id: "trc03-taikei-saisho", label: "僕が講座などを作るときに最初にやること", children: [
+          L("trc03-taikei-saisho-1", "コンセプトを達成するための体系を作る"),
+          { id: "trc03-taikei-saisho-rei", label: "例えば", children: [
+            L("trc03-taikei-saisho-rei-1", "DRM＝集客・教育・販売"),
+            L("trc03-taikei-saisho-rei-2", "人間パワースポット化＝物語化・運命化・パワースポット化"),
+            L("trc03-taikei-saisho-rei-3", "三種の神器＝コンセプト・キャラクター・ストーリー"),
+            L("trc03-taikei-saisho-rei-4", "など"),
+            L("trc03-taikei-saisho-rei-5", "それぞれ3つの大カテゴリの中に、\n全ての伝えるべき情報が収納される"),
+          ]},
+          { id: "trc03-taikei-saisho-dakara", label: "だから", children: [
+            L("trc03-taikei-saisho-dakara-1", "構造的には"),
+            L("trc03-taikei-saisho-dakara-2", "①3〜5つの大カテゴリ"),
+            L("trc03-taikei-saisho-dakara-3", "②さらに3〜5つの中カテゴリ"),
+            L("trc03-taikei-saisho-dakara-4", "③無数の小項目"),
+            L("trc03-taikei-saisho-dakara-5", "という感じになる"),
+            L("trc03-taikei-saisho-dakara-6", "記事や動画の具体的なコンテンツになるのは、\n小項目レベルのもの"),
+          ]},
+        ]},
+        { id: "trc03-taikei-dou", label: "どうやって作るか？", children: [
+          L("trc03-taikei-dou-1", "僕は3〜5個でいつも考えている"),
+          L("trc03-taikei-dou-2", "なぜなら、それ以上になると複雑になりすぎるから"),
+          L("trc03-taikei-dou-3", "理解しやすいためにも範囲を絞り込む必要がある"),
+          { id: "trc03-taikei-dou-ue", label: "その上で", children: [
+            L("trc03-taikei-dou-ue-1", "階層構造"),
+            { id: "trc03-taikei-dou-ue-zu", label: "図", note: "元のマインドマップでは、それぞれの図の画像が添えられています。", children: [
+              L("trc03-taikei-dou-ue-zu-1", "ikigaiの図"),
+              L("trc03-taikei-dou-ue-zu-2", "マーケティングファネルの図"),
+              L("trc03-taikei-dou-ue-zu-3", "幸福のブループリント"),
+            ]},
+            L("trc03-taikei-dou-ue-3", "などを作っていく"),
+          ]},
+        ]},
+      ]},
+      { id: "trc03-hasshin", label: "体系化→情報発信", children: [
+        L("trc03-hasshin-1", "この順番でやると「柱」ができる"),
+        L("trc03-hasshin-2", "8割から9割は3〜5大カテゴリに入る話をすればいい"),
+        L("trc03-hasshin-3", "もし分類できない話をする場合は、\nそれは番外編扱いしていけばいい"),
+        { id: "trc03-hasshin-koto", label: "体系化することで", children: [
+          { id: "trc03-hasshin-koto-jibun", label: "自分は", children: [
+            L("trc03-hasshin-koto-jibun-1", "情報発信に迷いがなくなる"),
+            L("trc03-hasshin-koto-jibun-2", "弱い部分を強化できる"),
+          ]},
+          { id: "trc03-hasshin-koto-dokusha", label: "読者は", children: [
+            L("trc03-hasshin-koto-dokusha-1", "わかりやすくなる"),
+            L("trc03-hasshin-koto-dokusha-2", "全体像が掴める"),
+          ]},
+          { id: "trc03-hasshin-koto-sarani", label: "さらに", children: [
+            L("trc03-hasshin-koto-sarani-1", "「膨大な情報が圧縮されている感じ」がするので、\n自然と権威性が上がっていく"),
+            L("trc03-hasshin-koto-sarani-2", "コンサルティングをするときにも、\n凄腕ドクターのように的確に診断できるようになる"),
+          ]},
+        ]},
+        { id: "trc03-hasshin-rei", label: "例えば", children: [
+          L("trc03-hasshin-rei-1", "運動・食事・睡眠の3大カテゴリで\n健康について情報発信していくと"),
+          L("trc03-hasshin-rei-2", "100記事書けば、自分にもかなり知識が蓄積され、\n大体の悩みには応えられるようになる"),
+          L("trc03-hasshin-rei-3", "カテゴリは別に奇をてらう必要はない"),
+          L("trc03-hasshin-rei-4", "むしろ王道でいい"),
+          { id: "trc03-hasshin-rei-tadashi", label: "ただし", children: [
+            L("trc03-hasshin-rei-tadashi-1", "「他と違う」を出したい場合は、\n「ただの運動・食事・睡眠ではない要素」が必要"),
+            L("trc03-hasshin-rei-tadashi-2", "そこはコンセプトだったり、\n自分のストーリーに繋がってくる"),
+            L("trc03-hasshin-rei-tadashi-3", "独自の体験や葛藤や研究があったから、\n「ただの」ではないものが生み出されたはず"),
+          ]},
+        ]},
+        L("trc03-hasshin-last", "情報発信の方向性が決まったら、しっかりと自分の体系を作っていこう！"),
+      ]},
     ]
   },
 ];
 
+// つながり（連携）：回をまたいで関連する項目どうしを結んでいます（Claudeからの提案）。
 const LINKS = [
-  { from: "tenkyu-bichiku", to: "hakko-miso", label: "醗酵食で備蓄" },
-  { from: "tenkyu-mikiwame", to: "yasou-shiki", label: "見極める力" },
-  { from: "yasou-ryouri", to: "hakko-koji", label: "野草×醗酵" },
+  { from: "trc01-zentei-1", to: "trc02-kihon", label: "情報発信の基本" },
+  { from: "trc01-todo-plan-concept", to: "trc02-kihon-1", label: "三種の神器" },
+  { from: "trc01-todo-plan-concept-1", to: "trc02-kihon-1", label: "キャラクター＆ストーリー" },
+  { from: "trc01-todo-plan-concept-2", to: "trc02-jibun", label: "なぜ自分が" },
+  { from: "trc01-todo-plan-target", to: "trc02-dare", label: "誰のため" },
+  { from: "trc01-todo-plan-goal", to: "trc02-nan", label: "何のため" },
+  { from: "trc01-susume-1", to: "trc02-aratame-3", label: "叩き台" },
+  { from: "trc01-todo-plan-action", to: "trc01-pj-toha-3", label: "スケジュールに落とす" },
+  { from: "trc02-aratame-1", to: "trc03-kizuki-1", label: "言語化の“その先”" },
+  { from: "trc02-kihon-1", to: "trc03-taikei-saisho-rei-3", label: "三種の神器＝3大カテゴリ" },
+  { from: "trc01-pj-toha-1", to: "trc03-taikei-1", label: "範囲の限定" },
+  { from: "trc01-pj-yosuru-2", to: "trc03-kyoiku-onaji-4", label: "行き当たりばったり" },
+  { from: "trc01-zentei-1", to: "trc03-kyoiku-onaji-7", label: "情報発信の目的" },
+  { from: "trc01-todo-plan-concept", to: "trc03-hasshin-rei-tadashi-2", label: "コンセプト・ストーリー" },
+  { from: "trc01-susume-boku-1", to: "trc03-taikei-dou-ue-1", label: "階層構造で整理" },
 ];
 
 /* ===================================================================== */
@@ -246,6 +472,8 @@ const LINKS = [
   function prep(node, parent, mapId, color, depth) {
     node.parent = parent; node.mapId = mapId; node.color = color; node.depth = depth;
     node.children = node.children || [];
+    node.lines = node.label.split("\n");
+    node.text = node.lines.join("");
     if (byId.has(node.id)) console.warn("重複したid:", node.id);
     byId.set(node.id, node);
     node.children.forEach(c => prep(c, node, mapId, color, depth + 1));
@@ -265,11 +493,12 @@ const LINKS = [
   const ctx = document.createElement("canvas").getContext("2d");
   const width = (n) => {
     ctx.font = (n.depth === 0 ? "700 16px 'Shippori Mincho'" : n.depth === 1 ? "700 14px 'Noto Sans JP'" : "400 13px 'Noto Sans JP'");
-    return Math.ceil(ctx.measureText(n.label).width) + (n.children.length && n.depth ? 40 : 24);
+    return Math.ceil(Math.max(...n.lines.map(t => ctx.measureText(t).width))) + (n.children.length && n.depth ? 40 : 24);
   };
 
   // ---- layout (left→right tidy tree) ----
-  const ROW = 40, GAP = 56;
+  const GAP = 56, LINE = 17;
+  const nodeH = (n) => (n.depth === 0 ? 40 : n.depth === 1 ? 32 : 28) + (n.lines.length - 1) * LINE;
   function visibleChildren(n) { return collapsed.has(n.id) ? [] : n.children; }
   function layout(root) {
     const colX = [];
@@ -277,11 +506,12 @@ const LINKS = [
     (function w(n){ n.w = width(n); maxW[n.depth] = Math.max(maxW[n.depth] || 0, n.w); visibleChildren(n).forEach(w); })(root);
     colX[root.depth] = 0;
     for (let d = root.depth + 1; d < maxW.length; d++) colX[d] = colX[d-1] + maxW[d-1] + GAP;
-    let leaf = 0;
+    let cursor = 0;
     (function place(n){
       n.x = colX[n.depth];
+      n.h = nodeH(n);
       const kids = visibleChildren(n);
-      if (!kids.length) { n.y = leaf++ * ROW; return; }
+      if (!kids.length) { n.y = cursor + n.h / 2; cursor += n.h + 12; return; }
       kids.forEach(place);
       n.y = (kids[0].y + kids[kids.length-1].y) / 2;
     })(root);
@@ -321,14 +551,18 @@ const LINKS = [
         draw(c);
       });
       const isHub = n.depth === 0, isRoot = n.depth === 1;
-      const g = el("g", { class:"mm-node" + (isHub ? " hub" : isRoot ? " root" : ""), transform:`translate(${n.x},${n.y})`, tabindex:"0", role:"button", "aria-label":n.label }, gNodes);
-      if (q) g.classList.add(n.label.includes(q) || (n.note || "").includes(q) ? "hit" : "dim");
+      const g = el("g", { class:"mm-node" + (isHub ? " hub" : isRoot ? " root" : ""), transform:`translate(${n.x},${n.y})`, tabindex:"0", role:"button", "aria-label":n.text }, gNodes);
+      if (q) g.classList.add(n.text.includes(q) || (n.note || "").includes(q) ? "hit" : "dim");
       if (selected === n.id) g.classList.add("selected");
-      const h = isHub ? 40 : isRoot ? 32 : 28;
-      el("rect", { x:0, y:-h/2, width:n.w, height:h, rx:h/2,
+      const h = n.h;
+      el("rect", { x:0, y:-h/2, width:n.w, height:h, rx:Math.min(h / 2, 16),
         fill: isHub ? "#1f3227" : isRoot ? n.color + "22" : "#fff",
         stroke: n.color }, g);
-      const t = el("text", { x:12, y:0 }, g); t.textContent = n.label;
+      const t = el("text", { x:12, y:0 }, g);
+      n.lines.forEach((line, i) => {
+        const ts = el("tspan", { x:12, y:(i - (n.lines.length - 1) / 2) * LINE }, t);
+        ts.textContent = line;
+      });
       if (n.children.length && !isHub) {
         const s = el("text", { x:n.w - 18, y:0, class:"toggle" }, g);
         s.textContent = collapsed.has(n.id) ? "＋" : "－";
@@ -338,19 +572,28 @@ const LINKS = [
     })(root);
 
     if (showLinksBox.checked) {
+      // 折りたたまれた枝ではつながりを親にまとめ、同じ組み合わせは1本の線にする
+      const groups = new Map();
       links.forEach(l => {
         const a = visibleOf(byId.get(l.from)), b = visibleOf(byId.get(l.to));
-        if (!a || !b || a === b || a.x === undefined || b.x === undefined) return;
+        if (!a || !b || a === b) return;
+        const key = a.id < b.id ? a.id + "|" + b.id : b.id + "|" + a.id;
+        if (!groups.has(key)) groups.set(key, { a, b, items: [] });
+        groups.get(key).items.push({ l, exact: a.id === l.from && b.id === l.to });
+      });
+      groups.forEach(({ a, b, items }) => {
         const ax = a.x + a.w, ay = a.y, bx = b.x + b.w, by = b.y;
         const bend = 80 + Math.abs(ay - by) * 0.25;
         const cx = Math.max(ax, bx) + bend;
         el("path", { d:`M${ax},${ay} C${cx},${ay} ${cx},${by} ${bx},${by}`, class:"mm-xlink" }, gX);
-        if (l.label) {
+        const label = items.length === 1 && items[0].exact ? items[0].l.label : (items.length > 1 ? `${items.length}件` : "");
+        if (label) {
           const lt = el("text", { x:(ax + 6 * cx + bx) / 8 + 4, y:(ay + by) / 2, class:"mm-xlink-label" }, gX);
-          lt.textContent = l.label;
+          lt.textContent = label;
         }
       });
     }
+
     applyView();
   }
 
@@ -363,12 +606,12 @@ const LINKS = [
     render();
   }
 
-  function path(n) { const p = []; for (let a = n; a; a = a.parent) p.unshift(a.label); return p.join(" › "); }
+  function path(n) { const p = []; for (let a = n; a; a = a.parent) p.unshift(a.text); return p.join(" › "); }
 
   function showDetail(n) {
     const rel = links.filter(l => l.from === n.id || l.to === n.id);
     detail.innerHTML = "";
-    const h = document.createElement("h3"); h.textContent = n.label; detail.appendChild(h);
+    const h = document.createElement("h3"); h.textContent = n.text; detail.appendChild(h);
     const c = document.createElement("p"); c.className = "crumb"; c.textContent = path(n); detail.appendChild(c);
     if (n.note) { const p = document.createElement("p"); p.style.margin = "0"; p.textContent = n.note; detail.appendChild(p); }
     if (rel.length) {
@@ -377,10 +620,10 @@ const LINKS = [
       rel.forEach(l => {
         const other = byId.get(l.from === n.id ? l.to : l.from);
         const li = document.createElement("li");
-        const b = document.createElement("button"); b.className = "linkjump"; b.textContent = other.label;
+        const b = document.createElement("button"); b.className = "linkjump"; b.textContent = other.text;
         b.addEventListener("click", () => jumpTo(other.id));
         li.appendChild(b);
-        li.append(`（${byId.get(other.mapId).label}${l.label ? "／" + l.label : ""}）`);
+        li.append(`（${byId.get(other.mapId).text}${l.label ? "／" + l.label : ""}）`);
         ul.appendChild(li);
       });
       detail.appendChild(ul);
@@ -479,7 +722,7 @@ const LINKS = [
   showLinksBox.onchange = render;
   document.getElementById("mmSearch").addEventListener("input", () => {
     const q = query();
-    if (q) byId.forEach(n => { if (n.label.includes(q) || (n.note || "").includes(q)) for (let a = n.parent; a; a = a.parent) collapsed.delete(a.id); });
+    if (q) byId.forEach(n => { if (n.text.includes(q) || (n.note || "").includes(q)) for (let a = n.parent; a; a = a.parent) collapsed.delete(a.id); });
     render();
   });
 
@@ -491,10 +734,10 @@ const LINKS = [
     const build = (nodes) => {
       const ul = document.createElement("ul");
       nodes.forEach(n => {
-        const li = document.createElement("li"); li.textContent = n.label;
+        const li = document.createElement("li"); li.textContent = n.text;
         links.filter(l => l.from === n.id || l.to === n.id).forEach(l => {
           const o = byId.get(l.from === n.id ? l.to : l.from);
-          const s = document.createElement("span"); s.className = "xl"; s.textContent = ` ⇄ ${o.label}`; li.appendChild(s);
+          const s = document.createElement("span"); s.className = "xl"; s.textContent = ` ⇄ ${o.text}`; li.appendChild(s);
         });
         if (n.children.length) li.appendChild(build(n.children));
         ul.appendChild(li);
