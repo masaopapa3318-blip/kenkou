@@ -2232,3 +2232,4 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
   line-height: 1.7;
 }
 .recipe-tip::before { content: "ひとこと"; margin-right: 8px; font-size: .75rem; font-weight: 500; color: var(--clay); }
+.recipe-empty { margin: 0; padding: 40px 0; color: var(--ink-soft); text-align: center; }
