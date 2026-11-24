@@ -2145,6 +2145,9 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 
 /* 2種類のバリエーションを並べるシート */
 .recipe-body--variants { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+/* 材料が少なく手順が長いシート */
+.recipe-body--wide-steps { grid-template-columns: 1fr 2fr; }
+@media (max-width: 640px) { .recipe-body--wide-steps { grid-template-columns: 1fr; } }
 .recipe-variant h4 {
   margin: 12px 0 6px;
   font-family: var(--sans);
@@ -2223,6 +2226,7 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 }
 .recipe-ingredients li.recipe-group:first-child { margin-top: 0; }
 .recipe-pending { margin: 0; font-size: .9rem; color: var(--ink-soft); }
+.recipe-steps li strong { font-weight: 500; color: var(--forest-deep); }
 .recipe-tip {
   margin: 6px 0 0;
   padding: 8px 12px;
