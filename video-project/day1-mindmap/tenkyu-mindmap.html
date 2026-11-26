@@ -57,6 +57,8 @@ svg { display: block; }
 .link { fill: none; stroke-width: 2.2; opacity: .75; }
 .node { cursor: default; }
 .node[role=button] { cursor: pointer; }
+#map .link-node { cursor: pointer; }
+#map .link-node text { text-decoration: underline; }
 #map { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .node rect { stroke-width: 1.5; }
 .node text { font-family: var(--sans); fill: var(--ink); }
@@ -380,7 +382,12 @@ function render(fade) {
     if (n.c) {
       g.dataset.id = NODES.push(n) - 1;
     }
-    nodes.append(g);
+    if (n.u) { // リンクつきの箱は、タップで別のタブに開く
+      const a = document.createElementNS(NS, 'a');
+      a.setAttribute('href', n.u); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener');
+      g.setAttribute('class', g.getAttribute('class') + ' link-node');
+      a.append(g); nodes.append(a);
+    } else nodes.append(g);
   })(DATA);
 }
 

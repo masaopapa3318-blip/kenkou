@@ -57,6 +57,8 @@ svg { display: block; }
 .link { fill: none; stroke-width: 2.2; opacity: .75; }
 .node { cursor: default; }
 .node[role=button] { cursor: pointer; }
+#map .link-node { cursor: pointer; }
+#map .link-node text { text-decoration: underline; }
 #map { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .node rect { stroke-width: 1.5; }
 .node text { font-family: var(--sans); fill: var(--ink); }
@@ -138,7 +140,8 @@ const DATA = {
       { t: "糀・味噌・縄文漬け\n甘酒・シードル" }
     ]},
     { t: "⑤ 天給自足実践塾", s: "八ヶ岳の四季を、仲間と体で覚える", c: [
-      { t: "紹介動画でご覧ください" },
+      { k: "key", t: "▶ 紹介動画を見る（約6分）\nタップすると動画が開きます", u: "https://claude.ai/artifact/YGnwZDsxgy7koTgYpb6MZA" },
+      { t: "動画のあとに\n要点をおさらい ↓" },
       { t: "年6回の合宿\n（2か月に一度）", c: [
         { t: "4月　菊芋と陸稲\n植え付け" },
         { t: "6月　野草\n（野草醤・野草酵素）" },
@@ -325,7 +328,12 @@ function render(fade) {
     if (n.c) {
       g.dataset.id = NODES.push(n) - 1;
     }
-    nodes.append(g);
+    if (n.u) { // リンクつきの箱は、タップで別のタブに開く
+      const a = document.createElementNS(NS, 'a');
+      a.setAttribute('href', n.u); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener');
+      g.setAttribute('class', g.getAttribute('class') + ' link-node');
+      a.append(g); nodes.append(a);
+    } else nodes.append(g);
   })(DATA);
 }
 
