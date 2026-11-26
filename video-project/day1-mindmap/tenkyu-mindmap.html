@@ -1,0 +1,298 @@
+<title>天給自足 Day1 マインドマップ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 左の「幸せ」から右へ、話す順に枝が伸びる。枝ごとに土と森の色 */
+:root {
+  --bg: #f5f2ea;
+  --surface: #fffdf8;
+  --ink: #26302a;
+  --muted: #5f675f;
+  --line: #d9d2c2;
+  --root: #1f3227;
+  --root-ink: #fbf8f1;
+  --b1: #b9713a; --b2: #3f6b4f; --b3: #8a5a2b; --b4: #6c7f2e;
+  --b5: #8b4a5c; --b6: #2f6f78; --b7: #a3792c; --b8: #4b5a8a;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+    --root: #d9c9a3; --root-ink: #1a211c;
+    --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+    --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+  --root: #d9c9a3; --root-ink: #1a211c;
+  --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+  --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+.app { display: flex; flex-direction: column; height: 100%; }
+header.bar {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between;
+  padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--line); background: var(--surface);
+}
+.ttl { min-width: 0; }
+.ttl p { margin: 0; font-size: .72rem; letter-spacing: .18em; color: var(--muted); }
+.ttl h1 { margin: 2px 0 0; font-family: var(--serif); font-size: clamp(1.05rem, 2.6vw, 1.4rem); line-height: 1.35; text-wrap: balance; }
+.ctl { display: flex; flex-wrap: wrap; gap: 8px; }
+.ctl button {
+  font: inherit; font-size: .85rem; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+.ctl button.main { background: var(--root); color: var(--root-ink); border-color: var(--root); }
+.ctl button:focus-visible { outline: 2px solid var(--b6); outline-offset: 2px; }
+.stage { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; }
+svg { display: block; }
+.link { fill: none; stroke-width: 2.2; opacity: .75; }
+.node { cursor: pointer; }
+.node rect { stroke-width: 1.5; }
+.node text { font-family: var(--sans); fill: var(--ink); }
+.node.d0 text { font-family: var(--serif); fill: var(--root-ink); font-weight: 800; }
+.node.d1 text { font-family: var(--serif); font-weight: 800; }
+.node .chev { font-family: var(--sans); font-size: 13px; font-weight: 700; }
+.hint { margin: 0; font-size: .78rem; color: var(--muted); }
+@media (prefers-reduced-motion: no-preference) {
+  .node, .link { transition: opacity .35s ease; }
+}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <div class="ttl">
+      <p>天給自足実践塾 勉強会 ／ Day1</p>
+      <h1>幸せに生きる最善の方法、最強の健康法</h1>
+    </div>
+    <div class="ctl">
+      <button type="button" id="btn-next" class="main">次の枝を開く</button>
+      <button type="button" id="btn-all">すべて開く</button>
+      <button type="button" id="btn-reset">はじめに戻す</button>
+    </div>
+    <p class="hint">枝をタップすると開閉します。左右にスクロールできます。</p>
+  </header>
+  <div class="stage" id="stage"><svg id="map" role="img" aria-label="天給自足 Day1 マインドマップ"></svg></div>
+</div>
+
+<script>
+const DATA = {
+  t: "幸せに生きる\n最善の方法\n＝天給自足で\n安心を自給する",
+  c: [
+    { t: "① 幸せとは何か", s: "アランの幸福論", c: [
+      { t: "不安の正体を見極める\n（食料・健康・お金）\n原因を知れば、不安は消える" },
+      { t: "自分の畑を耕す\n仕事を自分の裁量で" },
+      { t: "幸せは受け取るものではなく\n生みだすもの\n歌う・描く・作り育む" },
+      { t: "幸せの敵は、自分自身" },
+      { t: "幸福は状況ではなく\n解釈力と態度" }
+    ]},
+    { t: "② 天給自足とは", c: [
+      { t: "大地・水・空気・太陽・種\nすべて天が用意してくれている" },
+      { t: "自然農で育てる", c: [
+        { t: "陸稲（畑のお米）" }, { t: "菊芋（世界三大健康野菜）" }, { t: "旬の野菜・ポタジェ" } ] },
+      { t: "天の恵みを見極める", c: [
+        { t: "野草・薬草" }, { t: "きのこ・山菜" }, { t: "木の葉と実" } ] },
+      { t: "調理し、生活に落とし込み\n生命エネルギーをいただく" },
+      { t: "自分で育み、流通をなくす\n添加物・農薬・除草剤から離れる" },
+      { t: "日本の田舎の\n伝統的な食文化" }
+    ]},
+    { t: "③ 最強の健康法\n＝腸活", c: [
+      { t: "體は食の変化体\n身体は食べたもので創られる" },
+      { t: "腸は神に最も近い臓器\n食べることは祈ること" },
+      { t: "醗酵食で腸から健康に", c: [
+        { t: "便秘・肌トラブルの改善" }, { t: "心が軽くなる" }, { t: "薬を飲まなくなった方も" } ] },
+      { t: "ミネラルが鍵", c: [
+        { t: "自然の恵みは\n微量ミネラルの宝庫" },
+        { t: "「すべての病気は\nミネラル不足に行き着く」\nライナス・ポーリング博士" },
+        { t: "精密機械にレアアース\n體には微量ミネラル" } ] },
+      { t: "自然の恵みが\n家庭の薬箱" },
+      { t: "病まない・飢えない・老けない" }
+    ]},
+    { t: "④ なぜ今、学ぶのか", s: "3つのメリット", c: [
+      { t: "必要性\n食で體と心を整える" },
+      { t: "重要性\n見極め、活用し、生き抜く力" },
+      { t: "今すぐ始める理由\n予測不可能な時代\n食をできるだけ自分で確保" },
+      { t: "安心は買うものではなく\n育てるもの" }
+    ]},
+    { t: "⑤ なぜ多くの人が\nうまくいかないのか", c: [
+      { t: "したい人 1万人\n始める人 100人\n続ける人 1人" },
+      { t: "知っている ≠ 活用できる\nやっている ≠ うまくいく" },
+      { t: "失敗①\n一人だと、一つの失敗で止まる" },
+      { t: "失敗②\n動画で知っても、土地・季節・年で違う\n四季を通した実践が必要" },
+      { t: "失敗③\nいつでも聞ける環境と\n仲間がない" }
+    ]},
+    { t: "⑥ うまくいく道", c: [
+      { t: "結果 ← 習慣 ← 行動 ← 選択\n← 無意識の思考 ← 環境" },
+      { t: "成果は才能ではなく\n環境で決まる" },
+      { t: "学びの浸透率", c: [
+        { t: "聞くだけ 6%" }, { t: "アウトプット 54%" }, { t: "実践 75%" }, { t: "人に教える 90%" } ] },
+      { t: "無期限で相談できる環境\n（気候は毎年違う）" },
+      { t: "サクセスステップ", c: [
+        { t: "1 誰でもできる自然農で\n成功体験から" },
+        { t: "2 四季を体感し\n早く一歩を踏み出す" },
+        { t: "3 先輩・仲間と\n一緒に始める" } ] }
+    ]},
+    { t: "⑦ 実践した方の声", c: [
+      { t: "腸活で心身が軽くなり\n薬を飲まなくなった" },
+      { t: "便秘・肌トラブルが改善し\n醗酵食の大切さを実感" },
+      { t: "安心を外注するのをやめ\n自給する生き方へ" },
+      { t: "医師ご夫妻・料理研究家\n保育園経営・ヘルスコーチ\nも受講" }
+    ]},
+    { t: "⑧ 未来へ\n伝承者・講師として", c: [
+      { t: "夢を叶える3つのポイント", c: [
+        { t: "志をありありと描く" }, { t: "今の現在地を知る" }, { t: "最短ルートを知る" } ] },
+      { t: "現在地チェック\n健康・農・これからの生き方" },
+      { t: "天給自足の伝承者・講師に\n日本伝承人協会" },
+      { t: "日本の食文化・伝統文化\n徳文化を伝承する" },
+      { t: "身体は食べたもの\n心は聞いた言葉\n未来は言った言葉で創られる" },
+      { t: "人生は、選択の質", c: [
+        { t: "次の一歩：\n無料30分の個別セッション\n→ Day2 講座のご案内へ" } ] }
+    ]}
+  ]
+};
+
+const COLORS = ['--b1', '--b2', '--b3', '--b4', '--b5', '--b6', '--b7', '--b8'];
+const FONT = [22, 18, 14.5, 13.5];
+const LINE_H = [30, 25, 21, 19];
+const PAD_X = [18, 16, 12, 10];
+const PAD_Y = [14, 10, 8, 6];
+const GAP_X = [56, 52, 44];
+const GAP_Y = [14, 10, 8];
+
+// 開閉状態を付ける（最初は幹だけ見せる）
+(function init(n, d, color) {
+  n.depth = d; n.color = color; n.open = d === 0;
+  (n.c || []).forEach((k, i) => init(k, d + 1, d === 0 ? COLORS[i % COLORS.length] : color));
+})(DATA, 0, '--root');
+
+const svg = document.getElementById('map');
+const NS = 'http://www.w3.org/2000/svg';
+const measureCtx = document.createElement('canvas').getContext('2d');
+
+function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function textW(s, fs, bold) {
+  measureCtx.font = `${bold ? 700 : 400} ${fs}px "Noto Sans JP", sans-serif`;
+  return measureCtx.measureText(s).width;
+}
+function boxSize(n) {
+  const d = Math.min(n.depth, 3);
+  const lines = n.t.split('\n');
+  if (n.s) lines.push(n.s);
+  const w = Math.max(...lines.map(l => textW(l, FONT[d], d < 2))) + PAD_X[d] * 2 + (n.c ? 18 : 0);
+  return { w: Math.ceil(w), h: lines.length * LINE_H[d] + PAD_Y[d] * 2, lines };
+}
+
+function layout() {
+  const colX = [0];
+  // 深さごとの最大幅で列を決める
+  const maxW = [0, 0, 0, 0];
+  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth], b.w);
+    if (n.open) (n.c || []).forEach(walk); })(DATA);
+  for (let d = 1; d < 4; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[d - 1];
+  let y = 0;
+  (function place(n) {
+    const kids = n.open ? (n.c || []) : [];
+    n.x = colX[n.depth];
+    if (!kids.length) { n.y = y + n.b.h / 2; y += n.b.h + GAP_Y[Math.max(0, Math.min(n.depth - 1, 2))]; return; }
+    const top = y;
+    kids.forEach(place);
+    const first = kids[0].y, last = kids[kids.length - 1].y;
+    n.y = (first + last) / 2;
+    if (y - top < n.b.h) y = top + n.b.h + GAP_Y[0];
+  })(DATA);
+  return { w: colX[3] + maxW[3] + 40, h: y };
+}
+
+function render(fade) {
+  const size = layout();
+  const M = 24;
+  const W = Math.max(size.w + M * 2, 320), H = Math.max(size.h + M * 2, 320);
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `${-M} ${-M} ${W} ${H}`);
+  svg.replaceChildren();
+  const links = document.createElementNS(NS, 'g'), nodes = document.createElementNS(NS, 'g');
+  svg.append(links, nodes);
+  (function draw(n) {
+    const kids = n.open ? (n.c || []) : [];
+    kids.forEach(k => {
+      const p = document.createElementNS(NS, 'path');
+      const x1 = n.x + n.b.w, y1 = n.y, x2 = k.x, y2 = k.y, mx = (x1 + x2) / 2;
+      p.setAttribute('d', `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+      p.setAttribute('class', 'link');
+      p.setAttribute('stroke', cssVar(k.color));
+      links.append(p);
+      draw(k);
+    });
+    const g = document.createElementNS(NS, 'g');
+    const d = Math.min(n.depth, 3);
+    g.setAttribute('class', `node d${d}`);
+    g.setAttribute('transform', `translate(${n.x},${n.y - n.b.h / 2})`);
+    g.setAttribute('tabindex', n.c ? '0' : '-1');
+    if (n.c) g.setAttribute('role', 'button');
+    const r = document.createElementNS(NS, 'rect');
+    r.setAttribute('width', n.b.w); r.setAttribute('height', n.b.h);
+    r.setAttribute('rx', d === 0 ? 18 : d === 1 ? 14 : 10);
+    const col = cssVar(n.color);
+    if (d === 0) { r.setAttribute('fill', col); r.setAttribute('stroke', col); }
+    else if (d === 1) { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-width', '2.5'); }
+    else { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-opacity', '.45'); }
+    g.append(r);
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('font-size', FONT[d]);
+    n.b.lines.forEach((line, i) => {
+      const ts = document.createElementNS(NS, 'tspan');
+      ts.setAttribute('x', PAD_X[d]);
+      ts.setAttribute('y', PAD_Y[d] + LINE_H[d] * (i + 0.72));
+      ts.textContent = line;
+      if (n.s && i === n.b.lines.length - 1) { ts.setAttribute('font-size', FONT[d] * 0.72); ts.setAttribute('fill', cssVar('--muted')); }
+      if (d === 1 && i === 0) ts.setAttribute('fill', col);
+      t.append(ts);
+    });
+    g.append(t);
+    if (n.c && d > 0) {
+      const ch = document.createElementNS(NS, 'text');
+      ch.setAttribute('class', 'chev');
+      ch.setAttribute('x', n.b.w - 16); ch.setAttribute('y', n.b.h / 2 + 5);
+      ch.setAttribute('fill', col);
+      ch.textContent = n.open ? '−' : '＋';
+      g.append(ch);
+    }
+    if (n.c) {
+      const toggle = () => { n.open = !n.open; if (!n.open) closeAll(n, false); render(); };
+      g.addEventListener('click', toggle);
+      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+    }
+    nodes.append(g);
+  })(DATA);
+}
+
+function closeAll(n, self = true) { if (self) n.open = false; (n.c || []).forEach(k => closeAll(k)); }
+function openAll(n) { n.open = true; (n.c || []).forEach(openAll); }
+
+// 話す順に、次の枝を開く（前の枝は閉じて、いま話している枝に集中する）
+let step = -1;
+document.getElementById('btn-next').addEventListener('click', () => {
+  step = (step + 1) % DATA.c.length;
+  DATA.c.forEach((b, i) => { if (i === step) openAll(b); else closeAll(b); });
+  render();
+  const b = DATA.c[step];
+  const stage = document.getElementById('stage');
+  stage.scrollTo({ top: Math.max(0, b.y - stage.clientHeight / 3), behavior: 'smooth' });
+});
+document.getElementById('btn-all').addEventListener('click', () => { openAll(DATA); render(); });
+document.getElementById('btn-reset').addEventListener('click', () => { step = -1; DATA.c.forEach(b => closeAll(b)); render(); document.getElementById('stage').scrollTo({ top: 0, left: 0 }); });
+
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+mq.addEventListener?.('change', () => render());
+new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => render());
+render();
+</script>
