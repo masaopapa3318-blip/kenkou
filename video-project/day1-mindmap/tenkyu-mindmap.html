@@ -55,7 +55,9 @@ header.bar {
 .stage { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; }
 svg { display: block; }
 .link { fill: none; stroke-width: 2.2; opacity: .75; }
-.node { cursor: pointer; }
+.node { cursor: default; }
+.node[role=button] { cursor: pointer; }
+#map { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
 .node rect { stroke-width: 1.5; }
 .node text { font-family: var(--sans); fill: var(--ink); }
 .node.d0 text { font-family: var(--serif); fill: var(--root-ink); font-weight: 800; }
@@ -315,6 +317,7 @@ function render(fade) {
   svg.setAttribute('width', W); svg.setAttribute('height', H);
   svg.setAttribute('viewBox', `${-M} ${-M} ${W} ${H}`);
   svg.replaceChildren();
+  NODES.length = 0;
   const links = document.createElementNS(NS, 'g'), nodes = document.createElementNS(NS, 'g');
   svg.append(links, nodes);
   (function draw(n) {
@@ -368,13 +371,21 @@ function render(fade) {
       g.append(ch);
     }
     if (n.c) {
-      const toggle = () => { n.open = !n.open; if (!n.open) closeAll(n, false); render(); };
-      g.addEventListener('click', toggle);
-      g.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); } });
+      g.dataset.id = NODES.push(n) - 1;
     }
     nodes.append(g);
   })(DATA);
 }
+
+// タップ・クリックは地図全体で一度だけ受け取る（描き直しても確実に反応する）
+const NODES = [];
+function toggleNode(n) {
+  if (n.depth === 0) { DATA.c.forEach(b => { b.open = true; }); render(); return; } // 中心をタップしたら枝をすべて見せる
+  n.open = !n.open; if (!n.open) closeAll(n, false); render();
+}
+function nodeFrom(e) { const g = e.target.closest && e.target.closest('.node'); return g && g.dataset.id ? NODES[+g.dataset.id] : null; }
+svg.addEventListener('click', e => { const n = nodeFrom(e); if (n) toggleNode(n); });
+svg.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const n = nodeFrom(e); if (n) { e.preventDefault(); toggleNode(n); } });
 
 function closeAll(n, self = true) { if (self) n.open = false; (n.c || []).forEach(k => closeAll(k)); }
 function openAll(n) { n.open = true; (n.c || []).forEach(openAll); }
