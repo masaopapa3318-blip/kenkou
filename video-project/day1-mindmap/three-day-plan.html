@@ -1,0 +1,160 @@
+<title>天給自足 3日間の設計</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 一本の縦の流れ：見本の分析 → 当てはめ → 3日間 → 決まったこと。段階は土の色の濃さで表す */
+:root {
+  --bg: #eef0e8;
+  --paper: #fafbf6;
+  --ink: #232a24;
+  --muted: #5b645c;
+  --line: #d3d8cb;
+  --moss: #3d5f46;
+  --soil1: #7f9a62; --soil2: #4f7a55; --soil3: #2f4f3a;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #151a16; --paper: #1d241f; --ink: #e6ebe4; --muted: #a3ada4; --line: #333d36;
+    --moss: #8fc19c; --soil1: #b4cc92; --soil2: #8fc19c; --soil3: #c9e2cf;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #151a16; --paper: #1d241f; --ink: #e6ebe4; --muted: #a3ada4; --line: #333d36;
+  --moss: #8fc19c; --soil1: #b4cc92; --soil2: #8fc19c; --soil3: #c9e2cf;
+  color-scheme: dark;
+}
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 15.5px; line-height: 1.85; }
+.wrap { max-width: 760px; margin: 0 auto; padding-block: 40px 64px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 44px; }
+header p.eyebrow { margin: 0; font-size: .78rem; letter-spacing: .16em; color: var(--muted); }
+h1 { margin: 6px 0 10px; font-family: var(--serif); font-weight: 800; font-size: clamp(1.6rem, 5vw, 2.2rem); line-height: 1.35; text-wrap: balance; }
+header .lead { margin: 0; color: var(--muted); }
+h2 { margin: 0 0 14px; font-family: var(--serif); font-weight: 800; font-size: 1.35rem; line-height: 1.4; text-wrap: balance; }
+h3 { margin: 0 0 6px; font-family: var(--serif); font-weight: 600; font-size: 1.08rem; }
+section > p { margin: 0 0 12px; }
+a { color: var(--moss); }
+ol.tricks { margin: 0; padding: 0; list-style: none; display: grid; gap: 14px; counter-reset: t; }
+ol.tricks li { counter-increment: t; display: grid; grid-template-columns: 2.2em 1fr; gap: 4px 10px; }
+ol.tricks li::before { content: counter(t); font-family: var(--serif); font-weight: 800; color: var(--moss); font-size: 1.15rem; line-height: 1.6; }
+ol.tricks b { display: block; }
+ol.tricks span { color: var(--muted); font-size: .94rem; grid-column: 2; }
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.step { background: var(--paper); border: 1px solid var(--line); border-top: 5px solid var(--c); border-radius: 10px; padding: 14px 16px; min-width: 0; }
+.step .day { font-size: .78rem; letter-spacing: .14em; color: var(--muted); }
+.step .name { font-family: var(--serif); font-weight: 800; font-size: 1.3rem; color: var(--c); line-height: 1.4; }
+.step p { margin: 6px 0 0; font-size: .92rem; }
+.motto { margin: 16px 0 0; padding: 14px 18px; border-left: 3px solid var(--moss); background: var(--paper); font-family: var(--serif); font-weight: 600; font-size: 1.08rem; }
+.flow { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); overflow: hidden; }
+.flow li { display: grid; grid-template-columns: 8.5em 1fr; gap: 12px; padding: 12px 16px; border-top: 1px solid var(--line); }
+.flow li:first-child { border-top: 0; }
+.flow .k { font-weight: 700; color: var(--moss); }
+.flow .v { min-width: 0; }
+.day-block { display: grid; gap: 10px; }
+.day-block + .day-block { margin-top: 26px; }
+.tag { display: inline-block; font-size: .78rem; padding: 1px 10px; border-radius: 999px; border: 1px solid var(--c, var(--moss)); color: var(--c, var(--moss)); margin-left: 8px; vertical-align: 2px; font-family: var(--sans); font-weight: 500; }
+ul.plain { margin: 0; padding-left: 1.2em; display: grid; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+th, td { text-align: left; vertical-align: top; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+th { font-weight: 700; white-space: nowrap; color: var(--muted); font-size: .85rem; }
+.tablebox { overflow-x: auto; background: var(--paper); border: 1px solid var(--line); border-radius: 10px; }
+.note { font-size: .88rem; color: var(--muted); }
+@media (max-width: 600px) {
+  .steps { grid-template-columns: 1fr; }
+  .flow li { grid-template-columns: 1fr; gap: 2px; }
+}
+</style>
+
+<main class="wrap">
+  <header>
+    <p class="eyebrow">天給自足実践塾 ／ 3日間オンライン合宿の設計</p>
+    <h1>幸せに生きる最善の方法<br>天給自足で安心を自給する生き方</h1>
+    <p class="lead">見本としていただいた3日間講座（Day1〜Day3のマインドマップ）の話の運び方を分析し、天給自足実践塾の3日間に当てはめた設計です。Day1のマインドマップは<a href="https://claude.ai/artifact/5vMjHBep7hxXWLuuFeMG55" target="_blank" rel="noopener">こちら</a>で、この設計どおりに組み替えてあります。</p>
+  </header>
+
+  <section>
+    <h2>3日間でたどる3つの段階</h2>
+    <div class="steps">
+      <div class="step" style="--c: var(--soil1)"><div class="day">DAY 1</div><div class="name">知る</div><p>人間が生きる上で一番大切なこと。それが天給自足・自給自足であることを知る。</p></div>
+      <div class="step" style="--c: var(--soil2)"><div class="day">DAY 2</div><div class="name">実践して育てる</div><p>四季を通して、自分の手で実践し、安心を育てていく。</p></div>
+      <div class="step" style="--c: var(--soil3)"><div class="day">DAY 3</div><div class="name">伝える</div><p>伝承者・講師となり、天給自足を日本全国へ広げていく。</p></div>
+    </div>
+    <p class="motto">合言葉：安心は買うものではなく、育てるもの。3日間で、きっと腑に落ちます。</p>
+  </section>
+
+  <section>
+    <h2>見本から学んだ、人を引き込む10の仕掛け</h2>
+    <ol class="tricks">
+      <li><b>3日間をレベルアップの物語にする</b><span>日ごとに段階が上がり、冒頭で「最後までやれば、もう困らない」と約束する。</span></li>
+      <li><b>「まずはじめに」で期待と緊急性をつくる</b><span>視聴期限、目的、3日間の内容を先に見せ、合言葉を一つ置く。</span></li>
+      <li><b>「〇〇とは何か？」と常識をひっくり返す</b><span>皆の思い込みをまず否定して、驚いてもらう。</span></li>
+      <li><b>毎回同じリズムで話す</b><span>問い → よくある失敗 → だから → 具体的には → たとえ話。</span></li>
+      <li><b>身近なたとえ話</b><span>漫画づくり、料理の工程、電卓との違いなど、誰でもわかる例で伝える。</span></li>
+      <li><b>本人の実例で信頼をつくる</b><span>話し手自身が実際にやっていることを見せる。</span></li>
+      <li><b>「続きは次の日に」で終える</b><span>ここまでは一人でもできる、でも続かない。だから次の日の話が必要、と橋をかける。</span></li>
+      <li><b>毎日の「今日のワーク」で参加してもらう</b><span>コメント欄に学び・悩み・期待を書いてもらう。最終日はプレゼントと期限つき。</span></li>
+      <li><b>毎日同じ形のまとめ</b><span>今日学んだこと → できるようになること → 大事な心構え → 次の日の準備 → 最後に。</span></li>
+      <li><b>最終日は技術から生き方へ広げ、最初の話に戻って締める</b><span>関係性、いま・ここ、迷いのない生き方へ。最後は冒頭の言葉に戻る。</span></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>天給自足の3日間に当てはめると</h2>
+
+    <div class="day-block">
+      <h3>Day1　知る<span class="tag" style="--c: var(--soil1)">マインドマップ組み替え済み</span></h3>
+      <ol class="flow">
+        <li><span class="k">まずはじめに</span><span class="v">視聴期限つき（96時間）のオンライン合宿。ワークを書いた方にプレゼント。3つの段階と合言葉。</span></li>
+        <li><span class="k">① なぜ今、自足が必要か</span><span class="v">「お金があれば食べ物は買える」は本当？と問いかける。不安は安心を外に預けることから生まれる。野菜のミネラル減少。</span></li>
+        <li><span class="k">② 自足とは何か</span><span class="v">自給自足ではなく天給自足。種をまく→育てる→仕込む→いただく、の4つの工程。</span></li>
+        <li><span class="k">③ 幸せとは何か</span><span class="v">アランの幸福論。幸せは受け取るものではなく、生みだすもの。</span></li>
+        <li><span class="k">④ 最強の健康法</span><span class="v">腸活。體は食の変化体。ミネラルが鍵。</span></li>
+        <li><span class="k">⑤ 3つのメリット</span><span class="v">必要性・重要性・今すぐ始める理由。</span></li>
+        <li><span class="k">⑥ 実践した方の声</span><span class="v">本人と受講生の変化で信頼をつくる（お名前は出さず属性のみ）。</span></li>
+        <li><span class="k">⑦ よくある失敗</span><span class="v">一人で始める、動画だけで学ぶ、いつでも聞ける相手がいない。</span></li>
+        <li><span class="k">⑧ はじめの一歩</span><span class="v">菊芋。食べてみる、暮らしに取り入れる、春に1個植える。「でも土地や季節で違う。一人では続かない。続きはDay2で」。</span></li>
+        <li><span class="k">今日のワーク</span><span class="v">①学んだこと ②あなたの食や健康の不安・失敗談 ③Day2への期待。</span></li>
+        <li><span class="k">まとめ</span><span class="v">見本と同じ5つの形で締める。</span></li>
+      </ol>
+    </div>
+
+    <div class="day-block">
+      <h3>Day2　実践して育てる<span class="tag" style="--c: var(--soil2)">これから</span></h3>
+      <ul class="plain">
+        <li>完成済みの紹介動画で、各講座（天給自足・醗酵・菊芋・野草・四季のリトリート）を案内する。</li>
+        <li>料理のたとえ話が醗酵にそのまま合う：工程のどこかで手を抜くと、そのまま味に出る。</li>
+        <li>「一度うまくいけばよいのではない。毎年うまくいくことが大事。気候は毎年違うから、聞ける環境が要る」。</li>
+        <li>うまくいく道（環境が成果を決める、学びの浸透率、サクセスステップ）をここで話す。</li>
+        <li>ワーク：今すぐやる行動を3つ。</li>
+      </ul>
+    </div>
+
+    <div class="day-block">
+      <h3>Day3　伝える<span class="tag" style="--c: var(--soil3)">これから</span></h3>
+      <ul class="plain">
+        <li>天（自然）・仲間・先輩との関係性の中で、人は育つ。</li>
+        <li>過去＝日本の伝統食文化、未来＝子どもや孫へ、いま＝今日の食卓。</li>
+        <li>守破離：学ぶ（守）→ 自分の土地で工夫する（破）→ 伝える（離）＝伝承者・講師として日本全国へ。</li>
+        <li>最後はDay1冒頭の「安心は育てるもの」に戻って締める。</li>
+        <li>無料30分の個別セッションと申し込みのご案内。レビューを送った方へのプレゼント（期限つき）。</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>決まったこと・これから決めること</h2>
+    <div class="tablebox">
+      <table>
+        <tr><th>3つの段階</th><td>知る → 実践して育てる → 伝える（伝承・講師、日本全国へ）</td></tr>
+        <tr><th>視聴期限</th><td>つける。時間は仮に96時間（見本と同じ）。</td></tr>
+        <tr><th>プレゼント</th><td>ワークを書いた方につける。<b>中身はこれから決める。</b></td></tr>
+        <tr><th>はじめの一歩</th><td>菊芋</td></tr>
+        <tr><th>作る順番</th><td>Day1マインドマップ（済）→ Day1パワーポイント → Day2 → Day3</td></tr>
+      </table>
+    </div>
+    <p class="note">菊芋の枝の「イヌリンが腸内細菌のえさになる」「いまが収穫の旬」「春に植える」は、スライドにない言葉を補ったものです。藤巻さんの言葉に合わせて直します。</p>
+  </section>
+</main>
