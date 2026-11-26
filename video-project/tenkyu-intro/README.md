@@ -13,3 +13,8 @@
 
 作業時は scripts 内の DECK パス（scratchpad/deck6/media/）とブックレット表紙パスを、このフォルダの deck-media/・booklet/ に置き換えて使う。
 次の作業：ご本人の録音（ボイスメモ）を受け取り、場面ごとの長さを合わせてナレーションを重ねる。
+
+## 第3版（ナレーション入り・約6分15秒）
+- 声：Google ドライブの「新規録音 19」（01〜09, 11〜22）と「新規録音 20」（10）。切り分け位置は `align-final.json`
+- `narrate.py align-final.json` で場面の秒数を声に合わせ、`voice.wav` を作る
+- `mux2.sh 映像 出力 ビットレート` で、声＋控えめなBGMを重ねる

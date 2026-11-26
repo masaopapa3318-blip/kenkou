@@ -1,0 +1,134 @@
+[
+ {
+  "key": "s01",
+  "start": 0,
+  "end": 13.18,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s02",
+  "start": 19.67,
+  "end": 29.21,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s03",
+  "start": 35.96,
+  "end": 51.55,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s04",
+  "start": 62.14,
+  "end": 79.29,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s05",
+  "start": 85.51,
+  "end": 102.51,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s06",
+  "start": 108.31,
+  "end": 123.18,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s07",
+  "start": 132.2,
+  "end": 149.02,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s08",
+  "start": 156.42,
+  "end": 171.62,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s09",
+  "start": 181.39,
+  "end": 192.24,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s10",
+  "start": 0.0,
+  "end": 36.79,
+  "src": "rec20.m4a"
+ },
+ {
+  "key": "s11",
+  "start": 245.46,
+  "end": 256.65,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s12",
+  "start": 263.82,
+  "end": 278.14,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s13",
+  "start": 284.9,
+  "end": 308.9,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s14",
+  "start": 318.2,
+  "end": 335.24,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s15",
+  "start": 341.8,
+  "end": 358.13,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s16",
+  "start": 362.31,
+  "end": 370.56,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s17",
+  "start": 379.07,
+  "end": 382.26,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s18",
+  "start": 393.32,
+  "end": 399.43,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s19",
+  "start": 410.4,
+  "end": 427.42,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s20",
+  "start": 438.43,
+  "end": 448.76,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "gift",
+  "start": 461.81,
+  "end": 474.38,
+  "src": "rec19.m4a"
+ },
+ {
+  "key": "s21",
+  "start": 482.82,
+  "end": 512.47,
+  "src": "rec19.m4a"
+ }
+]
