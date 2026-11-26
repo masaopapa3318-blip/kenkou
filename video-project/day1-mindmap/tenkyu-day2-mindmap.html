@@ -142,9 +142,12 @@ const DATA = {
       { t: "年6回の合宿\n（2か月に一度）", c: [
         { t: "4月　菊芋と陸稲\n植え付け" },
         { t: "6月　野草\n（野草醤・野草酵素）" },
-        { t: "8月　夏の畑" },
+        { t: "8月　夏の畑と竹細工", c: [
+          { t: "畑の整備" },
+          { t: "夏野菜の調理法" },
+          { t: "竹細工で\n箸・お皿・カップを作る" } ] },
         { t: "10月　醗酵ときのこ" },
-        { t: "12月　菊芋掘りと乾物" },
+        { t: "12月　乾物調理と\n菊芋掘り" },
         { t: "2月　米粉のフランス菓子\nと米パン" } ] },
       { t: "3つのコース", c: [
         { t: "講師養成2年コース\n2年目は講師の視点で再受講" },
@@ -240,10 +243,10 @@ function boxSize(n) {
 function layout() {
   const colX = [0];
   // 深さごとの最大幅で列を決める
-  const maxW = [0, 0, 0, 0];
-  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth], b.w);
+  const maxW = [];
+  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth] || 0, b.w);
     if (n.open) (n.c || []).forEach(walk); })(DATA);
-  for (let d = 1; d < 4; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[d - 1];
+  for (let d = 1; d < maxW.length; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[Math.min(d - 1, GAP_X.length - 1)];
   let y = 0;
   (function place(n) {
     const kids = n.open ? (n.c || []) : [];
@@ -255,7 +258,8 @@ function layout() {
     n.y = (first + last) / 2;
     if (y - top < n.b.h) y = top + n.b.h + GAP_Y[0];
   })(DATA);
-  return { w: colX[3] + maxW[3] + 40, h: y };
+  const last = maxW.length - 1;
+  return { w: colX[last] + maxW[last] + 40, h: y };
 }
 
 function render(fade) {

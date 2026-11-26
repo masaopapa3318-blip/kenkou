@@ -298,10 +298,10 @@ function boxSize(n) {
 function layout() {
   const colX = [0];
   // 深さごとの最大幅で列を決める
-  const maxW = [0, 0, 0, 0];
-  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth], b.w);
+  const maxW = [];
+  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth] || 0, b.w);
     if (n.open) (n.c || []).forEach(walk); })(DATA);
-  for (let d = 1; d < 4; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[d - 1];
+  for (let d = 1; d < maxW.length; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[Math.min(d - 1, GAP_X.length - 1)];
   let y = 0;
   (function place(n) {
     const kids = n.open ? (n.c || []) : [];
@@ -313,7 +313,8 @@ function layout() {
     n.y = (first + last) / 2;
     if (y - top < n.b.h) y = top + n.b.h + GAP_Y[0];
   })(DATA);
-  return { w: colX[3] + maxW[3] + 40, h: y };
+  const last = maxW.length - 1;
+  return { w: colX[last] + maxW[last] + 40, h: y };
 }
 
 function render(fade) {
