@@ -1,0 +1,361 @@
+<title>天給自足 Day2 マインドマップ</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 左の「幸せ」から右へ、話す順に枝が伸びる。枝ごとに土と森の色 */
+:root {
+  --bg: #f5f2ea;
+  --surface: #fffdf8;
+  --ink: #26302a;
+  --muted: #5f675f;
+  --line: #d9d2c2;
+  --root: #1f3227;
+  --root-ink: #fbf8f1;
+  --b1: #b9713a; --b2: #3f6b4f; --b3: #8a5a2b; --b4: #6c7f2e;
+  --b5: #8b4a5c; --b6: #2f6f78; --b7: #a3792c; --b8: #4b5a8a; --b9: #9a3f2f; --b10: #5a4a3a; --b11: #6b4a7a; --b12: #3d5a5a;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+    --root: #d9c9a3; --root-ink: #1a211c;
+    --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+    --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde; --b9: #e28a74; --b10: #cdb89c; --b11: #c3a0d3; --b12: #8fc0b8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+  --root: #d9c9a3; --root-ink: #1a211c;
+  --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+  --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde; --b9: #e28a74; --b10: #cdb89c; --b11: #c3a0d3; --b12: #8fc0b8;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+.app { display: flex; flex-direction: column; height: 100%; }
+header.bar {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between;
+  padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--line); background: var(--surface);
+}
+.ttl { min-width: 0; }
+.ttl p { margin: 0; font-size: .72rem; letter-spacing: .18em; color: var(--muted); }
+.ttl h1 { margin: 2px 0 0; font-family: var(--serif); font-size: clamp(1.05rem, 2.6vw, 1.4rem); line-height: 1.35; text-wrap: balance; }
+.ctl { display: flex; flex-wrap: wrap; gap: 8px; }
+.ctl button {
+  font: inherit; font-size: .85rem; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+.ctl button.main { background: var(--root); color: var(--root-ink); border-color: var(--root); }
+.ctl button:focus-visible { outline: 2px solid var(--b6); outline-offset: 2px; }
+.stage { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; }
+svg { display: block; }
+.link { fill: none; stroke-width: 2.2; opacity: .75; }
+.node { cursor: default; }
+.node[role=button] { cursor: pointer; }
+#map { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.node rect { stroke-width: 1.5; }
+.node text { font-family: var(--sans); fill: var(--ink); }
+.node.d0 text { font-family: var(--serif); fill: var(--root-ink); font-weight: 800; }
+.node.d1 text { font-family: var(--serif); font-weight: 800; }
+.node .chev { font-family: var(--sans); font-size: 13px; font-weight: 700; }
+.hint { margin: 0; font-size: .78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.lg::before { content: ""; width: 18px; height: 12px; border-radius: 3px; border: 1.5px solid var(--muted); }
+.lg-q::before { border-style: dashed; }
+.lg-k::before { background: color-mix(in srgb, var(--muted) 22%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  .node, .link { transition: opacity .35s ease; }
+}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <div class="ttl">
+      <p>天給自足実践塾 3日間オンライン合宿 ／ Day2</p>
+      <h1>Day2「実践して育てる」　四季を通して、安心を自分の手で</h1>
+    </div>
+    <div class="ctl">
+      <button type="button" id="btn-next" class="main">次の枝を開く</button>
+      <button type="button" id="btn-all">すべて開く</button>
+      <button type="button" id="btn-reset">はじめに戻す</button>
+    </div>
+    <p class="hint"><span class="lg lg-q">点線＝問いかけ</span><span class="lg lg-k">色つき＝大事な一言</span>枝をタップすると開閉します。</p>
+  </header>
+  <div class="stage" id="stage"><svg id="map" role="img" aria-label="天給自足 Day2 マインドマップ"></svg></div>
+</div>
+
+<script>
+const DATA = {
+  t: "実践して育てる\n＝四季を通して\n安心を自分の手で\n育てる",
+  c: [
+    { t: "まずはじめに", s: "Day2の目的", c: [
+      { k: "q", t: "菊芋、\n食べてみましたか？" },
+      { t: "Day1のふり返り", c: [
+        { t: "不安の多くは\n安心を外に預けることから" },
+        { t: "天給自足＝天の恵みを\n見極め、活かす生き方" },
+        { t: "はじめの一歩＝菊芋" } ] },
+      { k: "key", t: "Day1は「知る」\nDay2からは\n「実践して育てる」" },
+      { t: "Day2を踏まえて\nDay3「伝える」へ進むので\n飛ばさずに最後まで" },
+      { t: "視聴期限 96時間（4日間）\nワークを書いた方に\n「菊芋レシピ集」をプレゼント" }
+    ]},
+    { t: "① なぜ一人では\n続かないのか", c: [
+      { k: "q", t: "一度うまくいけば\nそれでいいのでしょうか？" },
+      { k: "key", t: "大切なのは\n毎年うまくいくこと" },
+      { t: "気候も雨量も\n毎年ちがう" },
+      { t: "種まきと収穫は\n一年に一度しか体験できない" },
+      { t: "一人ひとり経験値がちがう\nその人に合った学び方が要る" },
+      { t: "米パンもお菓子も\n一度ですべては身につかない" },
+      { t: "だから", c: [
+        { t: "無期限で相談できる環境" },
+        { t: "ともに学び、助け合う仲間" } ] }
+    ]},
+    { t: "② うまくいく道", c: [
+      { k: "q", t: "うまくいく人と\nいかない人\n何がちがうのでしょう？" },
+      { t: "結果 ← 習慣 ← 行動 ← 選択\n← 無意識の思考 ← 環境" },
+      { k: "key", t: "成果は才能ではなく\n環境で決まる" },
+      { t: "環境が人を作る\n環境は人が作る" },
+      { t: "学びの浸透率", c: [
+        { t: "聞くだけ 6%" }, { t: "アウトプット 54%" }, { t: "実践 75%" }, { t: "人に教える 90%" } ] },
+      { t: "人は次の日\n75%を忘れてしまう" }
+    ]},
+    { t: "③ サクセスステップ", s: "天給自足を身につける3段階", c: [
+      { t: "1 誰でもできる自然農で\n成功体験から始める\n知識より、体験と体感" },
+      { t: "2 四季を体感しながら実践\nできるだけ早く一歩を\n踏み出す" },
+      { t: "3 先輩・仲間と一緒に始める", c: [
+        { k: "key", t: "同じ失敗を\nする必要はない" },
+        { t: "先輩の長年の蓄積を\n1年目から実践できる" } ] }
+    ]},
+    { t: "④ 醗酵は料理と同じ\n丁寧な工程が育てる", c: [
+      { k: "q", t: "醗酵に「近道」は\nあるでしょうか？" },
+      { t: "種をまく → 育てる\n→ 仕込む → いただく\nどの工程にも意味がある" },
+      { k: "key", t: "どこかで手を抜くと\nそのまま味と體に出る" },
+      { t: "電子レンジでチンではなく\n時間と手間が\nおいしさと健康を育てる" },
+      { t: "糀・味噌・縄文漬け\n甘酒・シードル" }
+    ]},
+    { t: "⑤ 天給自足実践塾", s: "八ヶ岳の四季を、仲間と体で覚える", c: [
+      { t: "紹介動画でご覧ください" },
+      { t: "年6回の合宿\n（2か月に一度）", c: [
+        { t: "4月　菊芋と陸稲\n植え付け" },
+        { t: "6月　野草\n（野草醤・野草酵素）" },
+        { t: "8月　夏の畑" },
+        { t: "10月　醗酵ときのこ" },
+        { t: "12月　菊芋掘りと乾物" },
+        { t: "2月　米粉のフランス菓子\nと米パン" } ] },
+      { t: "3つのコース", c: [
+        { t: "講師養成2年コース\n2年目は講師の視点で再受講" },
+        { t: "1年コース\n暮らしに落とし込み、生涯健康へ" },
+        { t: "半年コース\n4・6・8・10月の4回" } ] },
+      { t: "宿泊・お食事込み\nLINEサポート無制限\nいつでも見学できます" },
+      { k: "key", t: "農業の経験がなくても\n大丈夫" }
+    ]},
+    { t: "⑥ 一緒に学べる講座", c: [
+      { t: "醗酵実践塾\n糀・味噌・縄文漬けなど全11講座\n2泊3日で集中して" },
+      { t: "菊芋活用実践塾\n自然農での栽培から\n調理と保存まで" },
+      { t: "野草を生活に落とし込み\n楽しむ会\n野草研究家みこたまさんと" },
+      { t: "四季を楽しむ食と香りの\n実践リトリート\nミネラル・天然の香り・醗酵食で\n心と身体を内と外から" }
+    ]},
+    { t: "⑦ 身につく\n一生モノのスキル", c: [
+      { t: "1 自然農と加工・調理の技術" },
+      { t: "2 一生使える醗酵スキル" },
+      { t: "3 グルテンフリーのお菓子\n米パンづくり" },
+      { t: "4 無添加の食づくりと\n備蓄の知恵" },
+      { t: "5 キッチンガーデン\n（ポタジェ）のつくり方" },
+      { t: "6 期限のない\nオンラインサポート" },
+      { k: "key", t: "7 老けない・病まない\n飢えない生き方" }
+    ]},
+    { t: "⑧ 実践すると\nどうなる？", c: [
+      { k: "q", t: "サクセスステップを実践したら\nどうなると思いますか？" },
+      { t: "自然の中で四季を感じ\n心と身体の躍動を実感できる" },
+      { t: "味噌も漬物も作れなかった方が\n醗酵食で腸から健康に" },
+      { t: "暮らしそのものが\n変わっていく" },
+      { k: "key", t: "未経験から\n講師として次の一歩を\n踏み出した方も" },
+      { t: "続きは Day3「伝える」で" }
+    ]},
+    { t: "今日のワーク", s: "コメント欄に書いてください", c: [
+      { t: "1 Day2で学んだこと\n印象に残ったこと・気づき" },
+      { t: "2 今すぐやろうと思う行動を\n3つ以上" },
+      { t: "3 Day3への期待" },
+      { k: "key", t: "書いてくださった方に\n「菊芋レシピ集」を\nプレゼントします" }
+    ]},
+    { t: "まとめ", c: [
+      { t: "今日学んだこと", c: [
+        { t: "大切なのは\n毎年うまくいくこと" },
+        { t: "成果は才能ではなく\n環境で決まる" },
+        { t: "醗酵も暮らしも\n丁寧な工程が育てる" } ] },
+      { t: "Day2でできるようになること", c: [
+        { t: "自分に合った学び方が\nわかる" },
+        { t: "一年の実践の地図が\n描ける" } ] },
+      { t: "大事な心構え", c: [
+        { t: "同じ失敗をする必要はない" },
+        { t: "種まきは年に一度\nできるだけ早く一歩を" },
+        { t: "一人で抱えない" } ] },
+      { t: "Day3への準備", c: [
+        { t: "今すぐやる行動を\n一つ始めてみる" },
+        { t: "天給自足を\n誰に伝えたいか\n思い浮かべておく" } ] },
+      { t: "最後に", c: [
+        { t: "Day2で「育てる」道が見えた" },
+        { t: "でも、まだ自分と家族のため" },
+        { k: "key", t: "Day3で「伝える」\n伝承者・講師として\n日本全国へ" } ] }
+    ]}
+  ]
+};
+
+const COLORS = ['--b10', '--b9', '--b2', '--b1', '--b3', '--b4', '--b5', '--b6', '--b7', '--b8', '--b11', '--b12'];
+const FONT = [22, 18, 14.5, 13.5];
+const LINE_H = [30, 25, 21, 19];
+const PAD_X = [18, 16, 12, 10];
+const PAD_Y = [14, 10, 8, 6];
+const GAP_X = [56, 52, 44];
+const GAP_Y = [14, 10, 8];
+
+// 開閉状態を付ける（最初は幹だけ見せる）
+(function init(n, d, color) {
+  n.depth = d; n.color = color; n.open = d === 0;
+  (n.c || []).forEach((k, i) => init(k, d + 1, d === 0 ? COLORS[i % COLORS.length] : color));
+})(DATA, 0, '--root');
+
+const svg = document.getElementById('map');
+const NS = 'http://www.w3.org/2000/svg';
+const measureCtx = document.createElement('canvas').getContext('2d');
+
+function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function textW(s, fs, bold) {
+  measureCtx.font = `${bold ? 700 : 400} ${fs}px "Noto Sans JP", sans-serif`;
+  return measureCtx.measureText(s).width;
+}
+function boxSize(n) {
+  const d = Math.min(n.depth, 3);
+  const lines = n.t.split('\n');
+  if (n.k === 'q') lines[0] = 'Q. ' + lines[0];
+  if (n.s) lines.push(n.s);
+  const w = Math.max(...lines.map(l => textW(l, FONT[d], d < 2 || n.k === 'key'))) + PAD_X[d] * 2 + (n.c ? 18 : 0);
+  return { w: Math.ceil(w), h: lines.length * LINE_H[d] + PAD_Y[d] * 2, lines };
+}
+
+function layout() {
+  const colX = [0];
+  // 深さごとの最大幅で列を決める
+  const maxW = [0, 0, 0, 0];
+  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth], b.w);
+    if (n.open) (n.c || []).forEach(walk); })(DATA);
+  for (let d = 1; d < 4; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[d - 1];
+  let y = 0;
+  (function place(n) {
+    const kids = n.open ? (n.c || []) : [];
+    n.x = colX[n.depth];
+    if (!kids.length) { n.y = y + n.b.h / 2; y += n.b.h + GAP_Y[Math.max(0, Math.min(n.depth - 1, 2))]; return; }
+    const top = y;
+    kids.forEach(place);
+    const first = kids[0].y, last = kids[kids.length - 1].y;
+    n.y = (first + last) / 2;
+    if (y - top < n.b.h) y = top + n.b.h + GAP_Y[0];
+  })(DATA);
+  return { w: colX[3] + maxW[3] + 40, h: y };
+}
+
+function render(fade) {
+  const size = layout();
+  const M = 24;
+  const W = Math.max(size.w + M * 2, 320), H = Math.max(size.h + M * 2, 320);
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `${-M} ${-M} ${W} ${H}`);
+  svg.replaceChildren();
+  NODES.length = 0;
+  const links = document.createElementNS(NS, 'g'), nodes = document.createElementNS(NS, 'g');
+  svg.append(links, nodes);
+  (function draw(n) {
+    const kids = n.open ? (n.c || []) : [];
+    kids.forEach(k => {
+      const p = document.createElementNS(NS, 'path');
+      const x1 = n.x + n.b.w, y1 = n.y, x2 = k.x, y2 = k.y, mx = (x1 + x2) / 2;
+      p.setAttribute('d', `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+      p.setAttribute('class', 'link');
+      p.setAttribute('stroke', cssVar(k.color));
+      links.append(p);
+      draw(k);
+    });
+    const g = document.createElementNS(NS, 'g');
+    const d = Math.min(n.depth, 3);
+    g.setAttribute('class', `node d${d}`);
+    g.setAttribute('transform', `translate(${n.x},${n.y - n.b.h / 2})`);
+    g.setAttribute('tabindex', n.c ? '0' : '-1');
+    if (n.c) g.setAttribute('role', 'button');
+    let r = document.createElementNS(NS, 'rect');
+    r.setAttribute('width', n.b.w); r.setAttribute('height', n.b.h);
+    r.setAttribute('rx', d === 0 ? 18 : d === 1 ? 14 : 10);
+    const col = cssVar(n.color);
+    if (d === 0) { r.setAttribute('fill', col); r.setAttribute('stroke', col); }
+    else if (d === 1) { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-width', '2.5'); }
+    else if (n.k === 'key') { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-width', '2');
+      const tint = document.createElementNS(NS, 'rect'); tint.setAttribute('width', n.b.w); tint.setAttribute('height', n.b.h); tint.setAttribute('rx', 10);
+      tint.setAttribute('fill', col); tint.setAttribute('fill-opacity', '.13'); tint.setAttribute('pointer-events', 'none'); g.append(r); r = tint; }
+    else if (n.k === 'q') { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-dasharray', '5 4'); }
+    else { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-opacity', '.45'); }
+    g.append(r);
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('font-size', FONT[d]);
+    if (n.k === 'key') t.setAttribute('font-weight', '700');
+    n.b.lines.forEach((line, i) => {
+      const ts = document.createElementNS(NS, 'tspan');
+      ts.setAttribute('x', PAD_X[d]);
+      ts.setAttribute('y', PAD_Y[d] + LINE_H[d] * (i + 0.72));
+      ts.textContent = line;
+      if (n.s && i === n.b.lines.length - 1) { ts.setAttribute('font-size', FONT[d] * 0.72); ts.setAttribute('fill', cssVar('--muted')); }
+      if (d === 1 && i === 0) ts.setAttribute('fill', col);
+      t.append(ts);
+    });
+    g.append(t);
+    if (n.c && d > 0) {
+      const ch = document.createElementNS(NS, 'text');
+      ch.setAttribute('class', 'chev');
+      ch.setAttribute('x', n.b.w - 16); ch.setAttribute('y', n.b.h / 2 + 5);
+      ch.setAttribute('fill', col);
+      ch.textContent = n.open ? '−' : '＋';
+      g.append(ch);
+    }
+    if (n.c) {
+      g.dataset.id = NODES.push(n) - 1;
+    }
+    nodes.append(g);
+  })(DATA);
+}
+
+// タップ・クリックは地図全体で一度だけ受け取る（描き直しても確実に反応する）
+const NODES = [];
+function toggleNode(n) {
+  if (n.depth === 0) { DATA.c.forEach(b => { b.open = true; }); render(); return; } // 中心をタップしたら枝をすべて見せる
+  n.open = !n.open; if (!n.open) closeAll(n, false); render();
+}
+function nodeFrom(e) { const g = e.target.closest && e.target.closest('.node'); return g && g.dataset.id ? NODES[+g.dataset.id] : null; }
+svg.addEventListener('click', e => { const n = nodeFrom(e); if (n) toggleNode(n); });
+svg.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const n = nodeFrom(e); if (n) { e.preventDefault(); toggleNode(n); } });
+
+function closeAll(n, self = true) { if (self) n.open = false; (n.c || []).forEach(k => closeAll(k)); }
+function openAll(n) { n.open = true; (n.c || []).forEach(openAll); }
+
+// 話す順に、次の枝を開く（前の枝は閉じて、いま話している枝に集中する）
+let step = -1;
+document.getElementById('btn-next').addEventListener('click', () => {
+  step = (step + 1) % DATA.c.length;
+  DATA.c.forEach((b, i) => { if (i === step) openAll(b); else closeAll(b); });
+  render();
+  const b = DATA.c[step];
+  const stage = document.getElementById('stage');
+  let top = b.y - b.b.h / 2;
+  (function minY(n) { top = Math.min(top, n.y - n.b.h / 2); if (n.open) (n.c || []).forEach(minY); })(b);
+  stage.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'smooth' });
+});
+document.getElementById('btn-all').addEventListener('click', () => { openAll(DATA); render(); });
+document.getElementById('btn-reset').addEventListener('click', () => { step = -1; DATA.c.forEach(b => closeAll(b)); render(); document.getElementById('stage').scrollTo({ top: 0, left: 0 }); });
+
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+mq.addEventListener?.('change', () => render());
+new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => render());
+render();
+</script>
