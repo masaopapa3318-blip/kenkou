@@ -134,5 +134,10 @@ page('s21', f'''<div class="page dark" style="justify-content:center;padding-top
 <div style="margin-top:40px"><div style="display:flex;gap:50px;align-items:flex-start;justify-content:center"><div style="text-align:center;width:380px"><p style="font-size:30px;line-height:1.45;font-weight:700;margin-bottom:14px;min-height:132px;display:flex;align-items:flex-end;justify-content:center">天給自足実践塾<br>30分セッションの<br>お申し込み</p><div style="background:#fff;border-radius:22px;padding:27px"><img src="{IMG}line-qr-code.png" style="width:100%;display:block"></div><p style="font-size:30px;line-height:1.45;margin-top:14px">公式LINE<br>レジオン八ヶ岳</p></div><div style="text-align:center;width:380px"><p style="font-size:30px;line-height:1.45;font-weight:700;margin-bottom:14px;min-height:132px;display:flex;align-items:flex-end;justify-content:center">食と香りの実践リトリート<br>お問い合わせ・<br>ご相談はこちら</p><div style="background:#fff;border-radius:22px;padding:27px"><img src="file:///home/user/kenkou/video-project/tenkyu-intro/line-qr-hakko-lab.png" style="width:100%;display:block"></div><p style="font-size:30px;line-height:1.45;margin-top:14px">公式LINE<br>八ヶ岳醗酵する暮らしラボ</p></div></div></div>
 <p class="serif" style="font-size:38px;margin-top:40px">レジオン八ヶ岳　天給自足実践塾</p></div>'''); add('s21', 14)
 
+# ナレーションに合わせた秒数があれば、それを優先する
+_dp = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'voice', 'durations.json')
+if os.path.exists(_dp):
+    _d = json.load(open(_dp))
+    for _s in scenes: _s['dur'] = _d.get(_s['name'], _s['dur'])
 json.dump(scenes, open(os.path.join(OUT, 'scenes.json'), 'w'), ensure_ascii=False, indent=1)
 print(len(scenes), 'scenes,', sum(s['dur'] for s in scenes), 'sec')

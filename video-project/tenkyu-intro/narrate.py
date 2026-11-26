@@ -4,6 +4,7 @@ D = os.path.dirname(os.path.abspath(__file__))
 AL = json.load(open(os.path.join(D, 'voice', sys.argv[1]), encoding='utf-8'))
 XF, LEAD, TAIL, MIN = 0.8, 0.9, 1.6, 5.0
 durs = {a['key']: round(max(MIN, (a['end'] - a['start']) + LEAD + TAIL), 2) for a in AL}
+json.dump(durs, open(os.path.join(D, 'voice', 'durations.json'), 'w'), indent=1)
 for sd in ['scenes', 'scenes_v']:
     p = os.path.join(D, sd, 'scenes.json'); sc = json.load(open(p))
     for s in sc: s['dur'] = durs[s['name']]
