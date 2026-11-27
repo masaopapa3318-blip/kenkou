@@ -2168,6 +2168,13 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 @media (max-width: 640px) {
   .recipe-sheet--long .recipe-photo { height: auto; }
 }
+/* 画面の幅がA4より狭いとき：文字がはみ出さないよう、シートを中身に合わせて伸ばす（印刷には影響しない） */
+@media screen and (min-width: 641px) and (max-width: 900px) {
+  .recipe-sheet { aspect-ratio: auto; min-height: 0; }
+  .recipe-sheet .recipe-photo,
+  .recipe-sheet--compact .recipe-photo,
+  .recipe-sheet--long .recipe-photo { height: auto; aspect-ratio: 2 / 1; }
+}
 
 /* 3種類を並べるシート（おむすび三種など） */
 .recipe-body--variants3 { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
