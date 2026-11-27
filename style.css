@@ -2168,6 +2168,10 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 @media (max-width: 640px) {
   .recipe-sheet--long .recipe-photo { height: auto; }
 }
+/* 材料が特に多いシート（3つの生地・クリームを使うお菓子など）：写真をさらに小さくする */
+.recipe-sheet--xlong .recipe-photo { height: 14%; margin: 12px 0; }
+.recipe-sheet--xlong .recipe-ingredients li { padding: 2px 2px; }
+.recipe-sheet--xlong .recipe-ingredients li.recipe-group { margin-top: 5px; }
 /* 画面の幅がA4より狭いとき：文字がはみ出さないよう、シートを中身に合わせて伸ばす（印刷には影響しない） */
 @media screen and (min-width: 641px) and (max-width: 900px) {
   .recipe-sheet { aspect-ratio: auto; min-height: 0; }
