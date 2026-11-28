@@ -1,0 +1,629 @@
+<title>天給自足 Day1 収録用</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 左の「幸せ」から右へ、話す順に枝が伸びる。枝ごとに土と森の色 */
+:root {
+  --bg: #f5f2ea;
+  --surface: #fffdf8;
+  --ink: #26302a;
+  --muted: #5f675f;
+  --line: #d9d2c2;
+  --root: #1f3227;
+  --root-ink: #fbf8f1;
+  --b1: #b9713a; --b2: #3f6b4f; --b3: #8a5a2b; --b4: #6c7f2e;
+  --b5: #8b4a5c; --b6: #2f6f78; --b7: #a3792c; --b8: #4b5a8a; --b9: #9a3f2f; --b10: #5a4a3a; --b11: #6b4a7a; --b12: #3d5a5a;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+    --root: #d9c9a3; --root-ink: #1a211c;
+    --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+    --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde; --b9: #e28a74; --b10: #cdb89c; --b11: #c3a0d3; --b12: #8fc0b8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+  --root: #d9c9a3; --root-ink: #1a211c;
+  --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+  --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde; --b9: #e28a74; --b10: #cdb89c; --b11: #c3a0d3; --b12: #8fc0b8;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+.app { display: flex; flex-direction: column; height: 100%; }
+header.bar {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between;
+  padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--line); background: var(--surface);
+}
+.ttl { min-width: 0; }
+.ttl p { margin: 0; font-size: .72rem; letter-spacing: .18em; color: var(--muted); }
+.ttl .q { margin: 2px 0 0; font-family: var(--serif); font-size: clamp(.9rem, 2vw, 1.02rem); letter-spacing: .02em; color: var(--ink); }
+.ttl h1 { margin: 2px 0 0; font-family: var(--serif); font-size: clamp(1.05rem, 2.6vw, 1.4rem); line-height: 1.35; text-wrap: balance; }
+.ctl { display: flex; flex-wrap: wrap; gap: 8px; }
+.ctl button {
+  font: inherit; font-size: .85rem; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+.ctl button.main { background: var(--root); color: var(--root-ink); border-color: var(--root); }
+.ctl button:focus-visible { outline: 2px solid var(--b6); outline-offset: 2px; }
+.stage { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; }
+svg { display: block; }
+.link { fill: none; stroke-width: 2.2; opacity: .75; }
+.node { cursor: default; }
+.node[role=button] { cursor: pointer; }
+#map .link-node { cursor: pointer; }
+#map .link-node text { text-decoration: underline; }
+#map { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.node rect { stroke-width: 1.5; }
+.node text { font-family: var(--sans); fill: var(--ink); }
+.node.d0 text { font-family: var(--serif); fill: var(--root-ink); font-weight: 800; }
+.node.d1 text { font-family: var(--serif); font-weight: 800; }
+.node .chev { font-family: var(--sans); font-size: 13px; font-weight: 700; }
+.hint { margin: 0; font-size: .78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.lg::before { content: ""; width: 18px; height: 12px; border-radius: 3px; border: 1.5px solid var(--muted); }
+.lg-q::before { border-style: dashed; }
+.lg-k::before { background: color-mix(in srgb, var(--muted) 22%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  .node, .link { transition: opacity .35s ease; }
+}
+
+/* 収録用：左にマインドマップ、右にいま話す枝の台本 */
+.body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 44%); }
+.body .stage { min-height: 0; }
+.prompter { min-width: 0; min-height: 0; overflow: auto; border-left: 1px solid var(--line); background: var(--surface);
+  padding-block: 20px 48px; padding-left: 24px; padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.pr-top { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between; }
+.pr-count { font-size: .8rem; letter-spacing: .14em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pr-size { display: flex; gap: 6px; }
+.pr-size button { font: inherit; font-size: .8rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.pr-title { margin: 8px 0 2px; font-family: var(--serif); font-weight: 800; font-size: 1.5em; line-height: 1.4; color: var(--pc, var(--ink)); text-wrap: balance; }
+.pr-time { margin: 0; font-size: .85rem; color: var(--muted); }
+.pr-screen { margin: 12px 0 18px; padding: 8px 12px; border-radius: 8px; background: var(--bg); font-size: .85rem; color: var(--muted); }
+.pr-text { font-size: var(--fs, 21px); line-height: 1.95; }
+.pr-text p { margin: 0 0 1em; }
+.pause { display: inline-block; margin: 0 .25em; padding: 0 .5em; border-radius: 6px; font-size: .78em; line-height: 1.6; vertical-align: .08em;
+  background: color-mix(in srgb, var(--pc, var(--b6)) 18%, transparent); color: var(--pc, var(--ink)); font-weight: 700; }
+.cue { padding: 10px 14px; border: 2px dashed var(--pc, var(--line)); border-radius: 10px; font-weight: 700; font-size: .9em; }
+.note { font-size: .78em; color: var(--muted); }
+.pr-nav { display: flex; gap: 8px; margin-top: 8px; }
+.pr-nav button { font: inherit; font-size: .9rem; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.pr-nav button.main { background: var(--root); color: var(--root-ink); border-color: var(--root); }
+.rec-badge { display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 999px; font-size: .7rem; letter-spacing: .1em; background: var(--b9); color: #fff; vertical-align: 1px; }
+@media (max-width: 820px) {
+  .body { grid-template-columns: 1fr; grid-template-rows: 38% minmax(0, 1fr); }
+  .prompter { border-left: 0; border-top: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <div class="ttl">
+      <p>八ヶ岳から届ける3日間オンライン合宿 ／ Day1「知る」</p>
+      <h1><span class="rec-badge">収録用</span>自給自足ではなく、「天給自足」</h1>
+      <p class="q">「お金があれば食べ物は買える」本当ですか？</p>
+    </div>
+    <div class="ctl">
+      <button type="button" id="btn-next" class="main">次の枝を開く</button>
+      <button type="button" id="btn-all">すべて開く</button>
+      <button type="button" id="btn-reset">はじめに戻す</button>
+    </div>
+    <p class="hint"><span class="lg lg-q">点線＝問いかけ</span><span class="lg lg-k">色つき＝大事な一言</span>枝をタップすると開閉します。</p>
+  </header>
+  <div class="body"><div class="stage" id="stage"><svg id="map" role="img" aria-label="天給自足 Day1 マインドマップ"></svg></div><aside class="prompter" id="prompter" aria-live="polite"></aside></div>
+</div>
+
+<script>
+const DATA = {
+  t: "幸せに生きる\n最善の方法\n＝天給自足で\n安心を自給する",
+  c: [
+    { t: "まずはじめに", s: "3日間のオンライン合宿", c: [
+      { k: "key", t: "結論を先にお伝えします\n最強の健康法と\n幸せに生きる最善の方法は\n天給自足で生きること" },
+      { t: "この3日間の形式", c: [
+        { t: "視聴期限 96時間（4日間）\n後回しにせず、最後まで" },
+        { t: "3日間のワークを書き終えた方に\n2つのプレゼント", c: [
+          { t: "天給自足 春号（4月号）の小冊子\n（菊芋レシピ入り）" },
+          { t: "3日間のマインドマップ\n（復習用）" } ] },
+        { t: "Day3の最後に\n参加者だけの\n特別なご案内があります" } ] },
+      { t: "3日間でたどる3つの段階", c: [
+        { t: "Day1　知る\n人間が生きる上で一番大切なこと\n＝天給自足・自給自足" },
+        { t: "Day2　実践して育てる\n四季を通して、自分の手で" },
+        { t: "Day3　伝える\n伝承者・講師となり\n日本全国へ広げる" } ] },
+      { t: "お話しするのは", s: "藤巻正夫（レジオン八ヶ岳）", c: [
+        { t: "18歳から洋菓子の道へ\nスイス・フランスで修業\nNHK「きょうの料理」出演" },
+        { t: "横浜で「レジオン」を21年\n2020年 八ヶ岳へ移り\ncafé & stay を開く" },
+        { t: "陸稲・菊芋の自然農 6年\n醗酵・菊芋活用実践塾 主宰" } ] },
+      { k: "key", t: "合言葉\n安心は買うものではなく\n育てるもの\n3日間で、きっと腑に落ちます" }
+    ]},
+    { t: "① なぜ今、自足という\n生き方が必要なのか", c: [
+      { k: "q", t: "「お金があれば\n食べ物は買える」\n本当でしょうか？" },
+      { t: "予測不可能な時代\n食料・健康・お金の不安" },
+      { k: "key", t: "不安の多くは\n安心を外に預けることから\n生まれる" },
+      { t: "安心の外注をやめよう", c: [
+        { t: "健康は、病院に" },
+        { t: "美は、化粧品に" },
+        { t: "食は、スーパーに" },
+        { t: "心は、誰かの言葉に" },
+        { k: "key", t: "外に預けると\n自分で生きる感覚を\n失ってしまう" } ] },
+      { t: "食の中身が変わった", c: [
+        { t: "野菜のミネラルが\n極端に減っている" },
+        { t: "添加物・農薬・除草剤\nホルモン剤" },
+        { t: "遠くから運ばれる食\n流通まかせの安心" } ] },
+      { t: "健康がなければ\n仕事も暮らしも創れない" },
+      { t: "だから", c: [
+        { t: "足元の食は、自分で確保する" },
+        { t: "自分と家族の安心は\n自ら育てる時代" } ] },
+      { t: "わたしの原点", c: [
+        { t: "6年前、八ヶ岳へ移住\n素人でも食を自給し\n健康になる道を探して" },
+        { t: "予測不可能な時代に必要なのは\n食の安心安全と健康" } ] }
+    ]},
+    { t: "② 自足とは何か\n＝天給自足", c: [
+      { k: "q", t: "「自給自足」と「天給自足」\n何が違うのでしょう？" },
+      { k: "key", t: "大地・水・空気・太陽・種\nすべて天が用意してくれている" },
+      { t: "天の恵みを見極め、調理し\n生活に落とし込み\n生命エネルギーをいただく生き方" },
+      { t: "4つの工程", c: [
+        { t: "1 種をまく" }, { t: "2 育てる" }, { t: "3 仕込む（醗酵・保存）" }, { t: "4 いただく" } ] },
+      { t: "自然農で育てる", c: [
+        { t: "陸稲（畑のお米）" }, { t: "菊芋（世界三大健康野菜）" }, { t: "旬の野菜・ポタジェ" } ] },
+      { t: "天の恵みを見極める", c: [
+        { t: "野草・薬草" }, { t: "きのこ・山菜" }, { t: "木の葉と実" } ] },
+      { t: "自分で育み、流通をなくす\n添加物・農薬・除草剤から離れる" },
+      { t: "それは、日本の田舎の\n伝統的な食文化" }
+    ]},
+    { t: "③ 幸せとは何か", s: "アランの幸福論", c: [
+      { k: "q", t: "どうしたら\n今より幸せになれるのか？" },
+      { t: "1 不安の正体を見極める\n（食料・健康・お金）\n原因を知れば、不安は消える" },
+      { t: "2 自分の畑を耕す\n仕事を自分の裁量で" },
+      { t: "3 幸せは受け取るものではなく\n生みだすもの\n歌う・描く・作り育む" },
+      { t: "4 幸せの敵は、自分自身" },
+      { t: "5 幸福は状況ではなく\n解釈力と態度" },
+      { k: "key", t: "天給自足は\n幸せを自分の手で\n生みだす生き方" }
+    ]},
+    { t: "④ 最強の健康法\n＝腸活", c: [
+      { k: "q", t: "あなたの體は\n何でできていますか？" },
+      { k: "key", t: "體は食の変化体\n身体は食べたもので創られる" },
+      { t: "腸は神に最も近い臓器\n食べることは祈ること" },
+      { t: "醗酵食で腸から健康に", c: [
+        { t: "便秘・肌トラブルの改善" }, { t: "心が軽くなる" }, { t: "薬を飲まなくなった方も" } ] },
+      { t: "ミネラルが鍵", c: [
+        { t: "自然の恵みは\n微量ミネラルの宝庫" },
+        { t: "「すべての病気は\nミネラル不足に行き着く」\nライナス・ポーリング博士" },
+        { t: "精密機械にレアアース\n體には微量ミネラル" } ] },
+      { t: "自然の恵みが\n家庭の薬箱" },
+      { k: "key", t: "病まない・飢えない・老けない" }
+    ]},
+    { t: "⑤ 天給自足を学ぶ\n3つのメリット", c: [
+      { t: "1 必要性\n食で體と心を整える" },
+      { t: "2 重要性\n見極め、活用し、生き抜く力\n家族の健康を守る" },
+      { t: "3 今すぐ始める理由\n見極める力の有無が\n大きな違いを生む\n経済効果もとても大きい" }
+    ]},
+    { t: "⑥ 実践した方の声", c: [
+      { t: "受講生の変化", c: [
+        { t: "腸活で心身が軽くなり\n薬を飲まなくなった" },
+        { t: "便秘・肌トラブルが改善し\n醗酵食の大切さを実感" },
+        { t: "安心を外注するのをやめ\n自給する生き方へ" } ] },
+      { t: "参加した方の気づき", c: [
+        { t: "植物の力を感じ\nエネルギーの循環がわかった" },
+        { t: "安心は自分で育てる\nその大切さに氣づいた" },
+        { t: "伝承することで\n成長が大きく変わる" } ] },
+      { t: "こんな方も受講", c: [
+        { t: "医師ご夫妻\nお子さんの体質を思い\n醗酵食を暮らしに" },
+        { t: "保育園経営の方" },
+        { t: "料理研究家（九州から）" },
+        { t: "機能性医学認定\nヘルスコーチ（ハワイから）" } ] }
+    ]},
+    { t: "⑦ よくある失敗\nなぜ多くの人が\nうまくいかないのか", c: [
+      { k: "q", t: "なぜ多くの人が\n中途半端で\n終わってしまうのか？" },
+      { k: "key", t: "したい人 1万人\n始める人 100人\n続ける人 1人" },
+      { t: "知っている ≠ 活用できる\nやっている ≠ うまくいく" },
+      { t: "失敗①\n一人だと、一つの失敗で止まる" },
+      { t: "失敗②\n動画で知っても、土地・季節・年で違う\n四季を通した実践が必要" },
+      { t: "失敗③\nいつでも聞ける環境と\n仲間がない" },
+      { t: "うまくいく正しい道は\nDay2でお伝えします" }
+    ]},
+    { t: "⑧ はじめの一歩\n＝菊芋", c: [
+      { t: "なぜ菊芋から？", c: [
+        { t: "世界三大健康野菜の一つ" },
+        { t: "イヌリン（水溶性食物繊維）が\n糖質の吸収を緩やかにし\n食後の急な血糖値上昇を\n穏やかにする" },
+        { t: "丈夫で育てやすく\n自然農の成功体験に最適" } ] },
+      { t: "今日から一人でできること", c: [
+        { t: "1 食べてみる\n（いまが収穫の旬）" },
+        { t: "2 生・きんぴら・菊芋茶など\n暮らしに取り入れる" },
+        { t: "3 春に植えれば\n無限ループで菊芋が育つ" } ] },
+      { t: "わたしも自然農で\n6年、菊芋を育てています" },
+      { k: "q", t: "でも――\n土地・季節・その年の気候で\n育ち方は大きく違う\n一人で続けられますか？" },
+      { k: "key", t: "続きは Day2\n「実践して育てる」で" }
+    ]},
+    { t: "今日のワーク", s: "コメント欄に書いてください", c: [
+      { t: "1 Day1で学んだこと\n印象に残ったこと・気づき" },
+      { t: "2 あなたの食や健康の不安\nこれまでの失敗談" },
+      { t: "3 Day2への期待" },
+      { k: "key", t: "3日間のワークを書き終えた方に\n春号の小冊子と\n3日間のマインドマップを\nプレゼント" },
+      { t: "あと2日。\n毎日書いて、受け取ってください" }
+    ]},
+    { t: "まとめ", c: [
+      { t: "今日学んだこと", c: [
+        { t: "健康も安心も\n買うものではなく育てるもの" },
+        { t: "最強の健康法は\n天給自足で育み、調理すること" },
+        { t: "幸せは生みだすもの\nとらえ方と態度" } ] },
+      { t: "Day1でできるようになること", c: [
+        { t: "自分の不安の正体がわかる" },
+        { t: "菊芋で腸活の一歩を\n踏み出せる" } ] },
+      { t: "大事な心構え", c: [
+        { t: "知っている ≠ 活用できる" },
+        { t: "悩むより、まず一歩" },
+        { t: "人生は、選択の質" } ] },
+      { t: "Day2への準備", c: [
+        { t: "菊芋を一度食べてみる" },
+        { t: "ワークを書く" },
+        { t: "自分の現在地をふり返る\n健康・農・これからの生き方" } ] },
+      { t: "最後に", c: [
+        { k: "key", t: "身体は食べたもので\n心は聞いた言葉で\n未来は言った言葉で創られる" },
+        { t: "Day1は、まだ「知る」の入口" },
+        { t: "Day2で「実践して育てる」へ" },
+        { t: "Day3で「伝える」\n伝承者・講師として全国へ" },
+        { t: "Day3の最後には\n参加者だけの特別なご案内" } ] }
+    ]}
+  ]
+};
+
+// Day2・Day3 で使う予定の枝（Day1の画面には出しません）
+const LATER = [
+    { t: "⑦ うまくいく道", c: [
+      { t: "結果 ← 習慣 ← 行動 ← 選択\n← 無意識の思考 ← 環境" },
+      { t: "成果は才能ではなく\n環境で決まる" },
+      { t: "学びの浸透率", c: [
+        { t: "聞くだけ 6%" }, { t: "アウトプット 54%" }, { t: "実践 75%" }, { t: "人に教える 90%" } ] },
+      { t: "無期限で相談できる環境\n（気候は毎年違う）" },
+      { t: "サクセスステップ", c: [
+        { t: "1 誰でもできる自然農で\n成功体験から" },
+        { t: "2 四季を体感し\n早く一歩を踏み出す" },
+        { t: "3 先輩・仲間と\n一緒に始める" } ] }
+    ]},
+    { t: "⑨ 未来へ\n伝承者・講師として", c: [
+      { t: "夢を叶える3つのポイント", c: [
+        { t: "志をありありと描く" }, { t: "今の現在地を知る" }, { t: "最短ルートを知る" } ] },
+      { t: "現在地チェック\n健康・農・これからの生き方" },
+      { t: "天給自足の伝承者・講師に\n天給自足協会" },
+      { t: "日本の食文化・伝統文化\n徳文化を伝承する" },
+      { t: "身体は食べたもの\n心は聞いた言葉\n未来は言った言葉で創られる" },
+      { t: "人生は、選択の質", c: [
+        { t: "次の一歩：\n無料30分の個別セッション\n→ Day2 講座のご案内へ" } ] }
+    ]}
+];
+
+const COLORS = ['--b10', '--b9', '--b2', '--b1', '--b3', '--b4', '--b5', '--b6', '--b7', '--b8', '--b11', '--b12'];
+const FONT = [22, 18, 14.5, 13.5];
+const LINE_H = [30, 25, 21, 19];
+const PAD_X = [18, 16, 12, 10];
+const PAD_Y = [14, 10, 8, 6];
+const GAP_X = [56, 52, 44];
+const GAP_Y = [14, 10, 8];
+
+// 開閉状態を付ける（最初は幹だけ見せる）
+(function init(n, d, color) {
+  n.depth = d; n.color = color; n.open = d === 0;
+  (n.c || []).forEach((k, i) => init(k, d + 1, d === 0 ? COLORS[i % COLORS.length] : color));
+})(DATA, 0, '--root');
+
+const svg = document.getElementById('map');
+const NS = 'http://www.w3.org/2000/svg';
+const measureCtx = document.createElement('canvas').getContext('2d');
+
+function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function textW(s, fs, bold) {
+  measureCtx.font = `${bold ? 700 : 400} ${fs}px "Noto Sans JP", sans-serif`;
+  return measureCtx.measureText(s).width;
+}
+function boxSize(n) {
+  const d = Math.min(n.depth, 3);
+  const lines = n.t.split('\n');
+  if (n.k === 'q') lines[0] = 'Q. ' + lines[0];
+  if (n.s) lines.push(n.s);
+  const w = Math.max(...lines.map(l => textW(l, FONT[d], d < 2 || n.k === 'key'))) + PAD_X[d] * 2 + (n.c ? 18 : 0);
+  return { w: Math.ceil(w), h: lines.length * LINE_H[d] + PAD_Y[d] * 2, lines };
+}
+
+function layout() {
+  const colX = [0];
+  // 深さごとの最大幅で列を決める
+  const maxW = [];
+  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth] || 0, b.w);
+    if (n.open) (n.c || []).forEach(walk); })(DATA);
+  for (let d = 1; d < maxW.length; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[Math.min(d - 1, GAP_X.length - 1)];
+  let y = 0;
+  (function place(n) {
+    const kids = n.open ? (n.c || []) : [];
+    n.x = colX[n.depth];
+    if (!kids.length) { n.y = y + n.b.h / 2; y += n.b.h + GAP_Y[Math.max(0, Math.min(n.depth - 1, 2))]; return; }
+    const top = y;
+    kids.forEach(place);
+    const first = kids[0].y, last = kids[kids.length - 1].y;
+    n.y = (first + last) / 2;
+    if (y - top < n.b.h) y = top + n.b.h + GAP_Y[0];
+  })(DATA);
+  const last = maxW.length - 1;
+  return { w: colX[last] + maxW[last] + 40, h: y };
+}
+
+function render(fade) {
+  const size = layout();
+  const M = 24;
+  const W = Math.max(size.w + M * 2, 320), H = Math.max(size.h + M * 2, 320);
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `${-M} ${-M} ${W} ${H}`);
+  svg.replaceChildren();
+  NODES.length = 0;
+  const links = document.createElementNS(NS, 'g'), nodes = document.createElementNS(NS, 'g');
+  svg.append(links, nodes);
+  (function draw(n) {
+    const kids = n.open ? (n.c || []) : [];
+    kids.forEach(k => {
+      const p = document.createElementNS(NS, 'path');
+      const x1 = n.x + n.b.w, y1 = n.y, x2 = k.x, y2 = k.y, mx = (x1 + x2) / 2;
+      p.setAttribute('d', `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+      p.setAttribute('class', 'link');
+      p.setAttribute('stroke', cssVar(k.color));
+      links.append(p);
+      draw(k);
+    });
+    const g = document.createElementNS(NS, 'g');
+    const d = Math.min(n.depth, 3);
+    g.setAttribute('class', `node d${d}`);
+    g.setAttribute('transform', `translate(${n.x},${n.y - n.b.h / 2})`);
+    g.setAttribute('tabindex', n.c ? '0' : '-1');
+    if (n.c) g.setAttribute('role', 'button');
+    let r = document.createElementNS(NS, 'rect');
+    r.setAttribute('width', n.b.w); r.setAttribute('height', n.b.h);
+    r.setAttribute('rx', d === 0 ? 18 : d === 1 ? 14 : 10);
+    const col = cssVar(n.color);
+    if (d === 0) { r.setAttribute('fill', col); r.setAttribute('stroke', col); }
+    else if (d === 1) { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-width', '2.5'); }
+    else if (n.k === 'key') { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-width', '2');
+      const tint = document.createElementNS(NS, 'rect'); tint.setAttribute('width', n.b.w); tint.setAttribute('height', n.b.h); tint.setAttribute('rx', 10);
+      tint.setAttribute('fill', col); tint.setAttribute('fill-opacity', '.13'); tint.setAttribute('pointer-events', 'none'); g.append(r); r = tint; }
+    else if (n.k === 'q') { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-dasharray', '5 4'); }
+    else { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-opacity', '.45'); }
+    g.append(r);
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('font-size', FONT[d]);
+    if (n.k === 'key') t.setAttribute('font-weight', '700');
+    n.b.lines.forEach((line, i) => {
+      const ts = document.createElementNS(NS, 'tspan');
+      ts.setAttribute('x', PAD_X[d]);
+      ts.setAttribute('y', PAD_Y[d] + LINE_H[d] * (i + 0.72));
+      ts.textContent = line;
+      if (n.s && i === n.b.lines.length - 1) { ts.setAttribute('font-size', FONT[d] * 0.72); ts.setAttribute('fill', cssVar('--muted')); }
+      if (d === 1 && i === 0) ts.setAttribute('fill', col);
+      t.append(ts);
+    });
+    g.append(t);
+    if (n.c && d > 0) {
+      const ch = document.createElementNS(NS, 'text');
+      ch.setAttribute('class', 'chev');
+      ch.setAttribute('x', n.b.w - 16); ch.setAttribute('y', n.b.h / 2 + 5);
+      ch.setAttribute('fill', col);
+      ch.textContent = n.open ? '−' : '＋';
+      g.append(ch);
+    }
+    if (n.c) {
+      g.dataset.id = NODES.push(n) - 1;
+    }
+    if (n.u) { // リンクつきの箱は、タップで別のタブに開く
+      const a = document.createElementNS(NS, 'a');
+      a.setAttribute('href', n.u); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener');
+      g.setAttribute('class', g.getAttribute('class') + ' link-node');
+      a.append(g); nodes.append(a);
+    } else nodes.append(g);
+  })(DATA);
+}
+
+// タップ・クリックは地図全体で一度だけ受け取る（描き直しても確実に反応する）
+const NODES = [];
+function toggleNode(n) {
+  if (n.depth === 0) { DATA.c.forEach(b => { b.open = true; }); render(); return; } // 中心をタップしたら枝をすべて見せる
+  n.open = !n.open; if (!n.open) closeAll(n, false); render();
+}
+function nodeFrom(e) { const g = e.target.closest && e.target.closest('.node'); return g && g.dataset.id ? NODES[+g.dataset.id] : null; }
+svg.addEventListener('click', e => { const n = nodeFrom(e); if (n) toggleNode(n); });
+svg.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const n = nodeFrom(e); if (n) { e.preventDefault(); toggleNode(n); } });
+
+function closeAll(n, self = true) { if (self) n.open = false; (n.c || []).forEach(k => closeAll(k)); }
+function openAll(n) { n.open = true; (n.c || []).forEach(openAll); }
+
+// 話す順に、次の枝を開く（前の枝は閉じて、いま話している枝に集中する）
+let step = -1;
+document.getElementById('btn-next').addEventListener('click', () => {
+  step = (step + 1) % DATA.c.length;
+  DATA.c.forEach((b, i) => { if (i === step) openAll(b); else closeAll(b); });
+  render();
+  const b = DATA.c[step];
+  const stage = document.getElementById('stage');
+  let top = b.y - b.b.h / 2;
+  (function minY(n) { top = Math.min(top, n.y - n.b.h / 2); if (n.open) (n.c || []).forEach(minY); })(b);
+  stage.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'smooth' });
+});
+document.getElementById('btn-all').addEventListener('click', () => { openAll(DATA); render(); });
+document.getElementById('btn-reset').addEventListener('click', () => { step = -1; DATA.c.forEach(b => closeAll(b)); render(); document.getElementById('stage').scrollTo({ top: 0, left: 0 }); });
+
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+mq.addEventListener?.('change', () => render());
+new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => render());
+render();
+// Day1 話す台本（Claude Docs「天給自足 Day1 話す台本」から写したもの）
+const SCRIPT = [
+  { t: "まずはじめに", m: "約5分", s: "中心の「幸せに生きる最善の方法」を見せてから、「まずはじめに」を開く", p: [
+    "こんにちは。八ヶ岳のレジオン八ヶ岳で、天給自足実践塾を主宰している、藤巻正夫です。この3日間のオンライン合宿にようこそ。今日から3日間、どうぞよろしくお願いします。",
+    "最初に、結論をお伝えします。最強の健康法と、幸せに生きる最善の方法。それは、天給自足で生きることです。（間）今はまだ、「どういうこと？」と思われるかもしれません。この3日間で、その意味をゆっくりお話ししていきます。",
+    "この合宿には、視聴期限があります。96時間、4日間です。後回しにしないで、ぜひ最後までお付き合いください。毎日、最後に「今日のワーク」があります。3日間のワークを書き終えた方には、2つのプレゼントがあります。天給自足の春号、四月号の小冊子。菊芋のレシピも入っています。そして、3日間のマインドマップです。復習に使ってください。そしてDay3の最後には、参加してくださった方だけの、特別なご案内もあります。楽しみにしていてください。",
+    "3日間は、3つの段階で進みます。",
+    "Day1は「知る」。人間が生きる上で一番大切なこと。それが天給自足、自給自足だということを知ります。",
+    "Day2は「実践して育てる」。四季を通して、自分の手で安心を育てていきます。",
+    "Day3は「伝える」。伝承者・講師となり、日本全国へ広げていきます。",
+    "少しだけ、自己紹介をさせてください。わたしは18歳で洋菓子の道に入り、スイスとフランスで修業をしました。NHKの「きょうの料理」にも出演させていただきました。横浜で「レジオン」を、21年間営んできました。2020年に八ヶ岳へ移り、café & stayを開きました。今は、陸稲や菊芋を自然農で育てて、6年になります。醗酵実践塾と菊芋活用実践塾も主宰しています。",
+    "この3日間の合言葉を、一つだけお伝えします。「安心は買うものではなく、育てるもの」。（間）この言葉の意味が、3日間できっと腹に落ちます。それでは、始めていきましょう。"
+  ]},
+  { t: "① なぜ今、自足という生き方が必要なのか", m: "約6分", s: "「① なぜ今」を開く。問いかけの箱から順に", p: [
+    "みなさんに、ひとつ問いかけます。「お金があれば、食べ物は買える」。本当でしょうか。（間）",
+    "今は、予測できない時代です。食料の不安、健康の不安、お金の不安。いろいろな不安を抱えている方が多いと思います。",
+    "でも、不安の多くは、安心を外に預けることから生まれています。（間）考えてみてください。健康は、病院に。美は、化粧品に。食は、スーパーに。心は、誰かの言葉に。わたしたちはいつの間にか、安心を外に預けて暮らしています。",
+    "外に預けると、自分で生きる感覚を失ってしまいます。だから、安心の外注をやめましょう。",
+    "しかも、食の中身そのものが変わってきています。野菜のミネラルは、極端に減っています。添加物、農薬、除草剤、ホルモン剤。遠くから運ばれてくる食べ物に、私たちの安心はまかされています。",
+    "そして、健康がなければ、仕事も暮らしも創れません。",
+    "だから、足元の食は、自分で確保する。自分と家族の安心は、自ら育てる時代です。",
+    "わたし自身、6年前に八ヶ岳へ移り住みました。農業はまったくの素人です。素人でも食を自給して、健康になれる道はないか。そう探し続けてきました。予測できない時代に必要なのは、食の安心安全と健康です。それが、わたしの原点です。"
+  ]},
+  { t: "② 自足とは何か＝天給自足", m: "約5分", s: "「② 自足とは何か」を開く", p: [
+    "では、自足とは何でしょう。「自給自足」と「天給自足」。何がちがうのでしょうか。（間）",
+    "ある日、畑で草刈りをしていて、ふと気づきました。大地も、水も、空気も、太陽も、種も。どれひとつ、自分で用意したものではありません。すべて、天が用意してくれている。だからわたしたちは、自給自足ではなく、天給自足と呼んでいます。",
+    "天給自足とは、天の恵みを見極め、調理し、生活に落とし込んで、生命エネルギーをいただく生き方です。",
+    "やることは、4つの工程です。種をまく。育てる。仕込む。いただく。",
+    "自然農では、畑のお米の陸稲、世界三大健康野菜の一つの菊芋、そして旬の野菜を育てます。山や野には、野草や薬草、きのこや山菜、木の葉や実があります。天の恵みを見極める力を身につけるのです。",
+    "自分で育てれば、流通が要らなくなります。添加物や農薬、除草剤からも離れられます。",
+    "そして、これは新しいことではありません。日本の田舎に昔からあった、伝統的な食文化そのものなのです。"
+  ]},
+  { t: "③ 幸せとは何か", m: "約5分", s: "「③ 幸せとは何か」を開く", p: [
+    "どうしたら、今より幸せになれるのでしょうか。（間）",
+    "アランの幸福論をご存じですか。そこから、5つのことをお伝えします。",
+    "1つ目。不安の正体を見極める。食料、健康、お金。不安には必ず原因があります。原因を知れば、不安は消えていきます。",
+    "2つ目。自分の畑を耕す。仕事は、自分の裁量で試行錯誤できるとき、楽しくなります。",
+    "3つ目。幸せは受け取るものではなく、生みだすもの。歌を聞くだけでなく歌う。絵を見るだけでなく描く。作り、育む。人間の喜びの一番深いところは、自分で生みだすことにあります。",
+    "4つ目。幸せの敵は、自分自身。不機嫌な人を見て、自分まで不機嫌になったことはありませんか。",
+    "5つ目。幸福は状況ではなく、解釈力と態度。恵まれた環境でも不機嫌な人はいます。厳しい状況でも、幸せに生きる人がいます。",
+    "天給自足は、まさに幸せを自分の手で生みだす生き方です。種をまき、育て、仕込み、いただく。その一つ一つが、幸せを生みだすことなのです。"
+  ]},
+  { t: "④ 最強の健康法＝腸活", m: "約5分", s: "「④ 最強の健康法」を開く", p: [
+    "あなたの體は、何でできていますか。（間）",
+    "體は、食の変化体です。身体は、食べたもので創られています。",
+    "そして、腸は神に最も近い臓器と言われます。食べることは、祈ること。わたしはそう感じています。",
+    "醗酵食で腸から整えると、体は変わっていきます。便秘や肌トラブルが改善した方。心が軽くなった方。薬を飲まなくなった方もいらっしゃいます。",
+    "もう一つの鍵が、ミネラルです。ノーベル賞を2度受賞したライナス・ポーリング博士は、「すべての病気は、ミネラル不足に行き着く」と言っています。精密機械は、レアアースという微量の金属がないと動きません。人間の體も同じです。微量ミネラルがないと、うまく働きません。",
+    "自然農の野菜や、野草、山菜、きのこ。天の恵みは、微量ミネラルの宝庫です。自然の恵みが、家庭の薬箱になるのです。",
+    "病まない、飢えない、老けない。それが、天給自足の腸活です。"
+  ]},
+  { t: "⑤ 天給自足を学ぶ3つのメリット", m: "約3分", s: "「⑤ 3つのメリット」を開く", p: [
+    "では、なぜ天給自足を学ぶ必要があるのでしょうか。わたしが提案する理由は、3つあります。",
+    "1つ目は、必要性です。食で體と心を整える。體は食の変化体です。健康で楽しい生活に、一番必要なのは食です。",
+    "2つ目は、重要性です。使う野菜を、すべて自然農にするのは難しいかもしれません。でも、自然の恵みを見極め、活用し、生き抜く力は身につけられます。自然の恵みを家庭の薬箱にして、家族の健康を守ることができます。",
+    "3つ目は、今すぐ始めてほしい理由です。自然の恵みを見極める力があるか、ないか。それが大きな違いを生みます。経済的な効果も、とても大きいのです。"
+  ]},
+  { t: "⑥ 実践した方の声", m: "約4分", s: "「⑥ 実践した方の声」を開く", p: [
+    "ここで、実際に天給自足を実践した方の声をご紹介します。",
+    "腸活で心と体が軽くなり、薬を飲まなくなった方がいます。便秘や肌のトラブルが改善して、醗酵食の大切さを実感した方もいます。そして、「安心を外注するのをやめて、安心を自給する生き方に変わった」という声もいただきました。",
+    "参加した方からは、こんな気づきも届いています。「植物の力を改めて感じて、エネルギーが循環しているのがわかった」。「安心は自分で育てる。その大切さに氣づいた」。「伝承することで、成長が大きく変わることに氣づいた」。",
+    "受講してくださる方は、本当にさまざまです。内科のお医者さまご夫妻は、お子さんの体質を思って醗酵食を学び、今ではいろいろな醗酵食を作って楽しんでいらっしゃいます。保育園を経営している方、九州から来てくださった料理研究家の方、ハワイから参加された機能性医学認定ヘルスコーチの方もいらっしゃいます。",
+    "このように、多くの方が変わっています。今日ご参加のみなさんも、天給自足と醗酵を活用することで、きっと体調が整い、心が軽くなると思います。"
+  ]},
+  { t: "⑦ よくある失敗", m: "約4分", s: "「⑦ よくある失敗」を開く", p: [
+    "では、なぜ多くの人が、中途半端で終わってしまうのでしょうか。（間）",
+    "ベストセラー作家の中谷彰宏さんの言葉に、こんなものがあります。何かをしたい人は、1万人。始める人は、100人。続ける人は、1人。",
+    "知っていることと、活用できることは違います。やっていることと、うまくいっていることも、別物です。",
+    "多くの方がつまずく失敗は、3つあります。",
+    "失敗の1つ目。一人で始めると、一つの失敗で止まってしまいます。",
+    "失敗の2つ目。YouTubeの動画で知ることはできます。でも実際に始めると、場所や土地、季節、その年の気候で、大きく違います。自然農も、陸稲も、山菜も、きのこも、四季を通して実践し、体験するしかないのです。",
+    "失敗の3つ目。いつでも聞ける環境と、仲間がないこと。気候も雨量も、毎年違います。ずっと学び合える環境がないと、続きません。",
+    "では、どうすればうまくいくのか。その正しい道は、Day2でお伝えします。"
+  ]},
+  { t: "⑧ はじめの一歩＝菊芋", m: "約4分", s: "「⑧ はじめの一歩」を開く", p: [
+    "では、今日から一人でできる、はじめの一歩をお伝えします。それは、菊芋です。",
+    "なぜ菊芋からなのか。菊芋は、世界三大健康野菜の一つです。菊芋には、イヌリンという水溶性の食物繊維が入っています。イヌリンは、糖質の吸収を緩やかにして、食後の急な血糖値の上昇を穏やかにする働きがあります。そして、丈夫で育てやすい。自然農の成功体験に、ぴったりなのです。",
+    "今日からできることは、3つです。",
+    "まず、食べてみること。ちょうど今が、収穫の旬です。",
+    "次に、暮らしに取り入れること。生のままでも、きんぴらでも、菊芋茶でも楽しめます。",
+    "そして、春に植えてみること。春に植えれば、無限ループで菊芋が育ちます。わたしも自然農で、6年、菊芋を育てています。",
+    "でも。（間）土地や季節、その年の気候で、育ち方は大きく違います。一人で、続けられるでしょうか。（間）",
+    "その続きは、Day2「実践して育てる」でお話しします。",
+    "※ 食品の働きを話すときは、「個人差があります」と一言添えると安心です。"
+  ]},
+  { t: "今日のワーク", m: "約2分", s: "「今日のワーク」を開く", p: [
+    "それでは、今日のワークです。コメント欄に、次の3つを書いてください。",
+    "1つ目。Day1で学んだこと、印象に残ったこと、氣づいたこと。",
+    "2つ目。あなたの食や健康の不安、これまでの失敗談。",
+    "3つ目。Day2への期待。",
+    "書くことで、学びはぐっと深くなります。短くてかまいません。ぜひ書いてくださいね。3日間のワークを書き終えた方には、天給自足の春号、四月号の小冊子と、3日間のマインドマップをプレゼントします。あと2日、毎日書いて、受け取ってくださいね。"
+  ]},
+  { t: "まとめ", m: "約3分", s: "「まとめ」を開く", p: [
+    "最後に、今日のお話をまとめます。",
+    "今日学んだことは、3つです。健康も安心も、買うものではなく、育てるもの。最強の健康法は、天給自足で育み、調理すること。そして、幸せは生みだすもの。とらえ方と態度です。",
+    "Day1で、自分の不安の正体が見えてきたと思います。そして、菊芋で腸活の一歩を踏み出せます。",
+    "大事な心構えは、知っていることと、活用できることは違う。悩むより、まず一歩。そして、人生は選択の質です。",
+    "Day2までに、菊芋を一度食べてみてください。ワークを書いて、自分の現在地をふり返っておいてください。健康のこと、農のこと、これからの生き方のことです。",
+    "最後に、この言葉をお伝えします。身体は、食べたもので創られる。心は、聞いた言葉で創られる。未来は、言った言葉で創られる。（間）",
+    "Day1は、まだ「知る」の入口です。Day2では「実践して育てる」へ。Day3では「伝える」、伝承者・講師として全国へと進んでいきます。明日も、楽しみにしていてください。今日はありがとうございました。"
+  ]}
+];
+
+const DAYLABEL = "Day1「知る」";
+
+// ---- 収録用：台本パネル ----
+const PR = document.getElementById('prompter');
+function esc(s) { return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+function line(p) {
+  if (p.startsWith('【')) return `<p class="cue">${esc(p)}</p>`;
+  if (p.startsWith('※')) return `<p class="note">${esc(p)}</p>`;
+  return `<p>${esc(p).replace(/（間）/g, '<span class="pause">間</span>')}</p>`;
+}
+function showScript(i) {
+  const nav = `<div class="pr-nav"><button type="button" data-go="prev">◀ 前の枝</button><button type="button" class="main" data-go="next">次の枝 ▶</button></div>`;
+  const size = `<div class="pr-size"><button type="button" data-size="-1" aria-label="文字を小さく">文字 小</button><button type="button" data-size="1" aria-label="文字を大きく">文字 大</button></div>`;
+  if (i < 0) {
+    PR.style.removeProperty('--pc');
+    PR.innerHTML = `<div class="pr-top"><span class="pr-count">${DAYLABEL}　収録用</span>${size}</div>
+      <h2 class="pr-title">収録の準備ができました</h2>
+      <div class="pr-text"><p>「次の枝を開く」を押すと、左のマインドマップと、この台本が一緒に進みます。</p>
+      <p>「<span class="pause">間</span>」のところで、2〜3秒だまります。</p>
+      <p class="note">このページは収録用です。受講生には、ふつうのマインドマップのページを見せてください。</p></div>${nav}`;
+    return;
+  }
+  const s = SCRIPT[i];
+  PR.style.setProperty('--pc', cssVar(DATA.c[i].color));
+  PR.innerHTML = `<div class="pr-top"><span class="pr-count">${DAYLABEL}　${i + 1} / ${SCRIPT.length}</span>${size}</div>
+    <h2 class="pr-title">${esc(s.t)}</h2><p class="pr-time">${esc(s.m)}</p>
+    <p class="pr-screen">画面：${esc(s.s)}</p>
+    <div class="pr-text">${s.p.map(line).join('')}</div>${nav}`;
+  PR.scrollTop = 0;
+}
+function goTo(i) {
+  step = (i + DATA.c.length) % DATA.c.length;
+  DATA.c.forEach((b, k) => { if (k === step) openAll(b); else closeAll(b); });
+  render();
+  const b = DATA.c[step], stage = document.getElementById('stage');
+  let top = b.y - b.b.h / 2;
+  (function minY(n) { top = Math.min(top, n.y - n.b.h / 2); if (n.open) (n.c || []).forEach(minY); })(b);
+  stage.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'smooth' });
+  showScript(step);
+}
+// 「次の枝を開く」と「はじめに戻す」を、台本と一緒に動くものに置きかえる
+for (const id of ['btn-next', 'btn-reset']) { const o = document.getElementById(id); o.replaceWith(o.cloneNode(true)); }
+document.getElementById('btn-next').addEventListener('click', () => goTo(step + 1));
+document.getElementById('btn-reset').addEventListener('click', () => { step = -1; DATA.c.forEach(b => closeAll(b)); render(); document.getElementById('stage').scrollTo({ top: 0, left: 0 }); showScript(-1); });
+PR.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]'); if (g) { goTo(g.dataset.go === 'next' ? step + 1 : (step < 0 ? DATA.c.length - 1 : step - 1)); return; }
+  const z = e.target.closest('[data-size]'); if (z) { setSize(fs + (+z.dataset.size) * 2); }
+});
+document.addEventListener('keydown', e => {
+  if (e.target.closest && e.target.closest('input, textarea')) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goTo(step + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(step < 0 ? DATA.c.length - 1 : step - 1); }
+});
+// 枝をタップして開いたときも、その枝の台本を出す
+const baseToggle = toggleNode;
+toggleNode = function (n) {
+  baseToggle(n);
+  if (n.depth === 1 && n.open) { step = DATA.c.indexOf(n); showScript(step); }
+};
+// 文字の大きさ（この端末だけに覚えておく）
+let fs = 21;
+function setSize(v) { fs = Math.max(15, Math.min(34, v)); PR.style.setProperty('--fs', fs + 'px'); try { localStorage.setItem('rec-fs', fs); } catch (e) {} }
+try { const v = +localStorage.getItem('rec-fs'); if (v) fs = v; } catch (e) {}
+setSize(fs);
+showScript(-1);
+</script>

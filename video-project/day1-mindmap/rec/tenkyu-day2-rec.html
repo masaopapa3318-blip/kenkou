@@ -1,0 +1,549 @@
+<title>天給自足 Day2 収録用</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+/* 左の「幸せ」から右へ、話す順に枝が伸びる。枝ごとに土と森の色 */
+:root {
+  --bg: #f5f2ea;
+  --surface: #fffdf8;
+  --ink: #26302a;
+  --muted: #5f675f;
+  --line: #d9d2c2;
+  --root: #1f3227;
+  --root-ink: #fbf8f1;
+  --b1: #b9713a; --b2: #3f6b4f; --b3: #8a5a2b; --b4: #6c7f2e;
+  --b5: #8b4a5c; --b6: #2f6f78; --b7: #a3792c; --b8: #4b5a8a; --b9: #9a3f2f; --b10: #5a4a3a; --b11: #6b4a7a; --b12: #3d5a5a;
+  --serif: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", serif;
+  --sans: "Noto Sans JP", "Hiragino Sans", "Yu Gothic", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+    --root: #d9c9a3; --root-ink: #1a211c;
+    --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+    --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde; --b9: #e28a74; --b10: #cdb89c; --b11: #c3a0d3; --b12: #8fc0b8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #141a16; --surface: #1d2520; --ink: #e8ece6; --muted: #a6aea7; --line: #34403a;
+  --root: #d9c9a3; --root-ink: #1a211c;
+  --b1: #e19a62; --b2: #7fb592; --b3: #d0a16a; --b4: #b3c56a;
+  --b5: #d590a3; --b6: #7cc0c8; --b7: #dfb862; --b8: #9fadde; --b9: #e28a74; --b10: #cdb89c; --b11: #c3a0d3; --b12: #8fc0b8;
+  color-scheme: dark;
+}
+html, body { height: 100%; }
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans); }
+.app { display: flex; flex-direction: column; height: 100%; }
+header.bar {
+  display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; justify-content: space-between;
+  padding-block: 12px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px));
+  border-bottom: 1px solid var(--line); background: var(--surface);
+}
+.ttl { min-width: 0; }
+.ttl p { margin: 0; font-size: .72rem; letter-spacing: .18em; color: var(--muted); }
+.ttl .q { margin: 2px 0 0; font-family: var(--serif); font-size: clamp(.9rem, 2vw, 1.02rem); letter-spacing: .02em; color: var(--ink); }
+.ttl h1 { margin: 2px 0 0; font-family: var(--serif); font-size: clamp(1.05rem, 2.6vw, 1.4rem); line-height: 1.35; text-wrap: balance; }
+.ctl { display: flex; flex-wrap: wrap; gap: 8px; }
+.ctl button {
+  font: inherit; font-size: .85rem; padding: 7px 14px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--line); background: var(--bg); color: var(--ink);
+}
+.ctl button.main { background: var(--root); color: var(--root-ink); border-color: var(--root); }
+.ctl button:focus-visible { outline: 2px solid var(--b6); outline-offset: 2px; }
+.stage { flex: 1; overflow: auto; -webkit-overflow-scrolling: touch; }
+svg { display: block; }
+.link { fill: none; stroke-width: 2.2; opacity: .75; }
+.node { cursor: default; }
+.node[role=button] { cursor: pointer; }
+#map .link-node { cursor: pointer; }
+#map .link-node text { text-decoration: underline; }
+#map { touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
+.node rect { stroke-width: 1.5; }
+.node text { font-family: var(--sans); fill: var(--ink); }
+.node.d0 text { font-family: var(--serif); fill: var(--root-ink); font-weight: 800; }
+.node.d1 text { font-family: var(--serif); font-weight: 800; }
+.node .chev { font-family: var(--sans); font-size: 13px; font-weight: 700; }
+.hint { margin: 0; font-size: .78rem; color: var(--muted); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: center; }
+.lg { display: inline-flex; align-items: center; gap: 6px; }
+.lg::before { content: ""; width: 18px; height: 12px; border-radius: 3px; border: 1.5px solid var(--muted); }
+.lg-q::before { border-style: dashed; }
+.lg-k::before { background: color-mix(in srgb, var(--muted) 22%, transparent); }
+@media (prefers-reduced-motion: no-preference) {
+  .node, .link { transition: opacity .35s ease; }
+}
+
+/* 収録用：左にマインドマップ、右にいま話す枝の台本 */
+.body { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) minmax(340px, 44%); }
+.body .stage { min-height: 0; }
+.prompter { min-width: 0; min-height: 0; overflow: auto; border-left: 1px solid var(--line); background: var(--surface);
+  padding-block: 20px 48px; padding-left: 24px; padding-right: max(20px, env(safe-area-inset-right, 0px)); }
+.pr-top { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: baseline; justify-content: space-between; }
+.pr-count { font-size: .8rem; letter-spacing: .14em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.pr-size { display: flex; gap: 6px; }
+.pr-size button { font: inherit; font-size: .8rem; padding: 3px 10px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.pr-title { margin: 8px 0 2px; font-family: var(--serif); font-weight: 800; font-size: 1.5em; line-height: 1.4; color: var(--pc, var(--ink)); text-wrap: balance; }
+.pr-time { margin: 0; font-size: .85rem; color: var(--muted); }
+.pr-screen { margin: 12px 0 18px; padding: 8px 12px; border-radius: 8px; background: var(--bg); font-size: .85rem; color: var(--muted); }
+.pr-text { font-size: var(--fs, 21px); line-height: 1.95; }
+.pr-text p { margin: 0 0 1em; }
+.pause { display: inline-block; margin: 0 .25em; padding: 0 .5em; border-radius: 6px; font-size: .78em; line-height: 1.6; vertical-align: .08em;
+  background: color-mix(in srgb, var(--pc, var(--b6)) 18%, transparent); color: var(--pc, var(--ink)); font-weight: 700; }
+.cue { padding: 10px 14px; border: 2px dashed var(--pc, var(--line)); border-radius: 10px; font-weight: 700; font-size: .9em; }
+.note { font-size: .78em; color: var(--muted); }
+.pr-nav { display: flex; gap: 8px; margin-top: 8px; }
+.pr-nav button { font: inherit; font-size: .9rem; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--line); background: var(--bg); color: var(--ink); cursor: pointer; }
+.pr-nav button.main { background: var(--root); color: var(--root-ink); border-color: var(--root); }
+.rec-badge { display: inline-block; margin-right: 8px; padding: 1px 8px; border-radius: 999px; font-size: .7rem; letter-spacing: .1em; background: var(--b9); color: #fff; vertical-align: 1px; }
+@media (max-width: 820px) {
+  .body { grid-template-columns: 1fr; grid-template-rows: 38% minmax(0, 1fr); }
+  .prompter { border-left: 0; border-top: 1px solid var(--line); padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+}
+</style>
+
+<div class="app">
+  <header class="bar">
+    <div class="ttl">
+      <p>八ヶ岳から届ける3日間オンライン合宿 ／ Day2「実践して育てる」</p>
+      <h1><span class="rec-badge">収録用</span>自給自足ではなく、「天給自足」</h1>
+      <p class="q">「お金があれば食べ物は買える」本当ですか？</p>
+    </div>
+    <div class="ctl">
+      <button type="button" id="btn-next" class="main">次の枝を開く</button>
+      <button type="button" id="btn-all">すべて開く</button>
+      <button type="button" id="btn-reset">はじめに戻す</button>
+    </div>
+    <p class="hint"><span class="lg lg-q">点線＝問いかけ</span><span class="lg lg-k">色つき＝大事な一言</span>枝をタップすると開閉します。</p>
+  </header>
+  <div class="body"><div class="stage" id="stage"><svg id="map" role="img" aria-label="天給自足 Day2 マインドマップ"></svg></div><aside class="prompter" id="prompter" aria-live="polite"></aside></div>
+</div>
+
+<script>
+const DATA = {
+  t: "実践して育てる\n＝四季を通して\n安心を自分の手で\n育てる",
+  c: [
+    { t: "まずはじめに", s: "Day2の目的", c: [
+      { k: "q", t: "菊芋、\n食べてみましたか？" },
+      { t: "Day1のふり返り", c: [
+        { t: "不安の多くは\n安心を外に預けることから" },
+        { t: "天給自足＝天の恵みを\n見極め、活かす生き方" },
+        { t: "はじめの一歩＝菊芋" } ] },
+      { k: "key", t: "Day1は「知る」\nDay2からは\n「実践して育てる」" },
+      { t: "Day2を踏まえて\nDay3「伝える」へ進むので\n飛ばさずに最後まで" },
+      { t: "視聴期限 96時間（4日間）" },
+      { t: "3日間のワークを書き終えた方に\n春号の小冊子と\n3日間のマインドマップを\nプレゼント" },
+      { t: "Day3の最後に\n参加者だけの\n特別なご案内があります" }
+    ]},
+    { t: "① なぜ一人では\n続かないのか", c: [
+      { k: "q", t: "一度うまくいけば\nそれでいいのでしょうか？" },
+      { k: "key", t: "大切なのは\n毎年うまくいくこと" },
+      { t: "気候も雨量も\n毎年ちがう" },
+      { t: "種まきと収穫は\n一年に一度しか体験できない" },
+      { t: "一人ひとり経験値がちがう\nその人に合った学び方が要る" },
+      { t: "米パンもお菓子も\n一度ですべては身につかない" },
+      { t: "だから", c: [
+        { t: "無期限で相談できる環境" },
+        { t: "ともに学び、助け合う仲間" } ] }
+    ]},
+    { t: "② うまくいく道", c: [
+      { k: "q", t: "うまくいく人と\nいかない人\n何がちがうのでしょう？" },
+      { t: "結果 ← 習慣 ← 行動 ← 選択\n← 無意識の思考 ← 環境" },
+      { k: "key", t: "成果は才能ではなく\n環境で決まる" },
+      { t: "環境が人を作る\n環境は人が作る" },
+      { t: "学びの浸透率", c: [
+        { t: "聞くだけ 6%" }, { t: "アウトプット 54%" }, { t: "実践 75%" }, { t: "人に教える 90%" } ] },
+      { t: "人は次の日\n75%を忘れてしまう" }
+    ]},
+    { t: "③ サクセスステップ", s: "天給自足を身につける3段階", c: [
+      { t: "1 誰でもできる自然農で\n成功体験から始める\n知識より、体験と体感" },
+      { t: "2 四季を体感しながら実践\nできるだけ早く一歩を\n踏み出す" },
+      { t: "3 先輩・仲間と一緒に始める", c: [
+        { k: "key", t: "同じ失敗を\nする必要はない" },
+        { t: "先輩の長年の蓄積を\n1年目から実践できる" } ] }
+    ]},
+    { t: "④ 醗酵は料理と同じ\n丁寧な工程が育てる", c: [
+      { k: "q", t: "醗酵に「近道」は\nあるでしょうか？" },
+      { t: "種をまく → 育てる\n→ 仕込む → いただく\nどの工程にも意味がある" },
+      { k: "key", t: "どこかで手を抜くと\nそのまま味と體に出る" },
+      { k: "key", t: "電子レンジでチンではなく\n時間と手間が\n美味しさと健康を育てる" },
+      { t: "糀・味噌・縄文漬け\n甘酒・シードル" }
+    ]},
+    { t: "⑤ 天給自足実践塾", s: "八ヶ岳の四季を、仲間と体で覚える", c: [
+      { k: "key", t: "▶ 紹介動画を見る（約6分）\nタップすると動画が開きます", u: "https://claude.ai/artifact/YGnwZDsxgy7koTgYpb6MZA" },
+      { t: "動画のあとに\n要点をおさらい ↓" },
+      { t: "年6回の合宿\n（2か月に一度）", c: [
+        { t: "4月　菊芋と陸稲\n植え付け" },
+        { t: "6月　野草\n（野草醤・野草酵素）" },
+        { t: "8月　夏の畑と竹細工", c: [
+          { t: "畑の整備" },
+          { t: "夏野菜の調理法" },
+          { t: "竹細工で\n箸・お皿・カップを作る" } ] },
+        { t: "10月　醗酵ときのこ" },
+        { t: "12月　乾物調理と\n菊芋掘り" },
+        { t: "2月　米粉のフランス菓子\nと米パン" } ] },
+      { t: "3つのコース", c: [
+        { t: "講師養成2年コース\n2年目は講師の視点で再受講" },
+        { t: "1年コース\n暮らしに落とし込み、生涯健康へ" },
+        { t: "半年コース\n4・6・8・10月の4回" } ] },
+      { t: "宿泊・お食事込み\nLINEサポート無制限\nいつでも見学できます" },
+      { k: "key", t: "農業の経験がなくても\n大丈夫" }
+    ]},
+    { t: "⑥ 塾の中で学べる講座", c: [
+      { t: "醗酵実践塾\n糀・味噌・縄文漬けなど全11講座\n2泊3日で集中して" },
+      { t: "菊芋活用実践塾\n自然農での栽培から\n調理と保存まで" },
+      { t: "野草を生活に落とし込み\n楽しむ会\n野草研究家みこたまさんと" }
+    ]},
+    { t: "⑦ 身につく\n一生モノのスキル", c: [
+      { t: "1 自然農と加工・調理の技術" },
+      { t: "2 一生使える醗酵スキル" },
+      { t: "3 グルテンフリーのお菓子\n米パンづくり" },
+      { t: "4 無添加の食づくりと\n備蓄の知恵" },
+      { t: "5 キッチンガーデン\n（ポタジェ）のつくり方" },
+      { t: "6 期限のない\nオンラインサポート" },
+      { k: "key", t: "7 老けない・病まない\n飢えない生き方" }
+    ]},
+    { t: "⑧ 実践すると\nどうなる？", c: [
+      { k: "q", t: "サクセスステップを実践したら\nどうなると思いますか？" },
+      { t: "自然の中で四季を感じ\n心と身体の躍動を実感できる" },
+      { t: "味噌も漬物も作れなかった方が\n醗酵食で腸から健康に" },
+      { t: "暮らしそのものが\n変わっていく" },
+      { k: "key", t: "未経験から\n講師として次の一歩を\n踏み出した方も" },
+      { t: "続きは Day3「伝える」で" }
+    ]},
+    { t: "今日のワーク", s: "コメント欄に書いてください", c: [
+      { t: "1 Day2で学んだこと\n印象に残ったこと・気づき" },
+      { t: "2 今すぐやろうと思う行動を\n3つ以上" },
+      { t: "3 Day3への期待" },
+      { k: "key", t: "3日間のワークを書き終えた方に\n春号の小冊子と\n3日間のマインドマップを\nプレゼント" },
+      { t: "あと1日。\n明日のワークで受け取れます" }
+    ]},
+    { t: "まとめ", c: [
+      { t: "今日学んだこと", c: [
+        { t: "大切なのは\n毎年うまくいくこと" },
+        { t: "成果は才能ではなく\n環境で決まる" },
+        { t: "醗酵も暮らしも\n丁寧な工程が育てる" } ] },
+      { t: "Day2でできるようになること", c: [
+        { t: "自分に合った学び方が\nわかる" },
+        { t: "一年の実践の地図が\n描ける" } ] },
+      { t: "大事な心構え", c: [
+        { t: "同じ失敗をする必要はない" },
+        { t: "種まきは年に一度\nできるだけ早く一歩を" },
+        { t: "一人で抱えない" } ] },
+      { t: "Day3への準備", c: [
+        { t: "今すぐやる行動を\n一つ始めてみる" },
+        { t: "天給自足を\n誰に伝えたいか\n思い浮かべておく" },
+        { t: "Day3の最後の\n特別なご案内を\n見のがさないでください" } ] },
+      { t: "最後に", c: [
+        { t: "Day2で「育てる」道が見えた" },
+        { t: "でも、まだ自分と家族のため" },
+        { k: "key", t: "Day3で「伝える」\n伝承者・講師として\n日本全国へ" } ] }
+    ]}
+  ]
+};
+
+const COLORS = ['--b10', '--b9', '--b2', '--b1', '--b3', '--b4', '--b5', '--b6', '--b7', '--b8', '--b11', '--b12'];
+const FONT = [22, 18, 14.5, 13.5];
+const LINE_H = [30, 25, 21, 19];
+const PAD_X = [18, 16, 12, 10];
+const PAD_Y = [14, 10, 8, 6];
+const GAP_X = [56, 52, 44];
+const GAP_Y = [14, 10, 8];
+
+// 開閉状態を付ける（最初は幹だけ見せる）
+(function init(n, d, color) {
+  n.depth = d; n.color = color; n.open = d === 0;
+  (n.c || []).forEach((k, i) => init(k, d + 1, d === 0 ? COLORS[i % COLORS.length] : color));
+})(DATA, 0, '--root');
+
+const svg = document.getElementById('map');
+const NS = 'http://www.w3.org/2000/svg';
+const measureCtx = document.createElement('canvas').getContext('2d');
+
+function cssVar(name) { return getComputedStyle(document.documentElement).getPropertyValue(name).trim(); }
+function textW(s, fs, bold) {
+  measureCtx.font = `${bold ? 700 : 400} ${fs}px "Noto Sans JP", sans-serif`;
+  return measureCtx.measureText(s).width;
+}
+function boxSize(n) {
+  const d = Math.min(n.depth, 3);
+  const lines = n.t.split('\n');
+  if (n.k === 'q') lines[0] = 'Q. ' + lines[0];
+  if (n.s) lines.push(n.s);
+  const w = Math.max(...lines.map(l => textW(l, FONT[d], d < 2 || n.k === 'key'))) + PAD_X[d] * 2 + (n.c ? 18 : 0);
+  return { w: Math.ceil(w), h: lines.length * LINE_H[d] + PAD_Y[d] * 2, lines };
+}
+
+function layout() {
+  const colX = [0];
+  // 深さごとの最大幅で列を決める
+  const maxW = [];
+  (function walk(n) { const b = boxSize(n); n.b = b; maxW[n.depth] = Math.max(maxW[n.depth] || 0, b.w);
+    if (n.open) (n.c || []).forEach(walk); })(DATA);
+  for (let d = 1; d < maxW.length; d++) colX[d] = colX[d - 1] + maxW[d - 1] + GAP_X[Math.min(d - 1, GAP_X.length - 1)];
+  let y = 0;
+  (function place(n) {
+    const kids = n.open ? (n.c || []) : [];
+    n.x = colX[n.depth];
+    if (!kids.length) { n.y = y + n.b.h / 2; y += n.b.h + GAP_Y[Math.max(0, Math.min(n.depth - 1, 2))]; return; }
+    const top = y;
+    kids.forEach(place);
+    const first = kids[0].y, last = kids[kids.length - 1].y;
+    n.y = (first + last) / 2;
+    if (y - top < n.b.h) y = top + n.b.h + GAP_Y[0];
+  })(DATA);
+  const last = maxW.length - 1;
+  return { w: colX[last] + maxW[last] + 40, h: y };
+}
+
+function render(fade) {
+  const size = layout();
+  const M = 24;
+  const W = Math.max(size.w + M * 2, 320), H = Math.max(size.h + M * 2, 320);
+  svg.setAttribute('width', W); svg.setAttribute('height', H);
+  svg.setAttribute('viewBox', `${-M} ${-M} ${W} ${H}`);
+  svg.replaceChildren();
+  NODES.length = 0;
+  const links = document.createElementNS(NS, 'g'), nodes = document.createElementNS(NS, 'g');
+  svg.append(links, nodes);
+  (function draw(n) {
+    const kids = n.open ? (n.c || []) : [];
+    kids.forEach(k => {
+      const p = document.createElementNS(NS, 'path');
+      const x1 = n.x + n.b.w, y1 = n.y, x2 = k.x, y2 = k.y, mx = (x1 + x2) / 2;
+      p.setAttribute('d', `M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+      p.setAttribute('class', 'link');
+      p.setAttribute('stroke', cssVar(k.color));
+      links.append(p);
+      draw(k);
+    });
+    const g = document.createElementNS(NS, 'g');
+    const d = Math.min(n.depth, 3);
+    g.setAttribute('class', `node d${d}`);
+    g.setAttribute('transform', `translate(${n.x},${n.y - n.b.h / 2})`);
+    g.setAttribute('tabindex', n.c ? '0' : '-1');
+    if (n.c) g.setAttribute('role', 'button');
+    let r = document.createElementNS(NS, 'rect');
+    r.setAttribute('width', n.b.w); r.setAttribute('height', n.b.h);
+    r.setAttribute('rx', d === 0 ? 18 : d === 1 ? 14 : 10);
+    const col = cssVar(n.color);
+    if (d === 0) { r.setAttribute('fill', col); r.setAttribute('stroke', col); }
+    else if (d === 1) { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-width', '2.5'); }
+    else if (n.k === 'key') { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-width', '2');
+      const tint = document.createElementNS(NS, 'rect'); tint.setAttribute('width', n.b.w); tint.setAttribute('height', n.b.h); tint.setAttribute('rx', 10);
+      tint.setAttribute('fill', col); tint.setAttribute('fill-opacity', '.13'); tint.setAttribute('pointer-events', 'none'); g.append(r); r = tint; }
+    else if (n.k === 'q') { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-dasharray', '5 4'); }
+    else { r.setAttribute('fill', cssVar('--surface')); r.setAttribute('stroke', col); r.setAttribute('stroke-opacity', '.45'); }
+    g.append(r);
+    const t = document.createElementNS(NS, 'text');
+    t.setAttribute('font-size', FONT[d]);
+    if (n.k === 'key') t.setAttribute('font-weight', '700');
+    n.b.lines.forEach((line, i) => {
+      const ts = document.createElementNS(NS, 'tspan');
+      ts.setAttribute('x', PAD_X[d]);
+      ts.setAttribute('y', PAD_Y[d] + LINE_H[d] * (i + 0.72));
+      ts.textContent = line;
+      if (n.s && i === n.b.lines.length - 1) { ts.setAttribute('font-size', FONT[d] * 0.72); ts.setAttribute('fill', cssVar('--muted')); }
+      if (d === 1 && i === 0) ts.setAttribute('fill', col);
+      t.append(ts);
+    });
+    g.append(t);
+    if (n.c && d > 0) {
+      const ch = document.createElementNS(NS, 'text');
+      ch.setAttribute('class', 'chev');
+      ch.setAttribute('x', n.b.w - 16); ch.setAttribute('y', n.b.h / 2 + 5);
+      ch.setAttribute('fill', col);
+      ch.textContent = n.open ? '−' : '＋';
+      g.append(ch);
+    }
+    if (n.c) {
+      g.dataset.id = NODES.push(n) - 1;
+    }
+    if (n.u) { // リンクつきの箱は、タップで別のタブに開く
+      const a = document.createElementNS(NS, 'a');
+      a.setAttribute('href', n.u); a.setAttribute('target', '_blank'); a.setAttribute('rel', 'noopener');
+      g.setAttribute('class', g.getAttribute('class') + ' link-node');
+      a.append(g); nodes.append(a);
+    } else nodes.append(g);
+  })(DATA);
+}
+
+// タップ・クリックは地図全体で一度だけ受け取る（描き直しても確実に反応する）
+const NODES = [];
+function toggleNode(n) {
+  if (n.depth === 0) { DATA.c.forEach(b => { b.open = true; }); render(); return; } // 中心をタップしたら枝をすべて見せる
+  n.open = !n.open; if (!n.open) closeAll(n, false); render();
+}
+function nodeFrom(e) { const g = e.target.closest && e.target.closest('.node'); return g && g.dataset.id ? NODES[+g.dataset.id] : null; }
+svg.addEventListener('click', e => { const n = nodeFrom(e); if (n) toggleNode(n); });
+svg.addEventListener('keydown', e => { if (e.key !== 'Enter' && e.key !== ' ') return; const n = nodeFrom(e); if (n) { e.preventDefault(); toggleNode(n); } });
+
+function closeAll(n, self = true) { if (self) n.open = false; (n.c || []).forEach(k => closeAll(k)); }
+function openAll(n) { n.open = true; (n.c || []).forEach(openAll); }
+
+// 話す順に、次の枝を開く（前の枝は閉じて、いま話している枝に集中する）
+let step = -1;
+document.getElementById('btn-next').addEventListener('click', () => {
+  step = (step + 1) % DATA.c.length;
+  DATA.c.forEach((b, i) => { if (i === step) openAll(b); else closeAll(b); });
+  render();
+  const b = DATA.c[step];
+  const stage = document.getElementById('stage');
+  let top = b.y - b.b.h / 2;
+  (function minY(n) { top = Math.min(top, n.y - n.b.h / 2); if (n.open) (n.c || []).forEach(minY); })(b);
+  stage.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'smooth' });
+});
+document.getElementById('btn-all').addEventListener('click', () => { openAll(DATA); render(); });
+document.getElementById('btn-reset').addEventListener('click', () => { step = -1; DATA.c.forEach(b => closeAll(b)); render(); document.getElementById('stage').scrollTo({ top: 0, left: 0 }); });
+
+const mq = window.matchMedia('(prefers-color-scheme: dark)');
+mq.addEventListener?.('change', () => render());
+new MutationObserver(() => render()).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+(document.fonts ? document.fonts.ready : Promise.resolve()).then(() => render());
+render();
+// Day2 話す台本（Claude Docs「天給自足 Day2 話す台本」から写したもの）
+const SCRIPT = [
+  { t: "まずはじめに", m: "約4分", s: "中心の「実践して育てる」を見せてから、「まずはじめに」を開く", p: [
+    "こんにちは。藤巻正夫です。Day2へようこそ。",
+    "最初に、ひとつ聞かせてください。菊芋、食べてみましたか？（間）",
+    "まだの方も大丈夫です。今が収穫の旬なので、ぜひ一度、味わってみてください。",
+    "Day1を少しふり返ります。不安の多くは、安心を外に預けることから生まれる。天給自足とは、天の恵みを見極めて、活かす生き方。そして、はじめの一歩は菊芋でした。",
+    "Day1は「知る」でした。Day2からは「実践して育てる」です。今日のお話を踏まえて、明日のDay3「伝える」へ進みます。ぜひ飛ばさずに、最後までお付き合いください。",
+    "視聴期限は96時間です。3日間のワークを書き終えた方には、2つのプレゼントがあります。天給自足の春号、四月号の小冊子と、3日間のマインドマップです。そしてDay3の最後には、参加してくださった方だけの、特別なご案内があります。"
+  ]},
+  { t: "① なぜ一人では続かないのか", m: "約5分", s: "「① なぜ一人では続かないのか」を開く", p: [
+    "みなさんに、問いかけます。一度うまくいけば、それでいいのでしょうか。（間）",
+    "大切なのは、毎年うまくいくことです。",
+    "気候も雨量も、毎年ちがいます。そして、種まきと収穫は、一年に一度しか体験できません。10年続けても、10回しか経験できないのです。",
+    "それに、一人ひとり経験もちがいます。その人に合った学び方が要ります。米パンもお菓子も、一度ですべてが身につくわけではありません。",
+    "だから、必要なのは2つです。いつまでも相談できる環境。そして、ともに学び、助け合う仲間です。"
+  ]},
+  { t: "② うまくいく道", m: "約5分", s: "「② うまくいく道」を開く", p: [
+    "うまくいく人と、いかない人。何がちがうのでしょうか。（間）",
+    "結果をつくるのは、習慣です。習慣をつくるのは、行動。行動をつくるのは、選択。選択をつくるのは、無意識の思考。そして、無意識の思考をつくるのは、育った環境や人間関係です。",
+    "つまり、成果は才能ではなく、環境で決まるのです。環境が人を作り、環境は人が作ります。",
+    "学びの浸透率の話もしましょう。聞くだけだと、身につくのは6パーセント。書いたり話したり、アウトプットすると54パーセント。実践すると75パーセント。そして、人に教えると90パーセントです。",
+    "しかも、人は次の日には75パーセントを忘れてしまいます。だからこそ、毎日のワークで書いていただいているのです。"
+  ]},
+  { t: "③ サクセスステップ", m: "約4分", s: "「③ サクセスステップ」を開く", p: [
+    "では、天給自足を身につけるには、どう進めばよいのでしょうか。3つのステップがあります。",
+    "ステップ1。誰でもできる自然農で、成功体験から始めること。知識だけでなく、体験し、体感しながら進むことが大切です。",
+    "ステップ2。四季を体感しながら実践すること。種まきは一年に一度です。だから、できるだけ早く一歩を踏み出すことが重要です。",
+    "ステップ3。先輩や仲間と一緒に始めること。（間）同じ失敗を、あなたがする必要はありません。長年続けてきた先輩の蓄積を、1年目から実践すればよいのです。"
+  ]},
+  { t: "④ 醗酵は料理と同じ", m: "約3分", s: "「④ 醗酵は料理と同じ」を開く", p: [
+    "醗酵に、近道はあるでしょうか。（間）",
+    "種をまく。育てる。仕込む。いただく。どの工程にも、意味があります。料理と同じで、どこかで手を抜くと、そのまま味と體に出てしまいます。",
+    "電子レンジでチンではなく、時間と手間が、美味しさと健康を育てる。（間）糀、味噌、縄文漬け、甘酒、シードル。どれも、丁寧な工程があってこその味です。"
+  ]},
+  { t: "⑤ 天給自足実践塾", m: "話す約4分＋動画約6分", s: "「⑤ 天給自足実践塾」を開き、「▶ 紹介動画を見る」をタップ", p: [
+    "ここまで、一人では続かない理由と、うまくいく道をお話ししてきました。では、それを形にしたのが、天給自足実践塾です。まずは6分ほどの紹介動画をご覧ください。マインドマップの「紹介動画を見る」から開けます。見終わったら、この音声の続きに戻ってきてくださいね。",
+    "【ここで紹介動画。録音はいったん止めます】",
+    "いかがでしたか。要点をおさらいします。",
+    "合宿は2か月に一度、年6回です。4月は菊芋と陸稲の植え付け。6月は野草で、野草醤や野草酵素を作ります。8月は、畑の整備と夏野菜の調理法。そして竹細工で、箸やお皿、カップを作ります。10月は醗酵ときのこ。12月は乾物の調理と菊芋掘り。2月は、米粉のフランス菓子と米パンです。八ヶ岳の四季を、仲間と一緒に体で覚えていきます。",
+    "コースは3つです。講師を目指す講師養成2年コース。暮らしに落とし込む1年コース。そして、4月・6月・8月・10月の4回の半年コースです。",
+    "どのコースも、宿泊とお食事込みです。LINEでのサポートは無制限。いつでも見学できます。",
+    "「農業の経験がなくても大丈夫？」とよく聞かれます。答えは、大丈夫です。わたし自身も、素人から始めました。"
+  ]},
+  { t: "⑥ 塾の中で学べる講座", m: "約2分", s: "「⑥ 塾の中で学べる講座」を開く", p: [
+    "天給自足実践塾の中では、次の3つの講座も学べます。",
+    "醗酵実践塾では、糀、味噌、縄文漬けなど、全11講座を2泊3日で集中して学びます。",
+    "菊芋活用実践塾では、自然農での栽培から、調理と保存まで、菊芋を究めます。",
+    "野草を生活に落とし込み楽しむ会では、野草研究家のみこたまさんと一緒に、野草を見極め、暮らしに活かします。"
+  ]},
+  { t: "⑦ 身につく一生モノのスキル", m: "約3分", s: "「⑦ 身につく一生モノのスキル」を開く", p: [
+    "この塾で身につくものは、一生モノです。7つあります。",
+    "1つ目、自然農と、加工・調理の技術。2つ目、一生使える醗酵のスキル。3つ目、グルテンフリーのお菓子と米パンづくり。4つ目、無添加の食づくりと、備蓄の知恵。5つ目、キッチンガーデン、ポタジェのつくり方。6つ目、期限のないオンラインのサポート。",
+    "そして、7つ目。（間）老けない、病まない、飢えない生き方そのものです。ご家族の健康を見つめ直すきっかけにしていただけたら、うれしいです。"
+  ]},
+  { t: "⑧ 実践するとどうなる？", m: "約3分", s: "「⑧ 実践するとどうなる？」を開く", p: [
+    "サクセスステップを実践したら、どうなると思いますか。（間）",
+    "自然の中で四季を感じて、心と体の躍動を実感できるようになります。",
+    "味噌も漬物も作れなかった方が、季節の恵みを活かして、醗酵食で腸から元気になっています。暮らしそのものが、変わっていくのです。",
+    "そして、まったくの未経験から始めて、講師として次の一歩を踏み出した方もいらっしゃいます。",
+    "その続きは、明日のDay3「伝える」でお話しします。"
+  ]},
+  { t: "今日のワーク", m: "約2分", s: "「今日のワーク」を開く", p: [
+    "それでは、今日のワークです。コメント欄に、次の3つを書いてください。",
+    "1つ目。Day2で学んだこと、印象に残ったこと、氣づいたこと。",
+    "2つ目。今すぐやろうと思う行動を、3つ以上。",
+    "3つ目。Day3への期待。",
+    "3日間のワークを書き終えた方には、春号の小冊子と、3日間のマインドマップをプレゼントします。あと1日です。明日のワークで受け取れますよ。"
+  ]},
+  { t: "まとめ", m: "約3分", s: "「まとめ」を開く", p: [
+    "最後に、今日のお話をまとめます。",
+    "今日学んだことは、3つです。大切なのは、毎年うまくいくこと。成果は才能ではなく、環境で決まること。そして、醗酵も暮らしも、丁寧な工程が育てることです。",
+    "Day2で、自分に合った学び方が見えてきたと思います。一年の実践の地図も、描けるようになったのではないでしょうか。",
+    "大事な心構えは、同じ失敗をする必要はないこと。種まきは一年に一度。できるだけ早く一歩を。そして、一人で抱えないことです。",
+    "Day3までに、今すぐやる行動を一つ、始めてみてください。そして、天給自足を誰に伝えたいか、思い浮かべておいてください。Day3の最後には、参加してくださった方だけの特別なご案内があります。ぜひ見のがさないでくださいね。",
+    "Day2で、「育てる」道が見えました。でも、まだ自分と家族のためです。（間）明日のDay3では「伝える」。伝承者・講師として、日本全国へ広げていくお話をします。今日はありがとうございました。"
+  ]}
+];
+
+const DAYLABEL = "Day2「実践して育てる」";
+
+// ---- 収録用：台本パネル ----
+const PR = document.getElementById('prompter');
+function esc(s) { return s.replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c])); }
+function line(p) {
+  if (p.startsWith('【')) return `<p class="cue">${esc(p)}</p>`;
+  if (p.startsWith('※')) return `<p class="note">${esc(p)}</p>`;
+  return `<p>${esc(p).replace(/（間）/g, '<span class="pause">間</span>')}</p>`;
+}
+function showScript(i) {
+  const nav = `<div class="pr-nav"><button type="button" data-go="prev">◀ 前の枝</button><button type="button" class="main" data-go="next">次の枝 ▶</button></div>`;
+  const size = `<div class="pr-size"><button type="button" data-size="-1" aria-label="文字を小さく">文字 小</button><button type="button" data-size="1" aria-label="文字を大きく">文字 大</button></div>`;
+  if (i < 0) {
+    PR.style.removeProperty('--pc');
+    PR.innerHTML = `<div class="pr-top"><span class="pr-count">${DAYLABEL}　収録用</span>${size}</div>
+      <h2 class="pr-title">収録の準備ができました</h2>
+      <div class="pr-text"><p>「次の枝を開く」を押すと、左のマインドマップと、この台本が一緒に進みます。</p>
+      <p>「<span class="pause">間</span>」のところで、2〜3秒だまります。</p>
+      <p class="note">このページは収録用です。受講生には、ふつうのマインドマップのページを見せてください。</p></div>${nav}`;
+    return;
+  }
+  const s = SCRIPT[i];
+  PR.style.setProperty('--pc', cssVar(DATA.c[i].color));
+  PR.innerHTML = `<div class="pr-top"><span class="pr-count">${DAYLABEL}　${i + 1} / ${SCRIPT.length}</span>${size}</div>
+    <h2 class="pr-title">${esc(s.t)}</h2><p class="pr-time">${esc(s.m)}</p>
+    <p class="pr-screen">画面：${esc(s.s)}</p>
+    <div class="pr-text">${s.p.map(line).join('')}</div>${nav}`;
+  PR.scrollTop = 0;
+}
+function goTo(i) {
+  step = (i + DATA.c.length) % DATA.c.length;
+  DATA.c.forEach((b, k) => { if (k === step) openAll(b); else closeAll(b); });
+  render();
+  const b = DATA.c[step], stage = document.getElementById('stage');
+  let top = b.y - b.b.h / 2;
+  (function minY(n) { top = Math.min(top, n.y - n.b.h / 2); if (n.open) (n.c || []).forEach(minY); })(b);
+  stage.scrollTo({ top: Math.max(0, top), left: 0, behavior: 'smooth' });
+  showScript(step);
+}
+// 「次の枝を開く」と「はじめに戻す」を、台本と一緒に動くものに置きかえる
+for (const id of ['btn-next', 'btn-reset']) { const o = document.getElementById(id); o.replaceWith(o.cloneNode(true)); }
+document.getElementById('btn-next').addEventListener('click', () => goTo(step + 1));
+document.getElementById('btn-reset').addEventListener('click', () => { step = -1; DATA.c.forEach(b => closeAll(b)); render(); document.getElementById('stage').scrollTo({ top: 0, left: 0 }); showScript(-1); });
+PR.addEventListener('click', e => {
+  const g = e.target.closest('[data-go]'); if (g) { goTo(g.dataset.go === 'next' ? step + 1 : (step < 0 ? DATA.c.length - 1 : step - 1)); return; }
+  const z = e.target.closest('[data-size]'); if (z) { setSize(fs + (+z.dataset.size) * 2); }
+});
+document.addEventListener('keydown', e => {
+  if (e.target.closest && e.target.closest('input, textarea')) return;
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') { e.preventDefault(); goTo(step + 1); }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') { e.preventDefault(); goTo(step < 0 ? DATA.c.length - 1 : step - 1); }
+});
+// 枝をタップして開いたときも、その枝の台本を出す
+const baseToggle = toggleNode;
+toggleNode = function (n) {
+  baseToggle(n);
+  if (n.depth === 1 && n.open) { step = DATA.c.indexOf(n); showScript(step); }
+};
+// 文字の大きさ（この端末だけに覚えておく）
+let fs = 21;
+function setSize(v) { fs = Math.max(15, Math.min(34, v)); PR.style.setProperty('--fs', fs + 'px'); try { localStorage.setItem('rec-fs', fs); } catch (e) {} }
+try { const v = +localStorage.getItem('rec-fs'); if (v) fs = v; } catch (e) {}
+setSize(fs);
+showScript(-1);
+</script>
