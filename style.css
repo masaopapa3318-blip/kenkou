@@ -2172,12 +2172,19 @@ a.related-card .hub-link { display: inline-block; margin-top: 14px; }
 .recipe-sheet--xlong .recipe-photo { height: 14%; margin: 12px 0; }
 .recipe-sheet--xlong .recipe-ingredients li { padding: 2px 2px; }
 .recipe-sheet--xlong .recipe-ingredients li.recipe-group { margin-top: 5px; }
+/* 写真を作り方の下に置くシート（材料が多く、上に写真の場所がとれないとき） */
+.recipe-sheet--side-photo .recipe-sheet-head { margin-bottom: 18px; }
+.recipe-sheet--side-photo .recipe-ingredients li { padding: 2px 2px; }
+.recipe-sheet--side-photo .recipe-ingredients li.recipe-group { margin-top: 5px; }
+.recipe-sheet .recipe-photo.recipe-photo--side { width: 62%; height: auto; aspect-ratio: 9 / 10; margin: 14px auto 0; }
+@media (max-width: 640px) { .recipe-sheet .recipe-photo.recipe-photo--side { width: 100%; } }
 /* 画面の幅がA4より狭いとき：文字がはみ出さないよう、シートを中身に合わせて伸ばす（印刷には影響しない） */
 @media screen and (min-width: 641px) and (max-width: 900px) {
   .recipe-sheet { aspect-ratio: auto; min-height: 0; }
   .recipe-sheet .recipe-photo,
   .recipe-sheet--compact .recipe-photo,
   .recipe-sheet--long .recipe-photo { height: auto; aspect-ratio: 2 / 1; }
+  .recipe-sheet .recipe-photo.recipe-photo--side { height: auto; aspect-ratio: 9 / 10; }
 }
 
 /* 3種類を並べるシート（おむすび三種など） */
